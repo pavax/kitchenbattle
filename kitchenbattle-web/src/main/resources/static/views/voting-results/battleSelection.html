@@ -1,0 +1,26 @@
+<h1>Select a Battle</h1>
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Datum</th>
+        <th>Course Type</th>
+        <th>Teams</th>
+        <th>Courses</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="battle in battleSelection.battles">
+        <td>{{battle.createdAt | date}}</td>
+        <td>{{battle.courseType}}</td>
+        <td>{{battle.courseOne.teamName}} vs {{battle.courseTwo.teamName}}</td>
+        <td>{{battle.courseOne.courseName}} - {{battle.courseTwo.courseName}}</td>
+        <td>
+            <button type="button" class="btn btn-default" ui-sref="votingresults.show({battleId: battle.battleId})">
+                Select
+            </button>
+        </td>
+    </tr>
+    </tbody>
+</table>

@@ -39,8 +39,8 @@ public class BattleVotingResultSearchServiceImpl implements BattleVotingResultSe
     @Override
     public BattleVotingResultDto getBattleVotingResult(String battleId) {
         CourseBattle courseBattle = courseBattleRepository.findOne(new BattleId(battleId));
-        CourseVotingResultDto courseOne = toBattleVotingCourseResultDto(courseBattle.getCourseOne());
-        CourseVotingResultDto courseTwo = toBattleVotingCourseResultDto(courseBattle.getCourseTwo());
+        CourseVotingResultDto courseOne = toBattleVotingCourseResultDto(courseBattle.getCourseOneId(),courseBattle.getBattleId());
+        CourseVotingResultDto courseTwo = toBattleVotingCourseResultDto(courseBattle.getCourseTwoId(), courseBattle.getBattleId());
         return toBattleVotingResultDto(courseBattle, courseOne, courseTwo);
     }
 
@@ -48,9 +48,9 @@ public class BattleVotingResultSearchServiceImpl implements BattleVotingResultSe
         return new BattleVotingResultDto(courseBattle.getBattleId().getValue(), courseBattle.isBattleOpen(), courseBattle.getCourseType(), courseOne, courseTwo);
     }
 
-    private CourseVotingResultDto toBattleVotingCourseResultDto(CourseId courseOneId) {
+    private CourseVotingResultDto toBattleVotingCourseResultDto(CourseId courseOneId, BattleId battleId) {
         Course course = courseRepository.findOne(courseOneId);
-        Integer votesForCourse = guestCourseVotingRepository.countVotesForCourse(courseOneId);
+        Integer votesForCourse = guestCourseVotingRepository.countVotesForCourse(courseOneId, battleId);
         Team team = teamRepository.findOne(course.getTeamId());
         return new CourseVotingResultDto(course.getName(), courseOneId.getValue(), team.getColor(), team.getName(), votesForCourse);
     }

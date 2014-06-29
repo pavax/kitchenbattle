@@ -23,15 +23,15 @@
     <!-- Add your site or application content here -->
     <div class="container">
       <div class="header">
-        <ul class="nav nav-pills pull-right">
-          <li class="active"><a ng-href="#">Home</a></li>
-          <li><a ng-href="#">About</a></li>
-          <li><a ng-href="#">Contact</a></li>
+        <ul class="nav nav-pills pull-right" >
+          <li ui-sref-active="active"><a ng-href="#">Home</a></li>
+          <li ng-class="{active: $state.includes('votingresults')}"><a ui-sref="votingresults.select">Voting Results</a></li>
+          <li ui-sref-active="active"><a ng-href="#">Contact</a></li>
         </ul>
-        <h3 class="text-muted">kitchenbattleWeb</h3>
+        <h3 class="text-muted">Kitchen-Battle</h3>
       </div>
 
-      <div ng-include="'views/main.html'" ng-controller="MainCtrl"></div>
+     <div ui-view></div>
 
       <div class="footer">
         <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
@@ -58,7 +58,6 @@
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
     <script src="vendor/jquery/dist/jquery.js"></script>
-    <script src="vendor/es5-shim/es5-shim.js"></script>
     <script src="vendor/angular/angular.js"></script>
     <script src="vendor/json3/lib/json3.js"></script>
     <script src="vendor/bootstrap/dist/js/bootstrap.js"></script>
@@ -67,12 +66,23 @@
     <script src="vendor/angular-sanitize/angular-sanitize.js"></script>
     <script src="vendor/angular-animate/angular-animate.js"></script>
     <script src="vendor/angular-touch/angular-touch.js"></script>
+    <script src="vendor/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="vendor/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="vendor/angular-i18n/angular-locale_de-ch.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
-        <script src="scripts/controllers/main.js"></script>
+
+        <script src="scripts/common/commonsModule.js"></script>
+        <script src="scripts/common/resources/battleService.js"></script>
+        <script src="scripts/common/resources/votingResultService.js"></script>
+        <script src="scripts/common/resources/courseService.js"></script>
+
+        <script src="scripts/voting-results/votingResultsModule.js"></script>
+        <script src="scripts/voting-results/battleSelectionCtrl.js"></script>
+        <script src="scripts/voting-results/showBattleVotingResultsCtrl.js"></script>
         <!-- endbuild -->
 </body>
 </html>

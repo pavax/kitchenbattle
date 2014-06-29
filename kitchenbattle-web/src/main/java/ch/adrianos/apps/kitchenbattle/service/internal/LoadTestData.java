@@ -1,5 +1,8 @@
 package ch.adrianos.apps.kitchenbattle.service.internal;
 
+import ch.adrianos.apps.kitchenbattle.domain.battle.BattleId;
+import ch.adrianos.apps.kitchenbattle.domain.battle.CourseBattle;
+import ch.adrianos.apps.kitchenbattle.domain.battle.CourseBattleRepository;
 import ch.adrianos.apps.kitchenbattle.domain.course.*;
 import ch.adrianos.apps.kitchenbattle.domain.team.Team;
 import ch.adrianos.apps.kitchenbattle.domain.team.TeamId;
@@ -32,12 +35,17 @@ public class LoadTestData implements ApplicationListener<ContextRefreshedEvent> 
 
     private final CourseRepository courseRepository;
 
+    private final CourseBattleRepository courseBattleRepository;
+
     private final TransactionTemplate transactionTemplate;
 
+
+
     @Autowired
-    public LoadTestData(PlatformTransactionManager platformTransactionManager, TeamRepository teamRepository, CourseRepository courseRepository) {
+    public LoadTestData(PlatformTransactionManager platformTransactionManager, TeamRepository teamRepository, CourseRepository courseRepository, CourseBattleRepository courseBattleRepository) {
         this.teamRepository = teamRepository;
         this.courseRepository = courseRepository;
+        this.courseBattleRepository = courseBattleRepository;
         this.transactionTemplate = new TransactionTemplate(platformTransactionManager);
     }
 
@@ -48,8 +56,16 @@ public class LoadTestData implements ApplicationListener<ContextRefreshedEvent> 
             protected void doInTransactionWithoutResult(TransactionStatus status) {
                 loadTeamTestData();
                 loadCourseTestData();
+                loadBattleTestData();
             }
         });
+    }
+
+    private void loadBattleTestData() {
+        Course courseOne = courseRepository.findOne(COURSE_TEAM1_1);
+        Course courseTwo = courseRepository.findOne(COURSE_TEAM2_1);
+        CourseBattle savedCourseBattle = courseBattleRepository.save(new CourseBattle(new BattleId("Battle1"), CourseType.STARTER, courseOne, courseTwo));
+        savedCourseBattle.setBattleOpen(true);
     }
 
     private void loadTeamTestData() {
@@ -58,9 +74,9 @@ public class LoadTestData implements ApplicationListener<ContextRefreshedEvent> 
     }
 
     private void loadCourseTestData() {
-        Course courseOne = courseRepository.save(new Course(COURSE_TEAM1_1, "Delicious Starter-Course of Team 1", teamRepository.findOne(TEAM_1), CourseType.STARTER));
+        Course courseOne = courseRepository.save(new Course(COURSE_TEAM1_1, "Schmecker Salat", teamRepository.findOne(TEAM_1), CourseType.STARTER));
         setImage(courseOne);
-        Course courseTwo = courseRepository.save(new Course(COURSE_TEAM2_1, "Delicious Starter-Course of Team 2", teamRepository.findOne(TEAM_2), CourseType.STARTER));
+        Course courseTwo = courseRepository.save(new Course(COURSE_TEAM2_1, "Super Suppe", teamRepository.findOne(TEAM_2), CourseType.STARTER));
         setImage(courseTwo);
     }
 

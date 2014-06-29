@@ -29,7 +29,7 @@ public class CourseBattle {
     })
     @NotNull
     @Valid
-    private CourseId courseOne;
+    private CourseId courseOneId;
 
 
     @Embedded
@@ -38,19 +38,19 @@ public class CourseBattle {
     })
     @NotNull
     @Valid
-    private CourseId courseTwo;
+    private CourseId courseTwoId;
 
     private boolean isBattleOpen;
 
-    public CourseBattle(BattleId battleId, CourseType courseType, Course courseOne, Course courseTwo) {
+    public CourseBattle(BattleId battleId, CourseType courseType, Course courseOneId, Course courseTwoId) {
         Assert.notNull(battleId);
         Assert.notNull(courseType);
-        Assert.notNull(courseOne);
-        Assert.notNull(courseTwo);
+        Assert.notNull(courseOneId);
+        Assert.notNull(courseTwoId);
         this.battleId = battleId;
         this.courseType = courseType;
-        this.courseOne = courseOne.getCourseId();
-        this.courseTwo = courseTwo.getCourseId();
+        this.courseOneId = courseOneId.getCourseId();
+        this.courseTwoId = courseTwoId.getCourseId();
         this.isBattleOpen = false;
         this.createdAt = LocalDateTime.now();
     }
@@ -74,12 +74,12 @@ public class CourseBattle {
         return createdAt;
     }
 
-    public CourseId getCourseOne() {
-        return courseOne;
+    public CourseId getCourseOneId() {
+        return courseOneId;
     }
 
-    public CourseId getCourseTwo() {
-        return courseTwo;
+    public CourseId getCourseTwoId() {
+        return courseTwoId;
     }
 
     public boolean isBattleOpen() {
