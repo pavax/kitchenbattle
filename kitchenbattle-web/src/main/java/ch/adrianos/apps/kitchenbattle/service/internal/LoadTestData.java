@@ -18,7 +18,6 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.springframework.transaction.support.TransactionTemplate;
-import scala.tools.nsc.Global;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -38,7 +37,6 @@ public class LoadTestData implements ApplicationListener<ContextRefreshedEvent> 
     private final CourseBattleRepository courseBattleRepository;
 
     private final TransactionTemplate transactionTemplate;
-
 
 
     @Autowired
@@ -74,14 +72,14 @@ public class LoadTestData implements ApplicationListener<ContextRefreshedEvent> 
     }
 
     private void loadCourseTestData() {
-        Course courseOne = courseRepository.save(new Course(COURSE_TEAM1_1, "Schmecker Salat", teamRepository.findOne(TEAM_1), CourseType.STARTER));
-        setImage(courseOne);
-        Course courseTwo = courseRepository.save(new Course(COURSE_TEAM2_1, "Super Suppe", teamRepository.findOne(TEAM_2), CourseType.STARTER));
-        setImage(courseTwo);
+        Course courseOne = courseRepository.save(new Course(COURSE_TEAM1_1, "Marinierte Oliven", "Feinste marinierte entsteinte Oliven mit frischen Kräutern und Feta-Käse", teamRepository.findOne(TEAM_1), CourseType.STARTER));
+        setImage(courseOne, "oliven.png");
+        Course courseTwo = courseRepository.save(new Course(COURSE_TEAM2_1, "Bärlauchsuppe", "Bärlauch schmeckt frisch und herzhaft nach Knoblauch und verbündet sich gerne mit Kartoffeln zu diesem cremigen Frühlings-Partysüppchen", teamRepository.findOne(TEAM_2), CourseType.STARTER));
+        setImage(courseTwo, "suppe.jpg");
     }
 
-    private void setImage(Course course) {
-        InputStream in = this.getClass().getClassLoader().getResourceAsStream("Desert.gif");
+    private void setImage(Course course, String name) {
+        InputStream in = this.getClass().getClassLoader().getResourceAsStream(name);
         try {
             byte[] bytes = IOUtils.toByteArray(in);
             course.setImage(new Image(bytes, MediaType.IMAGE_GIF_VALUE));

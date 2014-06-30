@@ -12,11 +12,14 @@ public class CourseDto {
 
     private CourseType courseType;
 
-    public CourseDto(String courseId, String name, String teamId, CourseType courseType) {
+    private String description;
+
+    public CourseDto(String courseId, String name, String teamId, CourseType courseType, String description) {
         this.courseId = courseId;
         this.name = name;
         this.teamId = teamId;
         this.courseType = courseType;
+        this.description = description;
     }
 
     public CourseDto() {
@@ -52,5 +55,13 @@ public class CourseDto {
 
     public void setCourseType(CourseType courseType) {
         this.courseType = courseType;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

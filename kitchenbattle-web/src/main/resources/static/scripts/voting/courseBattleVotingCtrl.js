@@ -6,7 +6,7 @@ angular.module('votingModule')
         this.courseTwo = courseTwo;
         this.courseTwo.imageUrl = courseService.getCourseImageUrl(courseTwo.courseId);
         this.voteCourse = function (courseId) {
-            courseVotingService.voteCourse(courseId, this.battle.battleId.value)
+            courseVotingService.voteCourse(courseId, this.battle.battleId)
                 .success(function (data) {
                     alert("Danke");
                 }).error(function (error) {

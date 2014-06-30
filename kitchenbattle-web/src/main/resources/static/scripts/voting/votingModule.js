@@ -37,13 +37,13 @@ angular.module('votingModule',
                             });
                     },
                     courseOne: function (courseService, battle) {
-                        return courseService.getCourse(battle.courseOneId.value)
+                        return courseService.getCourse(battle.courseIdOne)
                             .then(function (successResponse) {
                                 return successResponse.data;
                             });
                     },
                     courseTwo: function (courseService, battle) {
-                        return courseService.getCourse(battle.courseTwoId.value)
+                        return courseService.getCourse(battle.courseIdTwo)
                             .then(function (successResponse) {
                                 return successResponse.data;
                             });

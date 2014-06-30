@@ -2,6 +2,7 @@ package ch.adrianos.apps.kitchenbattle.domain.course;
 
 import ch.adrianos.apps.kitchenbattle.domain.team.Team;
 import ch.adrianos.apps.kitchenbattle.domain.team.TeamId;
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.util.Assert;
 
@@ -16,7 +17,12 @@ public class Course {
     private CourseId courseId;
 
     @NotBlank
+    @Length(max = 100)
     private String name;
+
+    @NotBlank
+    @Length(max = 250)
+    private String description;
 
     @Embedded
     private TeamId teamId;
@@ -28,7 +34,8 @@ public class Course {
     @Valid
     private Image image;
 
-    public Course(CourseId courseId, String name, Team teamId, CourseType courseType) {
+    public Course(CourseId courseId, String name, String description, Team teamId, CourseType courseType) {
+        this.description = description;
         Assert.notNull(courseId);
         Assert.notNull(name);
         Assert.notNull(teamId);
@@ -69,5 +76,13 @@ public class Course {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }

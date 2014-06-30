@@ -31,7 +31,6 @@ public class CourseBattle {
     @Valid
     private CourseId courseOneId;
 
-
     @Embedded
     @AttributeOverrides({
             @AttributeOverride(name = "value", column = @Column(name = "courseTwoId")),

@@ -36,7 +36,7 @@ public class CourseServiceImpl implements CourseService {
         if (team == null) {
             throw new TeamNotFoundException(teamId);
         }
-        Course savedCourse = courseRepository.save(new Course(new CourseId(), createCourseDto.getCourseName(), team, createCourseDto.getCourseType()));
+        Course savedCourse = courseRepository.save(toCourse(createCourseDto, team));
         return savedCourse.getCourseId().getValue();
     }
 
@@ -56,6 +56,7 @@ public class CourseServiceImpl implements CourseService {
             throw new CourseNotFoundException(courseId);
         }
         course.setName(courseDto.getName());
+        course.setDescription(courseDto.getDescription());
         // TODO?
     }
 
@@ -95,6 +96,10 @@ public class CourseServiceImpl implements CourseService {
     }
 
     private static CourseDto toCourseDto(Course course) {
-        return new CourseDto(course.getCourseId().getValue(), course.getName(), course.getTeamId().getValue(), course.getCourseType());
+        return new CourseDto(course.getCourseId().getValue(), course.getName(), course.getTeamId().getValue(), course.getCourseType(), course.getDescription());
+    }
+
+    private static Course toCourse(CreateCourseDto createCourseDto, Team team) {
+        return new Course(new CourseId(), createCourseDto.getCourseName(), createCourseDto.getDescription(), team, createCourseDto.getCourseType());
     }
 }

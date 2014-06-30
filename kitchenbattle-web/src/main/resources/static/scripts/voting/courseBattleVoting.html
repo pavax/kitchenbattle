@@ -16,13 +16,25 @@
         </tr>
         <tr>
             <td>
+                <div class="text-center">
+                    <p class="lead text-muted">{{courseBattleVoting.courseOne.description}}</p>
+                </div>
+            </td>
+            <td>
+                <div class="text-center">
+                    <p class="lead text-muted">{{courseBattleVoting.courseTwo.description}}</p>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
                 <img ng-src="{{courseBattleVoting.courseOne.imageUrl}}"
-                     class="img-responsive"
+                     class="img-responsive img-rounded"
                      ng-click="courseBattleVoting.voteCourse(courseBattleVoting.courseOne.courseId)">
             </td>
             <td>
                 <img ng-src="{{courseBattleVoting.courseTwo.imageUrl}}"
-                     class="img-responsive"
+                     class="img-responsive img-rounded"
                      ng-click="courseBattleVoting.voteCourse(courseBattleVoting.courseTwo.courseId)">
             </td>
         </tr>

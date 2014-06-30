@@ -19,9 +19,11 @@ public class CustomMvcConfiguration {
         jackson2ObjectMapperFactoryBean.setFindModulesViaServiceLoader(true);
         jackson2ObjectMapperFactoryBean.setFeaturesToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         jackson2ObjectMapperFactoryBean.setFeaturesToDisable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+        jackson2ObjectMapperFactoryBean.setModulesToInstall(KitchenBattleModule.class);
         jackson2ObjectMapperFactoryBean.afterPropertiesSet();
         return jackson2ObjectMapperFactoryBean.getObject();
     }
+
 
     @Bean
     MultipartConfigElement multipartConfigElement() {
