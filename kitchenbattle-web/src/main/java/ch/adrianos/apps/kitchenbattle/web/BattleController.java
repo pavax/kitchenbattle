@@ -1,5 +1,6 @@
 package ch.adrianos.apps.kitchenbattle.web;
 
+import ch.adrianos.apps.kitchenbattle.domain.battle.BattleId;
 import ch.adrianos.apps.kitchenbattle.domain.battle.CourseBattle;
 import ch.adrianos.apps.kitchenbattle.domain.battle.CourseBattleRepository;
 import ch.adrianos.apps.kitchenbattle.service.*;
@@ -33,6 +34,11 @@ public class BattleController {
         return battleService.createNewBattle(createBattleDto);
     }
 
+    @RequestMapping(value = "/{battleId}", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    public CourseBattle getBattle(@PathVariable String battleId) {
+        return courseBattleRepository.findOne(new BattleId(battleId));
+    }
 
     @RequestMapping(value = "{battleId}/status", method = RequestMethod.PATCH)
     @ResponseStatus(HttpStatus.OK)

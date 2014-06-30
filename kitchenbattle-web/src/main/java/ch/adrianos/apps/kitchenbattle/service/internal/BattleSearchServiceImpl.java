@@ -39,7 +39,7 @@ public class BattleSearchServiceImpl implements BattleSearchService {
         List<CourseBattle> courseBattles = courseBattleRepository.findAll();
         List<BattleSearchDto> battleSearchDtos = new ArrayList<>();
         for (CourseBattle courseBattle : courseBattles) {
-            battleSearchDtos.add(new BattleSearchDto(courseBattle.getBattleId().getValue(),courseBattle.getCourseType(), courseBattle.getCreatedAt(), toCourseSearchDto(courseBattle.getCourseOneId()), toCourseSearchDto(courseBattle.getCourseTwoId())));
+            battleSearchDtos.add(new BattleSearchDto(courseBattle.getBattleId().getValue(), courseBattle.isBattleOpen(), courseBattle.getCourseType(), courseBattle.getCreatedAt(), toCourseSearchDto(courseBattle.getCourseOneId()), toCourseSearchDto(courseBattle.getCourseTwoId())));
         }
         return battleSearchDtos;
     }

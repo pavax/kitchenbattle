@@ -19,7 +19,7 @@ public class VotingController {
         this.guestCourseVotingRepository = guestCourseVotingRepository;
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public void vote(@RequestBody CreateGuestCourseVotingDto createGuestCourseVotingDto) {
         guestCourseVotingRepository.save(new GuestCourseVoting(new BattleId(createGuestCourseVotingDto.getBattleId()), new CourseId(createGuestCourseVotingDto.getVotedCourseId())));

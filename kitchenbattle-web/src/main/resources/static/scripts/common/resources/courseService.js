@@ -1,8 +1,6 @@
 'use strict';
 
-angular.module('commons.resources.course', []);
-
-angular.module('commons.resources.course')
+angular.module('commons.resources.course', [])
     .factory('courseService', function ($http) {
         return {
             getCourseImageUrl: function (courseId) {

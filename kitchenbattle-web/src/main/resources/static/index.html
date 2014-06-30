@@ -16,7 +16,7 @@
     <!-- endbuild -->
   </head>
   <body ng-app="kitchenbattleWebApp">
-    <!--[if lt IE 7]>
+    <!--[if lt IE 9]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
@@ -26,7 +26,7 @@
         <ul class="nav nav-pills pull-right" >
           <li ui-sref-active="active"><a ng-href="#">Home</a></li>
           <li ng-class="{active: $state.includes('votingresults')}"><a ui-sref="votingresults.select">Voting Results</a></li>
-          <li ui-sref-active="active"><a ng-href="#">Contact</a></li>
+          <li ng-class="{active: $state.includes('voting')}"><a ui-sref="voting.select">Voting</a></li>
         </ul>
         <h3 class="text-muted">Kitchen-Battle</h3>
       </div>
@@ -37,23 +37,6 @@
         <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
       </div>
     </div>
-
-
-    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
-     <script>
-       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-       ga('create', 'UA-XXXXX-X');
-       ga('send', 'pageview');
-    </script>
-
-    <!--[if lt IE 9]>
-    <script src="vendor/es5-shim/es5-shim.js"></script>
-    <script src="vendor/json3/lib/json3.min.js"></script>
-    <![endif]-->
 
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
@@ -76,13 +59,21 @@
         <script src="scripts/app.js"></script>
 
         <script src="scripts/common/commonsModule.js"></script>
+        <script src="scripts/common/directives/courseBattlesDirectives.js"></script>
         <script src="scripts/common/resources/battleService.js"></script>
         <script src="scripts/common/resources/votingResultService.js"></script>
         <script src="scripts/common/resources/courseService.js"></script>
+        <script src="scripts/common/resources/courseVotingService.js"></script>
+        <script src="scripts/common/filters/courseTypeFilter.js"></script>
+
 
         <script src="scripts/voting-results/votingResultsModule.js"></script>
-        <script src="scripts/voting-results/battleSelectionCtrl.js"></script>
-        <script src="scripts/voting-results/showBattleVotingResultsCtrl.js"></script>
+        <script src="scripts/voting-results/courseBattleSelectionCtrl.js"></script>
+        <script src="scripts/voting-results/showCourseBattleVotingResultsCtrl.js"></script>
+
+        <script src="scripts/voting/votingModule.js"></script>
+        <script src="scripts/voting/courseBattleVotingSelectionCtrl.js"></script>
+        <script src="scripts/voting/courseBattleVotingCtrl.js"></script>
         <!-- endbuild -->
 </body>
 </html>

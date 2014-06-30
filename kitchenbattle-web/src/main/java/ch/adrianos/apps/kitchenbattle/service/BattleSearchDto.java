@@ -16,8 +16,11 @@ public class BattleSearchDto {
 
     private CourseSearchDto courseTwo;
 
-    public BattleSearchDto(String battleId, CourseType courseType, LocalDateTime createdAt, CourseSearchDto courseOne, CourseSearchDto courseTwo) {
+    private boolean isOpen;
+
+    public BattleSearchDto(String battleId, boolean isOpen, CourseType courseType, LocalDateTime createdAt, CourseSearchDto courseOne, CourseSearchDto courseTwo) {
         this.battleId = battleId;
+        this.isOpen = isOpen;
         this.courseType = courseType;
         this.createdAt = createdAt;
         this.courseOne = courseOne;
@@ -42,5 +45,13 @@ public class BattleSearchDto {
 
     public CourseSearchDto getCourseTwo() {
         return courseTwo;
+    }
+
+    public boolean isOpen() {
+        return isOpen;
+    }
+
+    public void setOpen(boolean isOpen) {
+        this.isOpen = isOpen;
     }
 }

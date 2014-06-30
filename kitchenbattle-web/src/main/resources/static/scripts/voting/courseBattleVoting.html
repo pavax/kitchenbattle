@@ -1,0 +1,32 @@
+<h1>{{courseBattleVoting.battle.courseType | courseType }} Battle</h1>
+
+<div class="table-responsive">
+    <table class="table">
+        <tr>
+            <td>
+                <div class="text-center">
+                    <h1>{{courseBattleVoting.courseOne.name}}</h1>
+                </div>
+            </td>
+            <td>
+                <div class="text-center">
+                    <h1>{{courseBattleVoting.courseTwo.name}}</h1>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img ng-src="{{courseBattleVoting.courseOne.imageUrl}}"
+                     class="img-responsive"
+                     ng-click="courseBattleVoting.voteCourse(courseBattleVoting.courseOne.courseId)">
+            </td>
+            <td>
+                <img ng-src="{{courseBattleVoting.courseTwo.imageUrl}}"
+                     class="img-responsive"
+                     ng-click="courseBattleVoting.voteCourse(courseBattleVoting.courseTwo.courseId)">
+            </td>
+        </tr>
+    </table>
+</div>
+
+
