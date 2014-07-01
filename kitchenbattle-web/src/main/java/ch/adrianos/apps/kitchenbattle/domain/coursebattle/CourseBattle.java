@@ -1,4 +1,4 @@
-package ch.adrianos.apps.kitchenbattle.domain.battle;
+package ch.adrianos.apps.kitchenbattle.domain.coursebattle;
 
 import ch.adrianos.apps.kitchenbattle.domain.course.Course;
 import ch.adrianos.apps.kitchenbattle.domain.course.CourseId;

@@ -1,6 +1,5 @@
-package ch.adrianos.apps.kitchenbattle.domain.voting;
+package ch.adrianos.apps.kitchenbattle.domain.coursebattle;
 
-import ch.adrianos.apps.kitchenbattle.domain.battle.BattleId;
 import ch.adrianos.apps.kitchenbattle.domain.course.CourseId;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

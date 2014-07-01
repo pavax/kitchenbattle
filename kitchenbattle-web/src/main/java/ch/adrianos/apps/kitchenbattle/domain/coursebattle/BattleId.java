@@ -1,4 +1,4 @@
-package ch.adrianos.apps.kitchenbattle.domain.battle;
+package ch.adrianos.apps.kitchenbattle.domain.coursebattle;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.data.annotation.AccessType;

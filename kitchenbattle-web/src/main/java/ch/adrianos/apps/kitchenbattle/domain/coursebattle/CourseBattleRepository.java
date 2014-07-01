@@ -1,8 +1,6 @@
-package ch.adrianos.apps.kitchenbattle.domain.battle;
+package ch.adrianos.apps.kitchenbattle.domain.coursebattle;
 
-import ch.adrianos.apps.kitchenbattle.domain.team.TeamId;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository

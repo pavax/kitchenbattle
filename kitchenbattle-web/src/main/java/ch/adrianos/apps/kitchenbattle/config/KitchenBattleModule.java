@@ -1,7 +1,7 @@
 package ch.adrianos.apps.kitchenbattle.config;
 
-import ch.adrianos.apps.kitchenbattle.domain.battle.BattleId;
-import ch.adrianos.apps.kitchenbattle.domain.battle.CourseBattle;
+import ch.adrianos.apps.kitchenbattle.domain.coursebattle.BattleId;
+import ch.adrianos.apps.kitchenbattle.domain.coursebattle.CourseBattle;
 import ch.adrianos.apps.kitchenbattle.domain.course.Course;
 import ch.adrianos.apps.kitchenbattle.domain.course.CourseId;
 import ch.adrianos.apps.kitchenbattle.domain.course.Image;

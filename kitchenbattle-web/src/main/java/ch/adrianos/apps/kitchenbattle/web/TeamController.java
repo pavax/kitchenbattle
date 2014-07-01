@@ -3,6 +3,7 @@ package ch.adrianos.apps.kitchenbattle.web;
 import ch.adrianos.apps.kitchenbattle.domain.team.Team;
 import ch.adrianos.apps.kitchenbattle.domain.team.TeamId;
 import ch.adrianos.apps.kitchenbattle.domain.team.TeamRepository;
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -34,8 +35,12 @@ public class TeamController {
     }
 
     public static class CreateTeamDto {
+
+        @NotBlank
         private String name;
+
         private String color;
+
         private String description;
 
         public String getName() {

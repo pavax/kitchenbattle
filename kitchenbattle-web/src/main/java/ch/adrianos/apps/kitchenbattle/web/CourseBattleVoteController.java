@@ -1,12 +1,16 @@
 package ch.adrianos.apps.kitchenbattle.web;
 
-import ch.adrianos.apps.kitchenbattle.domain.battle.BattleId;
+import ch.adrianos.apps.kitchenbattle.domain.coursebattle.BattleId;
 import ch.adrianos.apps.kitchenbattle.domain.course.CourseId;
-import ch.adrianos.apps.kitchenbattle.domain.voting.CourseBattleVote;
-import ch.adrianos.apps.kitchenbattle.domain.voting.CourseBattleVoteRepository;
+import ch.adrianos.apps.kitchenbattle.domain.coursebattle.CourseBattleVote;
+import ch.adrianos.apps.kitchenbattle.domain.coursebattle.CourseBattleVoteRepository;
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 @RestController
 @RequestMapping("/api/course-battle-vote")
@@ -21,14 +25,16 @@ public class CourseBattleVoteController {
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public void vote(@RequestBody CreateGuestCourseBattleVotingDto createGuestCourseBattleVotingDto) {
+    public void vote(@RequestBody @Valid CreateGuestCourseBattleVotingDto createGuestCourseBattleVotingDto) {
         courseBattleVoteRepository.save(new CourseBattleVote(new BattleId(createGuestCourseBattleVotingDto.getBattleId()), new CourseId(createGuestCourseBattleVotingDto.getVotedCourseId())));
     }
 
     public static class CreateGuestCourseBattleVotingDto {
 
+        @NotBlank
         private String battleId;
 
+        @NotBlank
         private String votedCourseId;
 
         public String getBattleId() {

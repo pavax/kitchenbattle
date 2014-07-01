@@ -1,7 +1,7 @@
 package ch.adrianos.apps.kitchenbattle.service.internal;
 
-import ch.adrianos.apps.kitchenbattle.domain.battle.CourseBattle;
-import ch.adrianos.apps.kitchenbattle.domain.battle.CourseBattleRepository;
+import ch.adrianos.apps.kitchenbattle.domain.coursebattle.CourseBattle;
+import ch.adrianos.apps.kitchenbattle.domain.coursebattle.CourseBattleRepository;
 import ch.adrianos.apps.kitchenbattle.domain.course.Course;
 import ch.adrianos.apps.kitchenbattle.domain.course.CourseRepository;
 import ch.adrianos.apps.kitchenbattle.domain.team.Team;

@@ -1,13 +1,19 @@
 package ch.adrianos.apps.kitchenbattle.service;
 
 import ch.adrianos.apps.kitchenbattle.domain.course.CourseType;
+import org.hibernate.validator.constraints.NotBlank;
+
+import javax.validation.constraints.NotNull;
 
 public class CreateCourseBattleDto {
 
+    @NotBlank
     private String courseOneId;
 
+    @NotBlank
     private String courseTwoId;
 
+    @NotNull
     private CourseType courseType;
 
     public String getCourseOneId() {

@@ -1,7 +1,7 @@
-package ch.adrianos.apps.kitchenbattle.domain.voting;
+package ch.adrianos.apps.kitchenbattle.domain.coursebattle;
 
 import ch.adrianos.apps.kitchenbattle.domain.course.CourseId;
-import ch.adrianos.apps.kitchenbattle.domain.battle.BattleId;
+import ch.adrianos.apps.kitchenbattle.domain.coursebattle.BattleId;
 import org.springframework.util.Assert;
 
 import javax.persistence.Embedded;

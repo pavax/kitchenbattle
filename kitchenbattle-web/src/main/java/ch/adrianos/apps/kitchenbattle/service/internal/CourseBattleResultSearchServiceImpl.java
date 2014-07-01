@@ -1,14 +1,14 @@
 package ch.adrianos.apps.kitchenbattle.service.internal;
 
-import ch.adrianos.apps.kitchenbattle.domain.battle.BattleId;
-import ch.adrianos.apps.kitchenbattle.domain.battle.CourseBattle;
-import ch.adrianos.apps.kitchenbattle.domain.battle.CourseBattleRepository;
+import ch.adrianos.apps.kitchenbattle.domain.coursebattle.BattleId;
+import ch.adrianos.apps.kitchenbattle.domain.coursebattle.CourseBattle;
+import ch.adrianos.apps.kitchenbattle.domain.coursebattle.CourseBattleRepository;
 import ch.adrianos.apps.kitchenbattle.domain.course.Course;
 import ch.adrianos.apps.kitchenbattle.domain.course.CourseId;
 import ch.adrianos.apps.kitchenbattle.domain.course.CourseRepository;
 import ch.adrianos.apps.kitchenbattle.domain.team.Team;
 import ch.adrianos.apps.kitchenbattle.domain.team.TeamRepository;
-import ch.adrianos.apps.kitchenbattle.domain.voting.CourseBattleVoteRepository;
+import ch.adrianos.apps.kitchenbattle.domain.coursebattle.CourseBattleVoteRepository;
 import ch.adrianos.apps.kitchenbattle.service.CourseBattleResultDto;
 import ch.adrianos.apps.kitchenbattle.service.CourseBattleResultSearchService;
 import org.springframework.beans.factory.annotation.Autowired;
