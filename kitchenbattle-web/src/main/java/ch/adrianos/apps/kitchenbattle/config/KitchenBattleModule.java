@@ -4,8 +4,10 @@ import ch.adrianos.apps.kitchenbattle.domain.battle.BattleId;
 import ch.adrianos.apps.kitchenbattle.domain.battle.CourseBattle;
 import ch.adrianos.apps.kitchenbattle.domain.course.Course;
 import ch.adrianos.apps.kitchenbattle.domain.course.CourseId;
+import ch.adrianos.apps.kitchenbattle.domain.course.Image;
 import ch.adrianos.apps.kitchenbattle.domain.team.Team;
 import ch.adrianos.apps.kitchenbattle.domain.team.TeamId;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.fasterxml.jackson.core.Version;
@@ -21,22 +23,29 @@ public class KitchenBattleModule extends SimpleModule {
         setMixInAnnotation(CourseBattle.class, UnwrapDomainIdsMixin.class);
         setMixInAnnotation(Team.class, UnwrapDomainIdsMixin.class);
         setMixInAnnotation(Course.class, UnwrapDomainIdsMixin.class);
+        //setMixInAnnotation(Course.class, CourseMixin.class);
     }
 
     static abstract class BattleIdMixin {
         @JsonProperty("battleId")
         private String value;
     }
+
     static abstract class TeamIdMixin {
         @JsonProperty("teamId")
         private String value;
     }
+
     static abstract class CourseIdMixin {
         @JsonProperty("courseId")
         private String value;
     }
 
     static abstract class UnwrapDomainIdsMixin {
+
+        @JsonIgnore
+        private Image image;
+
         @JsonUnwrapped
         private BattleId battleId;
 

@@ -1,6 +1,10 @@
 package ch.adrianos.apps.kitchenbattle.web;
 
+import ch.adrianos.apps.kitchenbattle.domain.course.Course;
+import ch.adrianos.apps.kitchenbattle.domain.course.CourseId;
+import ch.adrianos.apps.kitchenbattle.domain.course.CourseRepository;
 import ch.adrianos.apps.kitchenbattle.domain.course.Image;
+import ch.adrianos.apps.kitchenbattle.domain.team.TeamId;
 import ch.adrianos.apps.kitchenbattle.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -20,65 +24,75 @@ public class CourseController {
 
     private final CourseService courseService;
 
+    private final CourseRepository courseRepository;
+
     @Autowired
-    public CourseController(CourseService courseService) {
+    public CourseController(CourseService courseService, CourseRepository courseRepository) {
         this.courseService = courseService;
+        this.courseRepository = courseRepository;
     }
 
     @RequestMapping(method = RequestMethod.POST, consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
     public String createCourse(@RequestBody @Valid CreateCourseDto createCourseDto) throws TeamNotFoundException {
-        String courseId = courseService.createNewCourse(createCourseDto);
-        return courseId;
+        return courseService.createNewCourse(createCourseDto);
     }
 
     @RequestMapping(value = "/find/byTeamId", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
-    public List<CourseDto> findCoursesByTeamId(@RequestParam String teamId) {
-        return courseService.findCoursesByTeam(teamId);
+    public List<Course> findCoursesByTeamId(@RequestParam String teamId) {
+        return courseRepository.findByTeamId(new TeamId(teamId));
     }
 
     @RequestMapping(value = "/{courseId}", method = RequestMethod.GET)
-    @ResponseStatus(HttpStatus.OK)
-    public CourseDto getCourse(@PathVariable String courseId) throws TeamNotFoundException, CourseNotFoundException {
-        CourseDto course = courseService.getCourse(courseId);
-        return course;
+    public ResponseEntity<Course> getCourse(@PathVariable String courseId) throws CourseNotFoundException {
+        Course course = getCourseInternally(courseId);
+        return new ResponseEntity<>(course, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{courseId}", method = RequestMethod.PATCH, consumes = "application/json")
     @ResponseStatus(HttpStatus.OK)
-    public void updateCourse(@PathVariable String courseId, CourseDto courseDto) throws TeamNotFoundException, CourseNotFoundException {
-        courseDto.setCourseId(courseId);
-        courseService.updateCourse(courseId, courseDto);
+    public void updateCourse(@PathVariable String courseId, @RequestBody @Valid UpdateCourseDto updateCourseDto) throws CourseNotFoundException {
+        courseService.updateCourse(courseId, updateCourseDto);
     }
 
     @RequestMapping(value = "/{courseId}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.OK)
-    public void deleteCourse(@PathVariable String courseId) throws TeamNotFoundException, CourseNotFoundException {
+    public void deleteCourse(@PathVariable String courseId) throws CourseNotFoundException {
         courseService.deleteCourse(courseId);
     }
 
     @RequestMapping(value = "/{courseId}/image", method = RequestMethod.POST, consumes = "multipart/form-data")
     @ResponseStatus(HttpStatus.OK)
-    public void updateCourseImage(@PathVariable String courseId, @RequestParam("file") MultipartFile file) throws CourseNotFoundException, IOException {
+    public void updateCourseImage(@PathVariable String courseId, @RequestParam("file") MultipartFile file) throws IOException, CourseNotFoundException {
+        Course course = getCourseInternally(courseId);
         if (!file.isEmpty()) {
             String contentType = file.getContentType();
             MediaType mediaType = MediaType.parseMediaType(contentType);
             if (!mediaType.equals(MediaType.IMAGE_JPEG) && !mediaType.equals(MediaType.IMAGE_PNG) && !mediaType.equals(MediaType.IMAGE_GIF)) {
                 throw new IllegalArgumentException("Image Type not supported: " + contentType);
             }
-            courseService.updateCourseImage(courseId, file.getBytes(), contentType);
+            course.setImage(new Image(file.getBytes(), contentType));
         }
     }
 
     @RequestMapping(value = "/{courseId}/image", method = RequestMethod.GET)
     public ResponseEntity<?> getCourseImage(@PathVariable String courseId) throws CourseNotFoundException {
-        Image courseImage = courseService.getCourseImage(courseId);
+        Course course = getCourseInternally(courseId);
+        Image courseImage = course.getImage();
         if (courseImage == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         final HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType(courseImage.getContentType()));
         return new ResponseEntity<>(courseImage.getContent(), headers, HttpStatus.OK);
+    }
+
+    private Course getCourseInternally(String courseId) throws CourseNotFoundException {
+        Course course = courseRepository.findOne(new CourseId(courseId));
+        if (course == null) {
+            throw new CourseNotFoundException(courseId);
+        }
+        return course;
     }
 }

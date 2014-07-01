@@ -1,37 +1,32 @@
 'use strict';
 
-angular.module('votingModule',
-    [
-        'commons.resources.battle',
-        'commons.resources.course',
-        'commons.resources.courseVoting'
-    ]
+angular.module('courseBattleVotingModule', []
 ).config(function ($stateProvider, $urlRouterProvider) {
         $stateProvider
-            .state('voting', {
-                url: "/voting",
+            .state('courseBattleVoting', {
+                url: "/course-battle-voting",
                 template: "<div ui-view></div>",
                 abstract: true
             })
-            .state('voting.select', {
+            .state('courseBattleVoting.select', {
                 url: "",
-                templateUrl: "scripts/voting/courseBattleVotingSelection.html",
+                templateUrl: "scripts/course-battle-voting/courseBattleVotingSelection.html",
                 controller: 'CourseBattleVotingSelectionController as courseBattleSelection',
                 resolve: {
-                    battles: function (battleService) {
-                        return battleService.getAllBattles().then(function (response) {
+                    battles: function (courseBattleService) {
+                        return courseBattleService.getAllBattles().then(function (response) {
                             return response.data;
                         });
                     }
                 }
             })
-            .state('voting.vote', {
+            .state('courseBattleVoting.vote', {
                 url: "/vote?battleId",
-                templateUrl: "scripts/voting/courseBattleVoting.html",
+                templateUrl: "scripts/course-battle-voting/courseBattleVoting.html",
                 controller: 'CourseBattleVotingCtrl as courseBattleVoting',
                 resolve: {
-                    battle: function (battleService, $stateParams) {
-                        return battleService.getBattle($stateParams.battleId)
+                    battle: function (courseBattleService, $stateParams) {
+                        return courseBattleService.getBattle($stateParams.battleId)
                             .then(function (successResponse) {
                                 return successResponse.data;
                             });

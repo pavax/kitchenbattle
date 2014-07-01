@@ -1,10 +1,12 @@
-angular.module('votingResultsModule')
-    .controller('ShowCourseBattleVotingResultsController', function ($scope, battleId, votingResultService, courseService, $timeout) {
+'use strict';
+
+angular.module('courseBattleResultModule')
+    .controller('ShowCourseBattleVotingResultsController', function ($scope, battleId, courseBattleResultSearchService, courseService, $timeout) {
 
         var showCourseBattleVotingResult = this;
 
         function init() {
-            votingResultService.getVotingResultForBattle(battleId).success(function (votingResult) {
+            courseBattleResultSearchService.getResultForBattle(battleId).success(function (votingResult) {
                 showCourseBattleVotingResult.votingResult = votingResult;
                 var totalGuestVotes = votingResult.totalGuestVotes;
                 showCourseBattleVotingResult.votingResult.courseOne.percentGuestCount = votingResult.courseOne.totalGuestVotes * 100 / totalGuestVotes;

@@ -1,34 +1,28 @@
 'use strict';
 
-angular.module('votingResultsModule',
-    [
-        'commons.resources.battle',
-        'commons.resources.votingResult',
-        'commons.resources.course',
-        'commons.directives.courseBattles'
-    ]
+angular.module('courseBattleResultModule', []
 ).config(function ($stateProvider, $urlRouterProvider) {
         $stateProvider
-            .state('votingresults', {
-                url: "/votingresults",
+            .state('courseBattleResults', {
+                url: "/course-battle-results",
                 template: "<div ui-view></div>",
                 abstract: true
             })
-            .state('votingresults.select', {
+            .state('courseBattleResults.select', {
                 url: "",
-                templateUrl: "scripts/voting-results/courseBattleSelection.html",
+                templateUrl: "scripts/course-battle-result/courseBattleSelection.html",
                 controller: 'CourseBattleSelectionController as courseBattleSelection',
                 resolve: {
-                    battles: function (battleService) {
-                        return battleService.getAllBattles().then(function (response) {
+                    battles: function (courseBattleService) {
+                        return courseBattleService.getAllBattles().then(function (response) {
                             return response.data;
                         });
                     }
                 }
             })
-            .state('votingresults.show', {
+            .state('courseBattleResults.show', {
                 url: "/show?battleId",
-                templateUrl: "scripts/voting-results/showCourseBattleVotringResults.html",
+                templateUrl: "scripts/course-battle-result/showCourseBattleVotringResults.html",
                 controller: 'ShowCourseBattleVotingResultsController as courseBattleVotingResult',
                 resolve: {
                     battleId: function ($stateParams) {

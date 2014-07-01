@@ -8,8 +8,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface GuestCourseVotingRepository extends JpaRepository<GuestCourseVoting, String> {
+public interface CourseBattleVoteRepository extends JpaRepository<CourseBattleVote, String> {
 
-    @Query("select distinct count (gvr) from GuestCourseVoting gvr where gvr.votedCourseId = :courseId and gvr.courseBattleId = :battleId ")
+    @Query("select distinct count (cbv) from CourseBattleVote cbv where cbv.votedCourseId = :courseId and cbv.courseBattleId = :battleId ")
     Integer countVotesForCourse(@Param("courseId") CourseId courseId, @Param("battleId") BattleId battleId);
 }

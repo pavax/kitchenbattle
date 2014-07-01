@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-public class GuestCourseVoting {
+public class CourseBattleVote {
 
     @Id
     private String id;
@@ -29,7 +29,7 @@ public class GuestCourseVoting {
 
     private String userName;
 
-    public GuestCourseVoting(BattleId courseBattleId, CourseId votedCourseId) {
+    public CourseBattleVote(BattleId courseBattleId, CourseId votedCourseId) {
         Assert.notNull(courseBattleId);
         Assert.notNull(votedCourseId);
         this.id = UUID.randomUUID().toString();
@@ -38,7 +38,7 @@ public class GuestCourseVoting {
         this.createdAt = LocalDateTime.now();
     }
 
-    protected GuestCourseVoting() {
+    protected CourseBattleVote() {
     }
 
     public String getId() {

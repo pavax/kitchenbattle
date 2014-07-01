@@ -1,10 +1,10 @@
 'use strict';
 
-angular.module('commons.resources.courseVoting', [])
-    .factory('courseVotingService', function ($http) {
+angular.module('commons.resources.courseBattleVote', [])
+    .factory('courseBattleVoteService', function ($http) {
         return {
             voteCourse: function (courseId, battleId) {
-                return $http.post('api/votings', {
+                return $http.post('api/course-battle-vote', {
                         votedCourseId: courseId,
                         battleId: battleId
                     }

@@ -2,7 +2,7 @@ package ch.adrianos.apps.kitchenbattle.service;
 
 import ch.adrianos.apps.kitchenbattle.domain.course.CourseType;
 
-public class CreateBattleDto {
+public class CreateCourseBattleDto {
 
     private String courseOneId;
 

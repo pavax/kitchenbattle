@@ -25,8 +25,8 @@
       <div class="header">
         <ul class="nav nav-pills pull-right" >
           <li ui-sref-active="active"><a ng-href="#">Home</a></li>
-          <li ng-class="{active: $state.includes('votingresults')}"><a ui-sref="votingresults.select">Voting Results</a></li>
-          <li ng-class="{active: $state.includes('voting')}"><a ui-sref="voting.select">Voting</a></li>
+          <li ng-class="{active: $state.includes('courseBattleResults')}"><a ui-sref="courseBattleResults.select">Course Battle Results</a></li>
+          <li ng-class="{active: $state.includes('courseBattleVoting')}"><a ui-sref="courseBattleVoting.select">Course Battle Voting</a></li>
         </ul>
         <h3 class="text-muted">Kitchen-Battle</h3>
       </div>
@@ -60,20 +60,20 @@
 
         <script src="scripts/common/commonsModule.js"></script>
         <script src="scripts/common/directives/courseBattlesDirectives.js"></script>
-        <script src="scripts/common/resources/battleService.js"></script>
-        <script src="scripts/common/resources/votingResultService.js"></script>
+        <script src="scripts/common/resources/courseBattleService.js"></script>
+        <script src="scripts/common/resources/courseBattleResultSearchService.js"></script>
         <script src="scripts/common/resources/courseService.js"></script>
-        <script src="scripts/common/resources/courseVotingService.js"></script>
+        <script src="scripts/common/resources/courseBattleVoteService.js"></script>
         <script src="scripts/common/filters/courseTypeFilter.js"></script>
 
 
-        <script src="scripts/voting-results/votingResultsModule.js"></script>
-        <script src="scripts/voting-results/courseBattleSelectionCtrl.js"></script>
-        <script src="scripts/voting-results/showCourseBattleVotingResultsCtrl.js"></script>
+        <script src="scripts/course-battle-result/courseBattleResultModule.js"></script>
+        <script src="scripts/course-battle-result/courseBattleSelectionCtrl.js"></script>
+        <script src="scripts/course-battle-result/showCourseBattleVotingResultsCtrl.js"></script>
 
-        <script src="scripts/voting/votingModule.js"></script>
-        <script src="scripts/voting/courseBattleVotingSelectionCtrl.js"></script>
-        <script src="scripts/voting/courseBattleVotingCtrl.js"></script>
+        <script src="scripts/course-battle-voting/courseBattleVotingModule.js"></script>
+        <script src="scripts/course-battle-voting/courseBattleVotingSelectionCtrl.js"></script>
+        <script src="scripts/course-battle-voting/courseBattleVotingCtrl.js"></script>
         <!-- endbuild -->
 </body>
 </html>

@@ -2,11 +2,11 @@
 
 angular.module('commonsModule',
     [
-        'commons.resources.battle',
-        'commons.resources.votingResult',
+        'commons.resources.courseBattle',
+        'commons.resources.courseBattleResultSearch',
         'commons.resources.course',
+        'commons.resources.courseBattleVote',
         'commons.directives.courseBattles',
-        'commons.resources.courseVoting',
         'commons.filters.courseType'
     ]
 );

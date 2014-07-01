@@ -1,7 +1,9 @@
-angular.module('votingModule')
+'use strict';
+
+angular.module('courseBattleVotingModule')
     .controller('CourseBattleVotingSelectionController', function (battles, $state) {
         this.battles = battles;
         this.selectedBattle = function (battle) {
-            $state.go('voting.vote', {battleId: battle.battleId})
+            $state.go('courseBattleVoting.vote', {battleId: battle.battleId})
         }
     });
