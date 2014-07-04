@@ -1,0 +1,33 @@
+<h1>Battle Result</h1>
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th ng-repeat="team in battleResult.teams">{{team.teamName}}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="courseBattleResult in battleResult.courseBattleResults">
+            <td>{{courseBattleResult.courseType | courseType}}</td>
+            <td ng-repeat="team in battleResult.teams">
+                <span class="label"
+                      ng-class="courseBattleResult.winnerTeamId == team.teamId ? 'label-success' : 'label-default'">
+                    {{battleResult.findCourseResultForTeam(team.teamId, courseBattleResult).totalGuestVotes}}
+                </span>
+            </td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <td>Total</td>
+            <td ng-repeat="team in battleResult.teams">
+                <span class="label" ng-class="team.winner ? 'label-success' : 'label-default'">
+                       {{team.total}}
+                </span>
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+</div>

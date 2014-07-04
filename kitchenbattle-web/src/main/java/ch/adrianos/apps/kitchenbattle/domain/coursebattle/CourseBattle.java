@@ -18,6 +18,7 @@ public class CourseBattle {
     private BattleId battleId;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
     private CourseType courseType;
 
     @NotNull

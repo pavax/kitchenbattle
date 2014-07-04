@@ -57,14 +57,17 @@ public class CourseBattleResultDto {
 
         private String courseColor;
 
+        private String teamId;
+
         private String teamName;
 
         private int totalGuestVotes;
 
-        public CourseVotingResultDto(String courseName, String courseId, String courseColor, String teamName, int totalGuestVotes) {
+        public CourseVotingResultDto(String courseName, String courseId, String courseColor, String teamId, String teamName, int totalGuestVotes) {
             this.courseName = courseName;
             this.courseId = courseId;
             this.courseColor = courseColor;
+            this.teamId = teamId;
             this.teamName = teamName;
             this.totalGuestVotes = totalGuestVotes;
         }
@@ -87,6 +90,10 @@ public class CourseBattleResultDto {
 
         public int getTotalGuestVotes() {
             return totalGuestVotes;
+        }
+
+        public String getTeamId() {
+            return teamId;
         }
     }
 }

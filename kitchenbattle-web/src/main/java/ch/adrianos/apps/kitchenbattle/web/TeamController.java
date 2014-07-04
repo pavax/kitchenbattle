@@ -3,6 +3,7 @@ package ch.adrianos.apps.kitchenbattle.web;
 import ch.adrianos.apps.kitchenbattle.domain.team.Team;
 import ch.adrianos.apps.kitchenbattle.domain.team.TeamId;
 import ch.adrianos.apps.kitchenbattle.domain.team.TeamRepository;
+import ch.adrianos.apps.kitchenbattle.service.TeamNotFoundException;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,8 +30,11 @@ public class TeamController {
     }
 
     @RequestMapping(value = "/{teamId}", method = RequestMethod.GET)
-    public Team getTeam(@PathVariable String teamId) {
+    public Team getTeam(@PathVariable String teamId) throws TeamNotFoundException {
         Team team = teamRepository.findOne(new TeamId(teamId));
+        if (team == null){
+            throw new TeamNotFoundException(teamId);
+        }
         return team;
     }
 

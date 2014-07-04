@@ -1,12 +1,12 @@
 'use strict';
 
 angular.module('courseBattleResultModule')
-    .controller('ShowCourseBattleVotingResultsController', function ($scope, battleId, courseBattleResultSearchService, courseService, $timeout) {
+    .controller('ShowCourseBattleVotingResultsController', function ($scope, battleId, courseBattleResultService, courseService, $timeout) {
 
         var showCourseBattleVotingResult = this;
 
         function init() {
-            courseBattleResultSearchService.getResultForBattle(battleId).success(function (votingResult) {
+            courseBattleResultService.getResultForBattle(battleId).success(function (votingResult) {
                 showCourseBattleVotingResult.votingResult = votingResult;
                 var totalGuestVotes = votingResult.totalGuestVotes;
                 showCourseBattleVotingResult.votingResult.courseOne.percentGuestCount = votingResult.courseOne.totalGuestVotes * 100 / totalGuestVotes;
@@ -17,8 +17,6 @@ angular.module('courseBattleResultModule')
 
                 showCourseBattleVotingResult.autoRefresh = votingResult.battleOpen;
             });
-
-
         }
 
         init();

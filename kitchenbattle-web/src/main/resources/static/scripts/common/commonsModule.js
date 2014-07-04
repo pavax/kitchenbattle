@@ -3,7 +3,7 @@
 angular.module('commonsModule',
     [
         'commons.resources.courseBattle',
-        'commons.resources.courseBattleResultSearch',
+        'commons.resources.courseBattleResult',
         'commons.resources.course',
         'commons.resources.courseBattleVote',
         'commons.directives.courseBattles',

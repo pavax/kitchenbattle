@@ -14,7 +14,7 @@ angular.module('courseBattleVotingModule', []
                 controller: 'CourseBattleVotingSelectionController as courseBattleSelection',
                 resolve: {
                     battles: function (courseBattleService) {
-                        return courseBattleService.getAllBattles().then(function (response) {
+                        return courseBattleService.getAllCourseBattles().then(function (response) {
                             return response.data;
                         });
                     }

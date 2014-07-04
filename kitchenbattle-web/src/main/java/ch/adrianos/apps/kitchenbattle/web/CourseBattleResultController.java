@@ -6,20 +6,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/api/course-battle-result-search")
-public class CourseBattleResultSearchController {
+@RequestMapping("/api/course-battle-result")
+public class CourseBattleResultController {
 
     private final CourseBattleResultSearchService courseBattleResultSearchService;
 
     @Autowired
-    public CourseBattleResultSearchController(CourseBattleResultSearchService courseBattleResultSearchService) {
+    public CourseBattleResultController(CourseBattleResultSearchService courseBattleResultSearchService) {
         this.courseBattleResultSearchService = courseBattleResultSearchService;
     }
 
     @RequestMapping(method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
-    public CourseBattleResultDto getBattleVotingResult(@RequestParam String battleId) {
+    public List<CourseBattleResultDto> getAllCourseBattleResults() {
+        return courseBattleResultSearchService.getAllCourseBattleResults();
+    }
+
+    @RequestMapping(value = "/{battleId}", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    public CourseBattleResultDto getBattleVotingResult(@PathVariable String battleId) {
         return courseBattleResultSearchService.getBattleVotingResult(battleId);
     }
 }

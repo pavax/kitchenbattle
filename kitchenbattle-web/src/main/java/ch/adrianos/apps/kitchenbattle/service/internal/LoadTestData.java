@@ -30,6 +30,8 @@ public class LoadTestData implements ApplicationListener<ContextRefreshedEvent> 
     public static final TeamId TEAM_2 = new TeamId("Team2");
     public static final CourseId COURSE_TEAM1_1 = new CourseId("Course-T1-1");
     public static final CourseId COURSE_TEAM2_1 = new CourseId("Course-T2-1");
+    public static final CourseId COURSE_TEAM1_2 = new CourseId("Course-T1-2");
+    public static final CourseId COURSE_TEAM2_2 = new CourseId("Course-T2-2");
     private final TeamRepository teamRepository;
 
     private final CourseRepository courseRepository;
@@ -60,9 +62,14 @@ public class LoadTestData implements ApplicationListener<ContextRefreshedEvent> 
     }
 
     private void loadBattleTestData() {
-        Course courseOne = courseRepository.findOne(COURSE_TEAM1_1);
-        Course courseTwo = courseRepository.findOne(COURSE_TEAM2_1);
-        CourseBattle savedCourseBattle = courseBattleRepository.save(new CourseBattle(new BattleId("Battle1"), CourseType.STARTER, courseOne, courseTwo));
+        startBattle(COURSE_TEAM1_1, COURSE_TEAM2_1, new BattleId("Battle1"), CourseType.STARTER);
+        startBattle(COURSE_TEAM2_2, COURSE_TEAM1_2, new BattleId("Battle2"), CourseType.MAIN);
+    }
+
+    private void startBattle(CourseId courseOneId, CourseId courseTwoId, BattleId battleId, CourseType courseType) {
+        Course courseOne = courseRepository.findOne(courseOneId);
+        Course courseTwo = courseRepository.findOne(courseTwoId);
+        CourseBattle savedCourseBattle = courseBattleRepository.save(new CourseBattle(battleId, courseType, courseOne, courseTwo));
         savedCourseBattle.setBattleOpen(true);
     }
 
@@ -76,6 +83,11 @@ public class LoadTestData implements ApplicationListener<ContextRefreshedEvent> 
         setImage(courseOne, "oliven.png");
         Course courseTwo = courseRepository.save(new Course(COURSE_TEAM2_1, "Bärlauchsuppe", "Bärlauch schmeckt frisch und herzhaft nach Knoblauch und verbündet sich gerne mit Kartoffeln zu diesem cremigen Frühlings-Partysüppchen", teamRepository.findOne(TEAM_2), CourseType.STARTER));
         setImage(courseTwo, "suppe.jpg");
+
+        Course courseThree = courseRepository.save(new Course(COURSE_TEAM1_2, "Marinierte Oliven (2)", "Feinste marinierte entsteinte Oliven mit frischen Kräutern und Feta-Käse", teamRepository.findOne(TEAM_1), CourseType.STARTER));
+        setImage(courseThree, "oliven.png");
+        Course courseFour = courseRepository.save(new Course(COURSE_TEAM2_2, "Bärlauchsuppe (2)", "Bärlauch schmeckt frisch und herzhaft nach Knoblauch und verbündet sich gerne mit Kartoffeln zu diesem cremigen Frühlings-Partysüppchen", teamRepository.findOne(TEAM_2), CourseType.STARTER));
+        setImage(courseFour, "suppe.jpg");
     }
 
     private void setImage(Course course, String name) {

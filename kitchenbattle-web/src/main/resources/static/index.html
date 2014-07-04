@@ -27,6 +27,7 @@
           <li ui-sref-active="active"><a ng-href="#">Home</a></li>
           <li ng-class="{active: $state.includes('courseBattleResults')}"><a ui-sref="courseBattleResults.select">Course Battle Results</a></li>
           <li ng-class="{active: $state.includes('courseBattleVoting')}"><a ui-sref="courseBattleVoting.select">Course Battle Voting</a></li>
+          <li ng-class="{active: $state.includes('battleResult')}"><a ui-sref="battleResult.show">Total Battle Result</a></li>
         </ul>
         <h3 class="text-muted">Kitchen-Battle</h3>
       </div>
@@ -61,7 +62,7 @@
         <script src="scripts/common/commonsModule.js"></script>
         <script src="scripts/common/directives/courseBattlesDirectives.js"></script>
         <script src="scripts/common/resources/courseBattleService.js"></script>
-        <script src="scripts/common/resources/courseBattleResultSearchService.js"></script>
+        <script src="scripts/common/resources/courseBattleResultService.js"></script>
         <script src="scripts/common/resources/courseService.js"></script>
         <script src="scripts/common/resources/courseBattleVoteService.js"></script>
         <script src="scripts/common/filters/courseTypeFilter.js"></script>
@@ -74,6 +75,9 @@
         <script src="scripts/course-battle-voting/courseBattleVotingModule.js"></script>
         <script src="scripts/course-battle-voting/courseBattleVotingSelectionCtrl.js"></script>
         <script src="scripts/course-battle-voting/courseBattleVotingCtrl.js"></script>
+
+        <script src="scripts/kitchenbattle-result/battleResultModule.js"></script>
+        <script src="scripts/kitchenbattle-result/battleResultCtrl.js"></script>
         <!-- endbuild -->
 </body>
 </html>

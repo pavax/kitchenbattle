@@ -3,7 +3,7 @@
 angular.module('commons.resources.courseBattle', [])
     .factory('courseBattleService', function ($http) {
         return {
-            getAllBattles: function () {
+            getAllCourseBattles: function () {
                 return $http.get('api/course-battles/search/allBattles');
             },
             getBattle: function (battleId) {

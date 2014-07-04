@@ -28,6 +28,7 @@ public class Course {
     private TeamId teamId;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
     private CourseType courseType;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

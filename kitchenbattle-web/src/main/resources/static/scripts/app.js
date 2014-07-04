@@ -10,7 +10,8 @@ var app = angular.module('kitchenbattleWebApp', [
     'ui.bootstrap',
     'commonsModule',
     'courseBattleResultModule',
-    'courseBattleVotingModule'
+    'courseBattleVotingModule',
+    'battleResultModule'
 ]);
 
 app.config(function ($stateProvider, $urlRouterProvider) {
