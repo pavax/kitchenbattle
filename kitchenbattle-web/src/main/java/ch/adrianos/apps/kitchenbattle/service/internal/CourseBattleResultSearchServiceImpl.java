@@ -39,7 +39,7 @@ public class CourseBattleResultSearchServiceImpl implements CourseBattleResultSe
     }
 
     @Override
-    public CourseBattleResultDto getBattleVotingResult(String battleId) {
+    public CourseBattleResultDto getCourseBattleVotingResult(String battleId) {
         CourseBattle courseBattle = courseBattleRepository.findOne(new BattleId(battleId));
         CourseBattleResultDto.CourseVotingResultDto courseOne = toBattleVotingCourseResultDto(courseBattle.getCourseOneId(), courseBattle.getBattleId());
         CourseBattleResultDto.CourseVotingResultDto courseTwo = toBattleVotingCourseResultDto(courseBattle.getCourseTwoId(), courseBattle.getBattleId());
@@ -51,7 +51,7 @@ public class CourseBattleResultSearchServiceImpl implements CourseBattleResultSe
         List<CourseBattle> courseBattles = courseBattleRepository.findAll();
         List<CourseBattleResultDto> result = new ArrayList<>();
         for (CourseBattle courseBattle : courseBattles) {
-            result.add(getBattleVotingResult(courseBattle.getBattleId().getValue()));
+            result.add(getCourseBattleVotingResult(courseBattle.getBattleId().getValue()));
         }
         return result;
     }

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/course-battle-result")
+@RequestMapping("/api/course-battle-results")
 public class CourseBattleResultController {
 
     private final CourseBattleResultSearchService courseBattleResultSearchService;
@@ -28,6 +28,6 @@ public class CourseBattleResultController {
     @RequestMapping(value = "/{battleId}", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     public CourseBattleResultDto getBattleVotingResult(@PathVariable String battleId) {
-        return courseBattleResultSearchService.getBattleVotingResult(battleId);
+        return courseBattleResultSearchService.getCourseBattleVotingResult(battleId);
     }
 }

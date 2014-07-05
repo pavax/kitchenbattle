@@ -87,3 +87,9 @@ body {
     color: #000;
     padding: 0.2em 0;
 }
+
+/* Apply padding to td elements that are direct children of the tr element. */
+tr.spaceUnder > td
+{
+    padding-bottom: 30px;
+}

@@ -13,7 +13,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 @RestController
-@RequestMapping("/api/course-battle-vote")
+@RequestMapping("/api/course-battle-votes")
 public class CourseBattleVoteController {
 
     private final CourseBattleVoteRepository courseBattleVoteRepository;

@@ -17,6 +17,11 @@ angular.module('battleResultModule', []
                         return courseBattleResultService.getAllResults().then(function (response) {
                             return response.data;
                         });
+                    },
+                    juryVotes: function (juryTeamVoteService) {
+                        return juryTeamVoteService.getAllJuryVotes().then(function (response) {
+                            return response.data;
+                        });
                     }
                 }
             })

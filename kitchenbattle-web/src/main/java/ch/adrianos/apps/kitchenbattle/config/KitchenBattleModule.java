@@ -5,6 +5,7 @@ import ch.adrianos.apps.kitchenbattle.domain.coursebattle.CourseBattle;
 import ch.adrianos.apps.kitchenbattle.domain.course.Course;
 import ch.adrianos.apps.kitchenbattle.domain.course.CourseId;
 import ch.adrianos.apps.kitchenbattle.domain.course.Image;
+import ch.adrianos.apps.kitchenbattle.domain.team.JuryTeamVote;
 import ch.adrianos.apps.kitchenbattle.domain.team.Team;
 import ch.adrianos.apps.kitchenbattle.domain.team.TeamId;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -23,7 +24,7 @@ public class KitchenBattleModule extends SimpleModule {
         setMixInAnnotation(CourseBattle.class, UnwrapDomainIdsMixin.class);
         setMixInAnnotation(Team.class, UnwrapDomainIdsMixin.class);
         setMixInAnnotation(Course.class, UnwrapDomainIdsMixin.class);
-        //setMixInAnnotation(Course.class, CourseMixin.class);
+        setMixInAnnotation(JuryTeamVote.class, UnwrapDomainIdsMixin.class);
     }
 
     static abstract class BattleIdMixin {
