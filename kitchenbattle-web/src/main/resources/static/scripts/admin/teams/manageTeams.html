@@ -1,0 +1,96 @@
+<div class="row page-header">
+    <div class="col-md-6">
+        <span class="h1">Manage Teams</span>
+    </div>
+    <div class="col-md-6">
+        <button type="button" class="btn btn-primary pull-right"
+                ng-click="teamCtrl.toogleNewTeamForm()">
+            <span class="glyphicon glyphicon-plus"></span>
+            Create New team
+        </button>
+    </div>
+</div>
+
+<div class="spacer20"></div>
+
+<div ng-show="teamCtrl.showCreateNewTeamForm">
+    <div class="row">
+        <form class="form-horizontal" name="createNewTeamForm" novalidate>
+            <fieldset>
+                <!-- Form Name -->
+                <legend>Create New Team</legend>
+
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="textinput">Team Name</label>
+
+                    <div class="col-md-4">
+                        <input id="textinput" name="teamName" ng-model="teamCtrl.newTeam.name" type="text" required
+                               placeholder="Team Name"
+                               class="form-control input-md">
+                        <span class="help-block"></span>
+                    </div>
+                </div>
+
+                <!-- Textarea -->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="textarea">Team Description</label>
+
+                    <div class="col-md-4">
+                        <textarea class="form-control" id="textarea" name="teamDescrition"
+                                  ng-model="teamCtrl.newTeam.description">Team Description</textarea>
+                    </div>
+                </div>
+
+                <!-- Button -->
+                <div class="form-group">
+                    <div class="col-md-4 control-label"></div>
+                    <div class="col-md-4">
+                        <button name="cancelButton" class="btn btn-default"
+                                ng-click="teamCtrl.toogleNewTeamForm()">
+                            Cancel
+                        </button>
+                        <button name="saveButton" class="btn btn-primary"
+                                ng-disabled="createNewTeamForm.$invalid"
+                                ng-click="teamCtrl.saveTeam()">
+                            Save New Team
+                        </button>
+                    </div>
+                </div>
+
+            </fieldset>
+        </form>
+    </div>
+    <div class="spacer20"></div>
+</div>
+
+<div class="row" ng-show="teamCtrl.teams">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Team Name</th>
+            <th>Description</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tr ng-repeat="team in teamCtrl.teams">
+            <td>
+                {{team.name}}
+            </td>
+            <td>
+                {{team.description}}
+            </td>
+            <td>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                        Action <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="" ng-click="teamCtrl.deleteTeam(team.teamId)">Delete</a></li>
+                        <li><a href="">Edit</a></li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>

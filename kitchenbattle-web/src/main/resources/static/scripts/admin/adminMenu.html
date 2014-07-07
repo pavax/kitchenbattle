@@ -1,0 +1,10 @@
+<div class="col-md-2">
+    <ul class="nav nav-pills nav-stacked">
+        <li ng-class="{active: $state.includes('admin.teams')}"><a ui-sref="admin.teams">Manage Teams</a></li>
+        <li ng-class="{active: $state.includes('admin.courses')}"><a ui-sref="admin.courses">Manage Courses</a></li>
+        <li ng-class="{active: $state.includes('admin.coursebattles')}"><a ui-sref="admin.coursebattles">Manage Course-Battles</a></li>
+    </ul>
+</div>
+<div class="col-md-10 main">
+    <div ui-view></div>
+</div>

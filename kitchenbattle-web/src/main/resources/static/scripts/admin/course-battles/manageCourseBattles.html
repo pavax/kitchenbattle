@@ -1,0 +1,140 @@
+<div class="row page-header">
+    <div class="col-md-6">
+        <span class="h1">Manage Course-Battles</span>
+    </div>
+    <div class="col-md-6">
+        <button type="button" class="btn btn-primary pull-right"
+                ng-click="courseBattlesCtrl.toogleNewCourseBattleForm()">
+            <span class="glyphicon glyphicon-plus"></span>
+            Create New Course Battle
+        </button>
+    </div>
+</div>
+
+<div class="spacer20"></div>
+
+<div ng-show="courseBattlesCtrl.showCreateNewCourseBattleForm">
+    <div class="row">
+        <form class="form-horizontal" name="createNewCourseBattleForm" novalidate>
+            <fieldset>
+                <!-- Form Name -->
+                <legend>Create Course Battle</legend>
+
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="courseType">Course Type</label>
+
+                    <div class="col-md-4">
+                        <select id="courseType"
+                                name="courseType"
+                                required
+                                class="form-control"
+                                ng-change="courseBattlesCtrl.selectedBattleCourseType()"
+                                ng-model="courseBattlesCtrl.newCourseBattle.courseType">
+                            <option value="STARTER">{{'STARTER' | courseType}}</option>
+                            <option value="MAIN">{{'MAIN' | courseType}}</option>
+                            <option value="DESSERT">{{'DESSERT' | courseType}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="courseOne">Course One</label>
+
+                    <div class="col-md-4">
+                        <select id="teamOne"
+                                class="form-control"
+                                required
+                                ng-model="courseBattlesCtrl.newCourseBattle.courseOne.selectedTeam"
+                                ng-options="team as team.name for team in courseBattlesCtrl.newCourseBattle.courseOne.possibleTeams"
+                                ng-change="courseBattlesCtrl.selectTeamForCourseOne(courseBattlesCtrl.newCourseBattle.courseOne.selectedTeam)">
+                        </select>
+                        <select id="courseOne"
+                                class="form-control"
+                                required
+                                ng-model="courseBattlesCtrl.newCourseBattle.courseOne.selectedCourseId"
+                                ng-options="course.courseId as course.name for course in courseBattlesCtrl.newCourseBattle.courseOne.possibleCourses | filter:{'courseType':courseBattlesCtrl.newCourseBattle.courseType}"></select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="courseTwo">Course Two</label>
+
+                    <div class="col-md-4">
+                        <select id="teamTwo"
+                                class="form-control"
+                                required
+                                ng-model="courseBattlesCtrl.newCourseBattle.courseTwo.selectedTeam"
+                                ng-options="team as team.name for team in courseBattlesCtrl.newCourseBattle.courseTwo.possibleTeams"
+                                ng-change="courseBattlesCtrl.selectTeamForCourseTwo(courseBattlesCtrl.newCourseBattle.courseTwo.selectedTeam)">
+                        </select>
+                        <select id="courseTwo"
+                                required
+                                class="form-control"
+                                ng-model="courseBattlesCtrl.newCourseBattle.courseTwo.selectedCourseId"
+                                ng-options="course.courseId as course.name for course in courseBattlesCtrl.newCourseBattle.courseTwo.possibleCourses | filter:{'courseType':courseBattlesCtrl.newCourseBattle.courseType}"></select>
+                    </div>
+                </div>
+
+                <!-- Button -->
+                <div class="form-group">
+                    <div class="col-md-4 control-label"></div>
+                    <div class="col-md-4">
+                        <button name="cancelButton" class="btn btn-default"
+                                ng-click="courseBattlesCtrl.toogleNewCourseBattleForm()">
+                            Cancel
+                        </button>
+                        <button name="saveButton" class="btn btn-primary"
+                                ng-disabled="createNewCourseBattleForm.$invalid"
+                                ng-click="courseBattlesCtrl.saveNewCourseBattle()">
+                            Save New Course-Battle
+                        </button>
+                    </div>
+                </div>
+
+            </fieldset>
+        </form>
+    </div>
+    <div class="spacer20"></div>
+</div>
+
+<div class="row">
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Datum</th>
+                <th>Course Type</th>
+                <th>Status</th>
+                <th>Teams</th>
+                <th>Courses</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="battle in courseBattlesCtrl.courseBattles">
+                <td>{{battle.createdAt | date:'short'}}</td>
+                <td>{{battle.courseType | courseType}}
+                <td>
+                    <span ng-show="battle.open" class="label label-success">Offen</span>
+                    <span ng-show="!battle.open" class="label label-danger">Abgeschlossen</span>
+                </td>
+                <td>{{battle.courseOne.teamName}} vs {{battle.courseTwo.teamName}}</td>
+                <td>{{battle.courseOne.courseName}} - {{battle.courseTwo.courseName}}</td>
+                <td>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            Action <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="">Delete</a></li>
+                            <li><a href="">Start</a></li>
+                            <li><a href="">Stop</a></li>
+                            <li><a href="">Show Results</a></li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,98 @@
+<div class="row page-header">
+    <div class="col-md-6">
+        <div class="col-md-6">
+            <span class="h1">Manage Courses</span>
+        </div>
+        <div class="col-md-6">
+            <select class="form-control"
+                    ng-model="coursesCtrl.selectedTeam.teamId"
+                    ng-options="team.teamId as team.name for team in coursesCtrl.teams"
+                    ng-change="coursesCtrl.selectTeam(coursesCtrl.selectedTeam.teamId)">
+            </select>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <button ng-disabled="!coursesCtrl.selectedTeam.teamId" type="button" class="btn btn-primary pull-right"
+                ng-click="coursesCtrl.toogleNewCourseForm()">
+            <span class="glyphicon glyphicon-plus"></span>
+            Create Course
+        </button>
+    </div>
+</div>
+
+<div class="spacer20"></div>
+
+<div class="row" ng-show="coursesCtrl.showCreateCourseForm">
+    <div class="panel panel-default" ng-show="coursesCtrl.showCreateCourseForm">
+        <!-- Default panel contents -->
+        <div class="panel-heading">Create New Course</div>
+        <div class="panel-body">
+            <form class="form-horizontal" name="createNewCourseForm" novalidate>
+
+                <course-form course="coursesCtrl.newCourse"></course-form>
+
+                <!-- Button -->
+                <div class="form-group">
+                    <div class="col-md-4 control-label"></div>
+                    <div class="col-md-4">
+                        <button name="cancelButton" class="btn btn-default"
+                                ng-click="coursesCtrl.toogleNewCourseForm()">
+                            Cancel
+                        </button>
+                        <button name="saveButton" class="btn btn-primary"
+                                ng-disabled="createNewCourseForm.$invalid"
+                                ng-click="coursesCtrl.saveCourse()">
+                            Save New Course
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+</div>
+
+<div class="row" ng-show="coursesCtrl.selectedTeam.teamId">
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Course Typ</th>
+                <th>Course Name</th>
+                <th>Course Description</th>
+                <th>Course Images</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="course in coursesCtrl.courses">
+                <td>{{course.courseType | courseType}}</td>
+                <td>{{course.name}}</td>
+                <td>{{course.description}}</td>
+                <td>
+                    <div ng-repeat="variant in course.courseVariants">
+                        <span>{{variant.value}}</span>
+                        <img ng-src="{{variant.imageUrl}}"
+                             width="60"
+                             height="60"
+                             alt="{{variant.value}}"
+                             class="img-responsive img-rounded">
+                    </div>
+                </td>
+                <td>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            Action <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="" ng-click="coursesCtrl.deleteCourse(course)">Delete</a></li>
+                            <li><a href="" ng-click="coursesCtrl.editCourse(course)">Edit</a></li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

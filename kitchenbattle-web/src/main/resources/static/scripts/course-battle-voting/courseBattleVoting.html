@@ -2,18 +2,20 @@
 
 <div class="table-responsive">
     <table class="table">
+        <thead>
         <tr>
-            <td>
+            <th class="col-md-6">
                 <div class="text-center">
                     <h1>{{courseBattleVoting.courseOne.name}}</h1>
                 </div>
-            </td>
-            <td>
+            </th>
+            <th class="col-md-6">
                 <div class="text-center">
                     <h1>{{courseBattleVoting.courseTwo.name}}</h1>
                 </div>
-            </td>
+            </th>
         </tr>
+        </thead>
         <tr>
             <td>
                 <div class="text-center">
@@ -28,14 +30,28 @@
         </tr>
         <tr>
             <td>
-                <img ng-src="{{courseBattleVoting.courseOne.imageUrl}}"
-                     class="img-responsive img-rounded"
-                     ng-click="courseBattleVoting.voteCourse(courseBattleVoting.courseOne.courseId)">
+                <carousel>
+                    <slide ng-repeat="courseVariant in courseBattleVoting.courseOne.courseVariants">
+                        <img ng-src="{{courseVariant.imageUrl}}"
+                             ng-click="courseBattleVoting.voteCourse(courseBattleVoting.courseOne.courseId)">
+
+                        <div class="carousel-caption">
+                            <h4>Image Number: {{$index+1}} - Variant: {{courseVariant.value}}</h4>
+                        </div>
+                    </slide>
+                </carousel>
             </td>
             <td>
-                <img ng-src="{{courseBattleVoting.courseTwo.imageUrl}}"
-                     class="img-responsive img-rounded"
-                     ng-click="courseBattleVoting.voteCourse(courseBattleVoting.courseTwo.courseId)">
+                <carousel>
+                    <slide ng-repeat="courseVariant in courseBattleVoting.courseTwo.courseVariants">
+                        <img ng-src="{{courseVariant.imageUrl}}"
+                             ng-click="courseBattleVoting.voteCourse(courseBattleVoting.courseTwo.courseId)">
+
+                        <div class="carousel-caption">
+                            <h4>Image Number: {{$index+1}} - Variant: {{courseVariant.value}}</h4>
+                        </div>
+                    </slide>
+                </carousel>
             </td>
         </tr>
     </table>

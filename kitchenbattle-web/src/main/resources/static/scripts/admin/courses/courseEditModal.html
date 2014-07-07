@@ -1,0 +1,48 @@
+<div class="modal-header">
+    <h3 class="modal-title">Edit Course</h3>
+</div>
+<div class="modal-body">
+    <form class="form-horizontal" novalidate name="editCourseForm">
+
+        <course-form course="course"></course-form>
+
+        <div class="form-group">
+            <label class="col-md-4 control-label">Course Images</label>
+
+            <div class="col-md-4">
+                <div ng-repeat="variant in course.courseVariants">
+                    <span>{{variant.value}}</span>
+                    <img ng-src="{{variant.imageUrl}}"
+                         width="150"
+                         height="150"
+                         alt="{{variant.value}}"
+                         class="img-responsive img-rounded">
+                    <button class="btn btn-xs" ng-click="deleteImage(variant.value)">Delete</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group" ng-form="uploadForm" ng-class="{'has-error': uploadForm.$invalid}">
+            <label class="col-md-4 control-label">Upload New Images</label>
+
+            <div class="col-md-4">
+                <input type="text" name="courseVariantName" required ng-model="imageUpload.variantName">
+
+                <div class="btn btn-primary btn-upload"
+                     ng-class="{'disabled': uploadForm.courseVariantName.$invalid}"
+                     required
+                     upload-button
+                     url="{{getUploadUrl(imageUpload.variantName)}}"
+                     accept="image/jpeg,image/png,image/gif"
+                     on-success="onUploadSuccess(response)">
+                    Upload
+                </div>
+                <span class="help-block"></span>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="ok()">OK</button>
+    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</div>

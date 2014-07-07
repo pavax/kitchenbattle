@@ -10,10 +10,12 @@ angular.module('courseBattleResultModule')
                 showCourseBattleVotingResult.votingResult = votingResult;
                 var totalGuestVotes = votingResult.totalGuestVotes;
                 showCourseBattleVotingResult.votingResult.courseOne.percentGuestCount = votingResult.courseOne.totalGuestVotes * 100 / totalGuestVotes;
-                showCourseBattleVotingResult.votingResult.courseOne.imageUrl = courseService.getCourseImageUrl(showCourseBattleVotingResult.votingResult.courseOne.courseId);
+                var courseOneVariant = "NORMAL";
+                showCourseBattleVotingResult.votingResult.courseOne.imageUrl = courseService.getCourseImageUrl(showCourseBattleVotingResult.votingResult.courseOne.courseId, courseOneVariant);
 
+                var courseTwoVariant = "NORMAL";
                 showCourseBattleVotingResult.votingResult.courseTwo.percentGuestCount = votingResult.courseTwo.totalGuestVotes * 100 / totalGuestVotes;
-                showCourseBattleVotingResult.votingResult.courseTwo.imageUrl = courseService.getCourseImageUrl(showCourseBattleVotingResult.votingResult.courseTwo.courseId);
+                showCourseBattleVotingResult.votingResult.courseTwo.imageUrl = courseService.getCourseImageUrl(showCourseBattleVotingResult.votingResult.courseTwo.courseId,courseTwoVariant);
 
                 showCourseBattleVotingResult.autoRefresh = votingResult.battleOpen;
             });

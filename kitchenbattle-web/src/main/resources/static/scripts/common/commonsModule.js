@@ -8,6 +8,7 @@ angular.module('commonsModule',
         'commons.resources.courseBattleVote',
         'commons.directives.courseBattles',
         'commons.filters.courseType',
-        'commons.resources.juryTeamVote'
+        'commons.resources.juryTeamVote',
+        'commons.resources.teams'
     ]
 );

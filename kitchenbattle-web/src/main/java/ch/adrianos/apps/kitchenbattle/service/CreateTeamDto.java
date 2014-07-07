@@ -1,19 +1,14 @@
 package ch.adrianos.apps.kitchenbattle.service;
 
-import ch.adrianos.apps.kitchenbattle.domain.course.CourseType;
 import org.hibernate.validator.constraints.NotBlank;
 
-import javax.validation.constraints.NotNull;
-
-public class UpdateCourseDto {
+public class CreateTeamDto {
 
     @NotBlank
     private String name;
 
-    @NotNull
-    private CourseType courseType;
+    private String color;
 
-    @NotBlank
     private String description;
 
     public String getName() {
@@ -24,12 +19,12 @@ public class UpdateCourseDto {
         this.name = name;
     }
 
-    public CourseType getCourseType() {
-        return courseType;
+    public String getColor() {
+        return color;
     }
 
-    public void setCourseType(CourseType courseType) {
-        this.courseType = courseType;
+    public void setColor(String color) {
+        this.color = color;
     }
 
     public String getDescription() {

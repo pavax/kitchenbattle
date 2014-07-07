@@ -14,6 +14,8 @@
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
+
+    <link rel="stylesheet" href="vendor/angular-upload/src/directives/btnUpload.min.css" />
   </head>
   <body ng-app="kitchenbattleWebApp">
     <!--[if lt IE 9]>
@@ -21,18 +23,19 @@
     <![endif]-->
 
     <!-- Add your site or application content here -->
-    <div class="container">
+    <div class="container-fluid">
       <div class="header">
         <ul class="nav nav-pills pull-right" >
-          <li ui-sref-active="active"><a ng-href="#">Home</a></li>
+          <li ><a ng-href="#">Home</a></li>
           <li ng-class="{active: $state.includes('courseBattleResults')}"><a ui-sref="courseBattleResults.select">Course Battle Results</a></li>
           <li ng-class="{active: $state.includes('courseBattleVoting')}"><a ui-sref="courseBattleVoting.select">Course Battle Voting</a></li>
           <li ng-class="{active: $state.includes('battleResult')}"><a ui-sref="battleResult.show">Total Battle Result</a></li>
+          <li ng-class="{active: $state.includes('admin')}"><a ui-sref="admin.teams">Admin</a></li>
         </ul>
         <h3 class="text-muted">Kitchen-Battle</h3>
       </div>
 
-     <div ui-view></div>
+     <div class="row" ui-view></div>
 
       <div class="footer">
         <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
@@ -45,10 +48,10 @@
     <script src="vendor/angular/angular.js"></script>
     <script src="vendor/json3/lib/json3.js"></script>
     <script src="vendor/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="vendor/angular-upload/angular-upload.js"></script>
     <script src="vendor/angular-resource/angular-resource.js"></script>
     <script src="vendor/angular-cookies/angular-cookies.js"></script>
     <script src="vendor/angular-sanitize/angular-sanitize.js"></script>
-    <script src="vendor/angular-animate/angular-animate.js"></script>
     <script src="vendor/angular-touch/angular-touch.js"></script>
     <script src="vendor/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="vendor/angular-bootstrap/ui-bootstrap-tpls.js"></script>
@@ -61,6 +64,7 @@
 
         <script src="scripts/common/commonsModule.js"></script>
         <script src="scripts/common/directives/courseBattlesDirectives.js"></script>
+        <script src="scripts/common/resources/teamService.js"></script>
         <script src="scripts/common/resources/courseBattleService.js"></script>
         <script src="scripts/common/resources/courseBattleResultService.js"></script>
         <script src="scripts/common/resources/courseService.js"></script>
@@ -76,6 +80,13 @@
         <script src="scripts/course-battle-voting/courseBattleVotingModule.js"></script>
         <script src="scripts/course-battle-voting/courseBattleVotingSelectionCtrl.js"></script>
         <script src="scripts/course-battle-voting/courseBattleVotingCtrl.js"></script>
+
+        <script src="scripts/admin/adminModule.js"></script>
+        <script src="scripts/admin/teams/teamCtrl.js"></script>
+        <script src="scripts/admin/courses/coursesCtrl.js"></script>
+        <script src="scripts/admin/courses/courseFormDirective.js"></script>
+        <script src="scripts/admin/courses/courseEditCtrl.js"></script>
+        <script src="scripts/admin/course-battles/courseBattlesCtrl.js"></script>
 
         <script src="scripts/kitchenbattle-result/battleResultModule.js"></script>
         <script src="scripts/kitchenbattle-result/battleResultCtrl.js"></script>

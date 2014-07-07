@@ -3,13 +3,15 @@ package ch.adrianos.apps.kitchenbattle.web;
 import ch.adrianos.apps.kitchenbattle.domain.team.Team;
 import ch.adrianos.apps.kitchenbattle.domain.team.TeamId;
 import ch.adrianos.apps.kitchenbattle.domain.team.TeamRepository;
+import ch.adrianos.apps.kitchenbattle.service.CreateTeamDto;
 import ch.adrianos.apps.kitchenbattle.service.TeamNotFoundException;
-import org.hibernate.validator.constraints.NotBlank;
+import ch.adrianos.apps.kitchenbattle.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/teams")
@@ -17,58 +19,39 @@ public class TeamController {
 
     private final TeamRepository teamRepository;
 
+    private final TeamService teamService;
+
     @Autowired
-    public TeamController(TeamRepository teamRepository) {
+    public TeamController(TeamRepository teamRepository, TeamService teamService) {
         this.teamRepository = teamRepository;
+        this.teamService = teamService;
     }
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public String createTeam(@RequestBody @Valid CreateTeamDto createTeamDto) {
-        Team save = teamRepository.save(new Team(new TeamId(), createTeamDto.getName(), createTeamDto.getColor(), createTeamDto.getDescription()));
-        return save.getTeamId().getValue();
+        return teamService.createTeam(createTeamDto);
+    }
+
+
+    @RequestMapping(method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    public List<Team> getAllTeams() {
+        return teamRepository.findAll();
     }
 
     @RequestMapping(value = "/{teamId}", method = RequestMethod.GET)
     public Team getTeam(@PathVariable String teamId) throws TeamNotFoundException {
         Team team = teamRepository.findOne(new TeamId(teamId));
-        if (team == null){
+        if (team == null) {
             throw new TeamNotFoundException(teamId);
         }
         return team;
     }
 
-    public static class CreateTeamDto {
-
-        @NotBlank
-        private String name;
-
-        private String color;
-
-        private String description;
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getColor() {
-            return color;
-        }
-
-        public void setColor(String color) {
-            this.color = color;
-        }
-
-        public String getDescription() {
-            return description;
-        }
-
-        public void setDescription(String description) {
-            this.description = description;
-        }
+    @RequestMapping(value = "/{teamId}", method = RequestMethod.DELETE)
+    public void deleteTeam(@PathVariable String teamId) {
+        teamService.deleteTeam(teamId);
     }
+
 }

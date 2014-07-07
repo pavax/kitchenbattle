@@ -2,6 +2,10 @@ package ch.adrianos.apps.kitchenbattle.domain.course;
 
 import ch.adrianos.apps.kitchenbattle.domain.team.Team;
 import ch.adrianos.apps.kitchenbattle.domain.team.TeamId;
+import com.google.common.base.Optional;
+import com.google.common.base.Predicate;
+import com.google.common.collect.FluentIterable;
+import com.google.common.collect.Iterables;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.util.Assert;
@@ -9,12 +13,17 @@ import org.springframework.util.Assert;
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Course {
 
     @EmbeddedId
     private CourseId courseId;
+
+    @Embedded
+    private TeamId teamId;
 
     @NotBlank
     @Length(max = 100)
@@ -24,16 +33,16 @@ public class Course {
     @Length(max = 250)
     private String description;
 
-    @Embedded
-    private TeamId teamId;
-
     @NotNull
     @Enumerated(EnumType.STRING)
     private CourseType courseType;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ElementCollection
+    private Set<CourseVariant> courseVariants = new HashSet<>();
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @Valid
-    private Image image;
+    private Set<CourseImage> courseImages = new HashSet<>();
 
     public Course(CourseId courseId, String name, String description, Team teamId, CourseType courseType) {
         this.description = description;
@@ -53,14 +62,6 @@ public class Course {
 
     public CourseId getCourseId() {
         return courseId;
-    }
-
-    public Image getImage() {
-        return image;
-    }
-
-    public void setImage(Image image) {
-        this.image = image;
     }
 
     public String getName() {
@@ -85,5 +86,53 @@ public class Course {
 
     public String getDescription() {
         return description;
+    }
+
+    public void addImage(CourseVariant courseVariant, Image image) {
+        removeImage(courseVariant);
+        this.courseImages.add(new CourseImage(courseVariant, image));
+        this.courseVariants.add(courseVariant);
+    }
+
+    public Image getImage(CourseVariant courseVariant) {
+        Optional<CourseImage> courseImageOptional = FluentIterable.from(this.courseImages).firstMatch(new Predicate<CourseImage>() {
+            @Override
+            public boolean apply(CourseImage input) {
+                return courseVariant.equals(input.getVariant());
+            }
+        });
+        return courseImageOptional.isPresent() ? courseImageOptional.get().getImage() : null;
+    }
+
+    public Set<CourseVariant> getCourseVariants() {
+        return courseVariants;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Course course = (Course) o;
+
+        if (courseId != null ? !courseId.equals(course.courseId) : course.courseId != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return courseId != null ? courseId.hashCode() : 0;
+    }
+
+    public void setCourseType(CourseType courseType) {
+        this.courseType = courseType;
+    }
+
+    public void removeImage(CourseVariant courseVariant) {
+        boolean hasBeenRemoved = Iterables.removeIf(this.courseImages, input -> courseVariant.equals(input.getVariant()));
+        if (hasBeenRemoved) {
+            this.courseVariants.remove(courseVariant);
+        }
     }
 }

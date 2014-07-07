@@ -1,17 +1,18 @@
 'use strict';
 
 var app = angular.module('kitchenbattleWebApp', [
-    'ngAnimate',
     'ngCookies',
     'ngResource',
     'ngSanitize',
     'ngTouch',
     'ui.router',
     'ui.bootstrap',
+    'lr.upload',
     'commonsModule',
     'courseBattleResultModule',
     'courseBattleVotingModule',
-    'battleResultModule'
+    'battleResultModule',
+    'adminModule'
 ]);
 
 app.config(function ($stateProvider, $urlRouterProvider) {
@@ -33,6 +34,13 @@ app.config(function ($provide) {
         return $delegate;
     });
 });
+
+app.config(['$httpProvider', function ($httpProvider) {
+    $httpProvider.defaults.headers.patch = {
+        'Content-Type': 'application/json;charset=utf-8'
+    }
+}]);
+
 app.run(function ($rootScope, $state, $stateParams) {
         // It's very handy to add references to $state and $stateParams to the $rootScope
         // so that you can access them from any scope within your applications.For example,

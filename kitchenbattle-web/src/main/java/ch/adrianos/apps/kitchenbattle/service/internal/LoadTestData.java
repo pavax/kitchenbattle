@@ -84,9 +84,9 @@ public class LoadTestData implements ApplicationListener<ContextRefreshedEvent> 
         Course courseTwo = courseRepository.save(new Course(COURSE_TEAM2_1, "Bärlauchsuppe", "Bärlauch schmeckt frisch und herzhaft nach Knoblauch und verbündet sich gerne mit Kartoffeln zu diesem cremigen Frühlings-Partysüppchen", teamRepository.findOne(TEAM_2), CourseType.STARTER));
         setImage(courseTwo, "suppe.jpg");
 
-        Course courseThree = courseRepository.save(new Course(COURSE_TEAM1_2, "Marinierte Oliven (2)", "Feinste marinierte entsteinte Oliven mit frischen Kräutern und Feta-Käse", teamRepository.findOne(TEAM_1), CourseType.STARTER));
+        Course courseThree = courseRepository.save(new Course(COURSE_TEAM1_2, "Marinierte Oliven (2)", "Feinste marinierte entsteinte Oliven mit frischen Kräutern und Feta-Käse", teamRepository.findOne(TEAM_1), CourseType.MAIN));
         setImage(courseThree, "oliven.png");
-        Course courseFour = courseRepository.save(new Course(COURSE_TEAM2_2, "Bärlauchsuppe (2)", "Bärlauch schmeckt frisch und herzhaft nach Knoblauch und verbündet sich gerne mit Kartoffeln zu diesem cremigen Frühlings-Partysüppchen", teamRepository.findOne(TEAM_2), CourseType.STARTER));
+        Course courseFour = courseRepository.save(new Course(COURSE_TEAM2_2, "Bärlauchsuppe (2)", "Bärlauch schmeckt frisch und herzhaft nach Knoblauch und verbündet sich gerne mit Kartoffeln zu diesem cremigen Frühlings-Partysüppchen", teamRepository.findOne(TEAM_2), CourseType.MAIN));
         setImage(courseFour, "suppe.jpg");
     }
 
@@ -94,7 +94,7 @@ public class LoadTestData implements ApplicationListener<ContextRefreshedEvent> 
         InputStream in = this.getClass().getClassLoader().getResourceAsStream(name);
         try {
             byte[] bytes = IOUtils.toByteArray(in);
-            course.setImage(new Image(bytes, MediaType.IMAGE_GIF_VALUE));
+            course.addImage(new CourseVariant("NORMAL"), new Image(bytes, MediaType.IMAGE_GIF_VALUE));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

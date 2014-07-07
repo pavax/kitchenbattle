@@ -16,7 +16,6 @@ public class Team {
     @NotBlank
     private String name;
 
-    @NotBlank
     private String color;
 
     private String description;

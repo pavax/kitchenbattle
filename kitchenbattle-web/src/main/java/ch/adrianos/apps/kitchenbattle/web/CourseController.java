@@ -1,9 +1,6 @@
 package ch.adrianos.apps.kitchenbattle.web;
 
-import ch.adrianos.apps.kitchenbattle.domain.course.Course;
-import ch.adrianos.apps.kitchenbattle.domain.course.CourseId;
-import ch.adrianos.apps.kitchenbattle.domain.course.CourseRepository;
-import ch.adrianos.apps.kitchenbattle.domain.course.Image;
+import ch.adrianos.apps.kitchenbattle.domain.course.*;
 import ch.adrianos.apps.kitchenbattle.domain.team.TeamId;
 import ch.adrianos.apps.kitchenbattle.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,30 +59,30 @@ public class CourseController {
         courseService.deleteCourse(courseId);
     }
 
-    @RequestMapping(value = "/{courseId}/image", method = RequestMethod.POST, consumes = "multipart/form-data")
+    @RequestMapping(value = "/{courseId}/image/{variant}", method = RequestMethod.POST, consumes = "multipart/form-data")
     @ResponseStatus(HttpStatus.OK)
-    public void updateCourseImage(@PathVariable String courseId, @RequestParam("file") MultipartFile file) throws IOException, CourseNotFoundException {
-        Course course = getCourseInternally(courseId);
+    public void updateCourseImage(@PathVariable String courseId, @PathVariable String variant, @RequestParam("file") MultipartFile file) throws IOException, CourseNotFoundException {
         if (!file.isEmpty()) {
-            String contentType = file.getContentType();
-            MediaType mediaType = MediaType.parseMediaType(contentType);
-            if (!mediaType.equals(MediaType.IMAGE_JPEG) && !mediaType.equals(MediaType.IMAGE_PNG) && !mediaType.equals(MediaType.IMAGE_GIF)) {
-                throw new IllegalArgumentException("Image Type not supported: " + contentType);
-            }
-            course.setImage(new Image(file.getBytes(), contentType));
+            courseService.addImage(courseId, variant, new Image(file.getBytes(), file.getContentType()));
         }
     }
 
-    @RequestMapping(value = "/{courseId}/image", method = RequestMethod.GET)
-    public ResponseEntity<?> getCourseImage(@PathVariable String courseId) throws CourseNotFoundException {
+    @RequestMapping(value = "/{courseId}/image/{variant}", method = RequestMethod.GET)
+    public ResponseEntity<?> getCourseImage(@PathVariable String courseId, @PathVariable String variant) throws CourseNotFoundException {
         Course course = getCourseInternally(courseId);
-        Image courseImage = course.getImage();
+        Image courseImage = course.getImage(new CourseVariant(variant));
         if (courseImage == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         final HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType(courseImage.getContentType()));
         return new ResponseEntity<>(courseImage.getContent(), headers, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/{courseId}/image/{variant}", method = RequestMethod.DELETE)
+    public void deleteCourseImage(@PathVariable String courseId, @PathVariable String variant) throws CourseNotFoundException {
+        Course course = getCourseInternally(courseId);
+        courseService.deleteImage(courseId, variant);
     }
 
     private Course getCourseInternally(String courseId) throws CourseNotFoundException {
