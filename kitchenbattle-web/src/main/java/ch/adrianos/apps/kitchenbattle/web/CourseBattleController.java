@@ -3,13 +3,13 @@ package ch.adrianos.apps.kitchenbattle.web;
 import ch.adrianos.apps.kitchenbattle.domain.coursebattle.BattleId;
 import ch.adrianos.apps.kitchenbattle.domain.coursebattle.CourseBattle;
 import ch.adrianos.apps.kitchenbattle.domain.coursebattle.CourseBattleRepository;
+import ch.adrianos.apps.kitchenbattle.domain.coursebattle.CourseBattleState;
 import ch.adrianos.apps.kitchenbattle.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @RestController
@@ -45,10 +45,16 @@ public class CourseBattleController {
         return courseBattle;
     }
 
-    @RequestMapping(value = "{battleId}/status", method = RequestMethod.PATCH)
+    @RequestMapping(value = "/{battleId}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.OK)
-    public void updateBattleStatus(@PathVariable String battleId, @RequestBody @Valid BattleStatusResource battleStatusResource) throws CourseBattleNotFoundException {
-        courseBattleService.updateCourseBattleStatus(battleId, battleStatusResource.isBattleOpen());
+    public void deleteBattle(@PathVariable String battleId) throws CourseBattleNotFoundException {
+        courseBattleService.deleteCourseBattle(battleId);
+    }
+
+    @RequestMapping(value = "{battleId}/state", method = RequestMethod.PATCH)
+    @ResponseStatus(HttpStatus.OK)
+    public void updateBattleStatus(@PathVariable String battleId, @RequestBody CourseBattleStateResource courseBattleStateResource) throws CourseBattleNotFoundException {
+        courseBattleService.updateCourseBattleStatus(battleId, courseBattleStateResource.nextState);
     }
 
     @RequestMapping(value = "/search/allBattles", method = RequestMethod.GET)
@@ -57,17 +63,16 @@ public class CourseBattleController {
         return courseBattleSearchService.searchAllCourseBattles();
     }
 
-    public static class BattleStatusResource {
+    public static final class CourseBattleStateResource {
 
-        @NotNull
-        private boolean isBattleOpen;
+        private CourseBattleState nextState;
 
-        public boolean isBattleOpen() {
-            return isBattleOpen;
+        public CourseBattleState getNextState() {
+            return nextState;
         }
 
-        public void setBattleOpen(boolean battleOpen) {
-            this.isBattleOpen = battleOpen;
+        public void setNextState(CourseBattleState nextState) {
+            this.nextState = nextState;
         }
     }
 }

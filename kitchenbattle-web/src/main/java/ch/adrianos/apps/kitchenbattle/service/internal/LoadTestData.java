@@ -70,7 +70,6 @@ public class LoadTestData implements ApplicationListener<ContextRefreshedEvent> 
         Course courseOne = courseRepository.findOne(courseOneId);
         Course courseTwo = courseRepository.findOne(courseTwoId);
         CourseBattle savedCourseBattle = courseBattleRepository.save(new CourseBattle(battleId, courseType, courseOne, courseTwo));
-        savedCourseBattle.setBattleOpen(true);
     }
 
     private void loadTeamTestData() {

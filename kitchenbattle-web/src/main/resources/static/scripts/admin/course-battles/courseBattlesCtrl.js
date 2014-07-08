@@ -50,11 +50,19 @@ angular.module('adminModule')
             });
         };
 
-
-        this.deleteCourseBattle = function (courseBattleId) {
-
+        this.updateCourseBattleState = function (courseBattleId, newStatus) {
+            courseBattleService.updateCourseBattleState(courseBattleId, newStatus)
+                .then(function () {
+                    $state.forceReload();
+                });
         };
 
+        this.deleteCourseBattle = function (courseBattleId) {
+            courseBattleService.deleteCourseBattle(courseBattleId)
+                .then(function () {
+                    $state.forceReload();
+                });
+        };
 
         this.saveNewCourseBattle = function () {
             if ($scope.createNewCourseBattleForm.$valid) {

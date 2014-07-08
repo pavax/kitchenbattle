@@ -40,7 +40,8 @@ public class CourseBattle {
     @Valid
     private CourseId courseTwoId;
 
-    private boolean isBattleOpen;
+    @Enumerated(EnumType.STRING)
+    private CourseBattleState state;
 
     public CourseBattle(BattleId battleId, CourseType courseType, Course courseOneId, Course courseTwoId) {
         Assert.notNull(battleId);
@@ -51,15 +52,11 @@ public class CourseBattle {
         this.courseType = courseType;
         this.courseOneId = courseOneId.getCourseId();
         this.courseTwoId = courseTwoId.getCourseId();
-        this.isBattleOpen = false;
+        this.state = CourseBattleState.INITIALIZED;
         this.createdAt = LocalDateTime.now();
     }
 
     protected CourseBattle() {
-    }
-
-    public void setBattleOpen(boolean isBattleOpen) {
-        this.isBattleOpen = isBattleOpen;
     }
 
     public BattleId getBattleId() {
@@ -82,7 +79,11 @@ public class CourseBattle {
         return courseTwoId;
     }
 
-    public boolean isBattleOpen() {
-        return isBattleOpen;
+    public CourseBattleState getState() {
+        return state;
+    }
+
+    public void setState(CourseBattleState state) {
+        this.state = state;
     }
 }

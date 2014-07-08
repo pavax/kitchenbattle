@@ -18,9 +18,19 @@ angular.module('commons.resources.courseBattle', [])
                     }
                 );
             },
-            deleteCourseBattle: function (courseOneId, courseTwoId, courseType) {
+            deleteCourseBattle: function (battleId) {
                 return $http.delete('api/course-battles/' + battleId);
+            },
+            updateCourseBattleState: function (battleId, newState) {
+                return $http(
+                    {
+                        method: 'PATCH',
+                        url: 'api/course-battles/' + battleId + "/state",
+                        data: {
+                            nextState: newState
+                        }
+                    }
+                );
             }
-
         }
     });

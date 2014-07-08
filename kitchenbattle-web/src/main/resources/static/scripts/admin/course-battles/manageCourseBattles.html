@@ -40,7 +40,7 @@
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="courseOne">Course One</label>
 
-                    <div class="col-md-4">
+                    <div class="col-md-2">
                         <select id="teamOne"
                                 class="form-control"
                                 required
@@ -48,6 +48,8 @@
                                 ng-options="team as team.name for team in courseBattlesCtrl.newCourseBattle.courseOne.possibleTeams"
                                 ng-change="courseBattlesCtrl.selectTeamForCourseOne(courseBattlesCtrl.newCourseBattle.courseOne.selectedTeam)">
                         </select>
+                    </div>
+                    <div class="col-md-2">
                         <select id="courseOne"
                                 class="form-control"
                                 required
@@ -59,7 +61,7 @@
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="courseTwo">Course Two</label>
 
-                    <div class="col-md-4">
+                    <div class="col-md-2">
                         <select id="teamTwo"
                                 class="form-control"
                                 required
@@ -67,6 +69,9 @@
                                 ng-options="team as team.name for team in courseBattlesCtrl.newCourseBattle.courseTwo.possibleTeams"
                                 ng-change="courseBattlesCtrl.selectTeamForCourseTwo(courseBattlesCtrl.newCourseBattle.courseTwo.selectedTeam)">
                         </select>
+                    </div>
+
+                    <div class="col-md-2">
                         <select id="courseTwo"
                                 required
                                 class="form-control"
@@ -115,8 +120,12 @@
                 <td>{{battle.createdAt | date:'short'}}</td>
                 <td>{{battle.courseType | courseType}}
                 <td>
-                    <span ng-show="battle.open" class="label label-success">Offen</span>
-                    <span ng-show="!battle.open" class="label label-danger">Abgeschlossen</span>
+                    <span ng-show="battle.state === 'INITIALIZED'"
+                          class="label label-success">{{battle.state | courseBattleState}}</span>
+                    <span ng-show="battle.state === 'VOTING_IN_PROGRESS'"
+                          class="label label-danger">{{battle.state | courseBattleState}}</span>
+                    <span ng-show="battle.state === 'CLOSED'"
+                          class="label label-info">{{battle.state | courseBattleState}}</span>
                 </td>
                 <td>{{battle.courseOne.teamName}} vs {{battle.courseTwo.teamName}}</td>
                 <td>{{battle.courseOne.courseName}} - {{battle.courseTwo.courseName}}</td>
@@ -126,10 +135,32 @@
                             Action <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="">Delete</a></li>
-                            <li><a href="">Start</a></li>
-                            <li><a href="">Stop</a></li>
-                            <li><a href="">Show Results</a></li>
+                            <li>
+                                <a href="" ng-if="battle.state === 'INITIALIZED'"
+                                   ng-click="courseBattlesCtrl.updateCourseBattleState(battle.battleId, 'VOTING_IN_PROGRESS')">
+                                    <span class="glyphicon glyphicon-play-circle"></span> Start Battle
+                                </a>
+                            </li>
+                            <li>
+                                <a href="" ng-if="battle.state === 'VOTING_IN_PROGRESS'"
+                                   ng-click="courseBattlesCtrl.updateCourseBattleState(battle.battleId, 'CLOSED')">
+                                    <span class="glyphicon glyphicon-off"></span> Close Battle
+                                </a>
+                            </li>
+                            <li>
+                                <a href="" ng-if="battle.state === 'CLOSED'"
+                                   ng-click="courseBattlesCtrl.updateCourseBattleState(battle.battleId, 'INITIALIZED')">
+                                    <span class="glyphicon glyphicon-repeat"></span> Reopen Battle
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li><a href=""><span class="glyphicon glyphicon-stats"></span>Show Results</a></li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="" ng-click="courseBattlesCtrl.deleteCourseBattle(battle.battleId)">
+                                    <span class="glyphicon glyphicon-remove-circle"></span><span class="text-danger">Delete</span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </td>

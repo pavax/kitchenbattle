@@ -57,7 +57,7 @@ public class CourseBattleResultSearchServiceImpl implements CourseBattleResultSe
     }
 
     private static CourseBattleResultDto toBattleVotingResultDto(CourseBattle courseBattle, CourseBattleResultDto.CourseVotingResultDto courseOne, CourseBattleResultDto.CourseVotingResultDto courseTwo) {
-        return new CourseBattleResultDto(courseBattle.getBattleId().getValue(), courseBattle.isBattleOpen(), courseBattle.getCourseType(), courseOne, courseTwo);
+        return new CourseBattleResultDto(courseBattle.getBattleId().getValue(), courseBattle.getState(), courseBattle.getCourseType(), courseOne, courseTwo);
     }
 
     private CourseBattleResultDto.CourseVotingResultDto toBattleVotingCourseResultDto(CourseId courseOneId, BattleId battleId) {

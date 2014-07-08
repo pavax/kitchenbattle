@@ -1,6 +1,7 @@
 package ch.adrianos.apps.kitchenbattle.service;
 
 import ch.adrianos.apps.kitchenbattle.domain.course.CourseType;
+import ch.adrianos.apps.kitchenbattle.domain.coursebattle.CourseBattleState;
 
 import java.time.LocalDateTime;
 
@@ -16,11 +17,11 @@ public class CourseBattleSearchResultDto {
 
     private DetailedCourseDto courseTwo;
 
-    private boolean isOpen;
+    private CourseBattleState state;
 
-    public CourseBattleSearchResultDto(String battleId, boolean isOpen, CourseType courseType, LocalDateTime createdAt, DetailedCourseDto courseOne, DetailedCourseDto courseTwo) {
+    public CourseBattleSearchResultDto(String battleId, CourseBattleState state, CourseType courseType, LocalDateTime createdAt, DetailedCourseDto courseOne, DetailedCourseDto courseTwo) {
         this.battleId = battleId;
-        this.isOpen = isOpen;
+        this.state = state;
         this.courseType = courseType;
         this.createdAt = createdAt;
         this.courseOne = courseOne;
@@ -47,12 +48,8 @@ public class CourseBattleSearchResultDto {
         return courseTwo;
     }
 
-    public boolean isOpen() {
-        return isOpen;
-    }
-
-    public void setOpen(boolean isOpen) {
-        this.isOpen = isOpen;
+    public CourseBattleState getState() {
+        return state;
     }
 
     public static class DetailedCourseDto {

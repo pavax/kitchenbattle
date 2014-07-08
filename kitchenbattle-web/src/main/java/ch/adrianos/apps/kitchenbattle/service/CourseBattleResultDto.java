@@ -1,6 +1,7 @@
 package ch.adrianos.apps.kitchenbattle.service;
 
 import ch.adrianos.apps.kitchenbattle.domain.course.CourseType;
+import ch.adrianos.apps.kitchenbattle.domain.coursebattle.CourseBattleState;
 
 public class CourseBattleResultDto {
 
@@ -12,17 +13,21 @@ public class CourseBattleResultDto {
 
     private CourseVotingResultDto courseTwo;
 
-    private boolean isBattleOpen;
+    private CourseBattleState state;
 
     private int totalGuestVotes;
 
-    public CourseBattleResultDto(String battleId, boolean isBattleOpen, CourseType courseType, CourseVotingResultDto courseOne, CourseVotingResultDto courseTwo) {
+    public CourseBattleResultDto(String battleId, CourseBattleState state, CourseType courseType, CourseVotingResultDto courseOne, CourseVotingResultDto courseTwo) {
         this.battleId = battleId;
-        this.isBattleOpen = isBattleOpen;
+        this.state = state;
         this.courseType = courseType;
         this.courseOne = courseOne;
         this.courseTwo = courseTwo;
         this.totalGuestVotes = courseOne.getTotalGuestVotes() + courseTwo.getTotalGuestVotes();
+    }
+
+    public CourseBattleState getState() {
+        return state;
     }
 
     public String getBattleId() {
@@ -41,9 +46,6 @@ public class CourseBattleResultDto {
         return courseTwo;
     }
 
-    public boolean isBattleOpen() {
-        return isBattleOpen;
-    }
 
     public int getTotalGuestVotes() {
         return totalGuestVotes;
@@ -95,5 +97,7 @@ public class CourseBattleResultDto {
         public String getTeamId() {
             return teamId;
         }
+
+
     }
 }

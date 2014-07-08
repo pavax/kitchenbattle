@@ -37,7 +37,7 @@ public class CourseBattleSearchServiceImpl implements CourseBattleSearchService 
         List<CourseBattle> courseBattles = courseBattleRepository.findAll();
         List<CourseBattleSearchResultDto> courseBattleSearchResultDtos = new ArrayList<>();
         for (CourseBattle courseBattle : courseBattles) {
-            courseBattleSearchResultDtos.add(new CourseBattleSearchResultDto(courseBattle.getBattleId().getValue(), courseBattle.isBattleOpen(), courseBattle.getCourseType(), courseBattle.getCreatedAt(), toDetailedCourseDto(courseRepository.findOne(courseBattle.getCourseOneId()), teamRepository.findOne(courseRepository.findOne(courseBattle.getCourseOneId()).getTeamId())), toDetailedCourseDto(courseRepository.findOne(courseBattle.getCourseTwoId()), teamRepository.findOne(courseRepository.findOne(courseBattle.getCourseTwoId()).getTeamId()))));
+            courseBattleSearchResultDtos.add(new CourseBattleSearchResultDto(courseBattle.getBattleId().getValue(), courseBattle.getState(), courseBattle.getCourseType(), courseBattle.getCreatedAt(), toDetailedCourseDto(courseRepository.findOne(courseBattle.getCourseOneId()), teamRepository.findOne(courseRepository.findOne(courseBattle.getCourseOneId()).getTeamId())), toDetailedCourseDto(courseRepository.findOne(courseBattle.getCourseTwoId()), teamRepository.findOne(courseRepository.findOne(courseBattle.getCourseTwoId()).getTeamId()))));
         }
         return courseBattleSearchResultDtos;
     }
