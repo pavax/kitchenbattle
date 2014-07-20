@@ -19,23 +19,41 @@ public class SwaggerConfig {
         this.springSwaggerConfig = springSwaggerConfig;
     }
 
-    @Bean //Don't forget the @Bean annotation
-    public SwaggerSpringMvcPlugin customImplementation() {
+    @Bean
+    public SwaggerSpringMvcPlugin appApi() {
         return new SwaggerSpringMvcPlugin(this.springSwaggerConfig)
-                .apiInfo(apiInfo())
+                .apiInfo(appApiInfo())
                 .swaggerGroup("api")
                 .includePatterns(".*api.*");
     }
 
-    private ApiInfo apiInfo() {
-        ApiInfo apiInfo = new ApiInfo(
-                "My Apps API Title",
-                "My Apps API Description",
+    @Bean
+    public SwaggerSpringMvcPlugin manageApi() {
+        return new SwaggerSpringMvcPlugin(this.springSwaggerConfig)
+                .apiInfo(manageApiInfo())
+                .swaggerGroup("manage")
+                .includePatterns(".*manage.*");
+    }
+
+    private ApiInfo appApiInfo() {
+        return new ApiInfo(
+                "Kitchenbattle Public-API",
+                "Kitchenbattle (c) by adrianos",
                 "My Apps API terms of service",
-                "My Apps API Contact Email",
+                "info@adrianos.ch",
                 "My Apps API Licence Type",
                 "My Apps API License URL"
         );
-        return apiInfo;
+    }
+
+    private ApiInfo manageApiInfo() {
+        return new ApiInfo(
+                "Kitchenbattle Manage App-API",
+                "Kitchenbattle (c) by adrianos",
+                "My Apps API terms of service",
+                "info@adrianos.ch",
+                "My Apps API Licence Type",
+                "My Apps API License URL"
+        );
     }
 }
