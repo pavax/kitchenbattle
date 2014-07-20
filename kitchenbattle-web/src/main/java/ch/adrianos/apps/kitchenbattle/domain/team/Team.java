@@ -1,5 +1,6 @@
 package ch.adrianos.apps.kitchenbattle.domain.team;
 
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.EmbeddedId;
@@ -11,6 +12,7 @@ public class Team {
 
     @EmbeddedId
     @Valid
+    @JsonUnwrapped
     private TeamId teamId;
 
     @NotBlank

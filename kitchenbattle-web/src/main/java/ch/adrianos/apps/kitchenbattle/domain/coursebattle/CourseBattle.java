@@ -3,6 +3,7 @@ package ch.adrianos.apps.kitchenbattle.domain.coursebattle;
 import ch.adrianos.apps.kitchenbattle.domain.course.Course;
 import ch.adrianos.apps.kitchenbattle.domain.course.CourseId;
 import ch.adrianos.apps.kitchenbattle.domain.course.CourseType;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import org.springframework.util.Assert;
 
 import javax.persistence.*;
@@ -15,6 +16,7 @@ public class CourseBattle {
 
     @EmbeddedId
     @Valid
+    @JsonUnwrapped
     private BattleId battleId;
 
     @NotNull
@@ -30,6 +32,7 @@ public class CourseBattle {
     })
     @NotNull
     @Valid
+    @JsonUnwrapped(suffix = "One")
     private CourseId courseOneId;
 
     @Embedded
@@ -38,6 +41,7 @@ public class CourseBattle {
     })
     @NotNull
     @Valid
+    @JsonUnwrapped(suffix = "Two")
     private CourseId courseTwoId;
 
     @Enumerated(EnumType.STRING)

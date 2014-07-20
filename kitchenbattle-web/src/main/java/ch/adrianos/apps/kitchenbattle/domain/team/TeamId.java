@@ -1,5 +1,6 @@
 package ch.adrianos.apps.kitchenbattle.domain.team;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.data.annotation.AccessType;
 import org.springframework.util.Assert;
@@ -12,10 +13,11 @@ import java.util.UUID;
 
 @Embeddable
 @AccessType(AccessType.Type.FIELD)
-public class TeamId implements Serializable{
+public class TeamId implements Serializable {
 
     @Column(name = "teamId")
     @NotBlank
+    @JsonProperty("teamId")
     private String value;
 
     public TeamId(String value) {

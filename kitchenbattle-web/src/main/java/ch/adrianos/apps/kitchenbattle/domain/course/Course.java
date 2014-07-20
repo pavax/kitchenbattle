@@ -2,6 +2,7 @@ package ch.adrianos.apps.kitchenbattle.domain.course;
 
 import ch.adrianos.apps.kitchenbattle.domain.team.Team;
 import ch.adrianos.apps.kitchenbattle.domain.team.TeamId;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
 import com.google.common.collect.FluentIterable;
@@ -20,9 +21,11 @@ import java.util.Set;
 public class Course {
 
     @EmbeddedId
+    @JsonUnwrapped
     private CourseId courseId;
 
     @Embedded
+    @JsonUnwrapped
     private TeamId teamId;
 
     @NotBlank

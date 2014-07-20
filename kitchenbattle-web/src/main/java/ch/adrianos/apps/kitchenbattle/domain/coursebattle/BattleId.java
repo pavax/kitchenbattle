@@ -1,5 +1,6 @@
 package ch.adrianos.apps.kitchenbattle.domain.coursebattle;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.data.annotation.AccessType;
 import org.springframework.util.Assert;
@@ -15,6 +16,7 @@ public class BattleId implements Serializable {
 
     @Column(name = "battleId")
     @NotBlank
+    @JsonProperty("battleId")
     private String value;
 
     public BattleId(String value) {
