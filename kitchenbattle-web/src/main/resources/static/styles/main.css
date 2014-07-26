@@ -98,6 +98,12 @@ body {
     display: none !important;
 }
 
+/* Custom container */
+.container-full {
+    margin: 0 auto;
+    width: 100%;
+}
+
 .main .page-header {
     margin-top: 0;
 }

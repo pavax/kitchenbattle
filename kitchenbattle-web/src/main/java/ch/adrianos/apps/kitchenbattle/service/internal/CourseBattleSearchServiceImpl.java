@@ -76,7 +76,7 @@ public class CourseBattleSearchServiceImpl implements CourseBattleSearchService 
         Course course = courseRepository.findOne(courseOneId);
         Integer votesForCourse = courseBattleVoteRepository.countVotesForCourse(courseOneId, battleId);
         Team team = teamRepository.findOne(course.getTeamId());
-        return new CourseBattleResultDto.CourseVotingResultDto(course.getName(), courseOneId.getValue(), team.getColor(), team.getTeamId().getValue(), team.getName(), votesForCourse);
+        return new CourseBattleResultDto.CourseVotingResultDto(course.getName(), courseOneId.getValue(), team.getColor(), team.getTeamId().getValue(), team.getName(), votesForCourse, course.getCourseVariants());
     }
 
     private CourseBattleSearchResultDto.DetailedCourseDto toDetailedCourseDto(Course course, Team team) {

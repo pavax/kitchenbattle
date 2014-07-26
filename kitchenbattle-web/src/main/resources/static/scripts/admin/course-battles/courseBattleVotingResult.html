@@ -2,9 +2,10 @@
 
 Auto-Refresh: <input type="checkbox" ng-model="courseBattleResultCtrl.autoRefresh">
 
-<div ng-if="courseBattleResultCtrl.votingResult">
+<div class="container-full" ng-if="courseBattleResultCtrl.votingResult" fullscreen>
 
-    <h2>{{courseBattleResultCtrl.votingResult.courseOne.courseName}} - {{courseBattleResultCtrl.votingResult.courseOne.teamName}}</h2>
+    <h2>{{courseBattleResultCtrl.votingResult.courseOne.courseName}} -
+        {{courseBattleResultCtrl.votingResult.courseOne.teamName}}</h2>
 
     <div class="row">
         <div class="col-md-3">
@@ -18,7 +19,9 @@ Auto-Refresh: <input type="checkbox" ng-model="courseBattleResultCtrl.autoRefres
         </div>
     </div>
 
-    <h2>{{courseBattleResultCtrl.votingResult.courseTwo.courseName}} - {{courseBattleResultCtrl.votingResult.courseTwo.teamName}}</h2>
+    <h2>{{courseBattleResultCtrl.votingResult.courseTwo.courseName}} -
+        {{courseBattleResultCtrl.votingResult.courseTwo.teamName}}</h2>
+
     <div class="row">
         <div class="col-md-3">
             <img ng-src="{{courseBattleResultCtrl.votingResult.courseTwo.imageUrl}}" class="img-responsive">

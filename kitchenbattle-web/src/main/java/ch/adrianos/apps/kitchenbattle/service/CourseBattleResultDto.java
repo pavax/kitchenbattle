@@ -1,7 +1,10 @@
 package ch.adrianos.apps.kitchenbattle.service;
 
 import ch.adrianos.apps.kitchenbattle.domain.course.CourseType;
+import ch.adrianos.apps.kitchenbattle.domain.course.CourseVariant;
 import ch.adrianos.apps.kitchenbattle.domain.coursebattle.CourseBattleState;
+
+import java.util.Set;
 
 public class CourseBattleResultDto {
 
@@ -64,13 +67,16 @@ public class CourseBattleResultDto {
 
         private int totalGuestVotes;
 
-        public CourseVotingResultDto(String courseName, String courseId, String courseColor, String teamId, String teamName, int totalGuestVotes) {
+        private Set<CourseVariant> courseVariants;
+
+        public CourseVotingResultDto(String courseName, String courseId, String courseColor, String teamId, String teamName, int totalGuestVotes, Set<CourseVariant> courseVariants) {
             this.courseName = courseName;
             this.courseId = courseId;
             this.courseColor = courseColor;
             this.teamId = teamId;
             this.teamName = teamName;
             this.totalGuestVotes = totalGuestVotes;
+            this.courseVariants = courseVariants;
         }
 
         public String getCourseName() {
@@ -98,5 +104,8 @@ public class CourseBattleResultDto {
         }
 
 
+        public Set<CourseVariant> getCourseVariants() {
+            return courseVariants;
+        }
     }
 }

@@ -1,27 +1,39 @@
 'use strict';
 
 angular.module('adminModule')
-    .controller('CourseBattleResultController', function ($scope, battleId, courseBattleSearchService, courseService, $timeout) {
+    .controller('CourseBattleResultController', function ($scope, battleId, courseBattleSearchService, courseService, $timeout, Fullscreen) {
 
         var courseBattleResultCtrl = this;
 
         function init() {
-            courseBattleSearchService.findCourseBattleResults(battleId).success(function (votingResult) {
-                courseBattleResultCtrl.votingResult = votingResult;
-                var totalGuestVotes = votingResult.totalGuestVotes;
-                courseBattleResultCtrl.votingResult.courseOne.percentGuestCount = votingResult.courseOne.totalGuestVotes * 100 / totalGuestVotes;
-                var courseOneVariant = "NORMAL";
-                courseBattleResultCtrl.votingResult.courseOne.imageUrl = courseService.getCourseImageUrl(courseBattleResultCtrl.votingResult.courseOne.courseId, courseOneVariant);
+            courseBattleSearchService.findCourseBattleResults(battleId)
+                .then(function (successResponse) {
+                    var votingResult = successResponse.data;
+                    courseBattleResultCtrl.votingResult = votingResult;
+                    var totalGuestVotes = votingResult.totalGuestVotes;
+                    courseBattleResultCtrl.votingResult.courseOne.percentGuestCount = votingResult.courseOne.totalGuestVotes * 100 / totalGuestVotes;
+                    courseBattleResultCtrl.votingResult.courseOne.imageUrl = courseBattleResultCtrl.votingResult.courseOne.courseVariants[0].imageUrl;
 
-                var courseTwoVariant = "NORMAL";
-                courseBattleResultCtrl.votingResult.courseTwo.percentGuestCount = votingResult.courseTwo.totalGuestVotes * 100 / totalGuestVotes;
-                courseBattleResultCtrl.votingResult.courseTwo.imageUrl = courseService.getCourseImageUrl(courseBattleResultCtrl.votingResult.courseTwo.courseId,courseTwoVariant);
+                    courseBattleResultCtrl.votingResult.courseTwo.percentGuestCount = votingResult.courseTwo.totalGuestVotes * 100 / totalGuestVotes;
+                    courseBattleResultCtrl.votingResult.courseTwo.imageUrl = courseBattleResultCtrl.votingResult.courseTwo.courseVariants[0].imageUrl;
 
-                //courseBattleResultCtrl.autoRefresh = votingResult.battleOpen;
-            });
+                    courseBattleResultCtrl.autoRefresh = votingResult.state === 'VOTING_IN_PROGRESS';
+                });
         }
 
         init();
+
+        this.goFullscreen = function () {
+
+            if (Fullscreen.isEnabled())
+                Fullscreen.cancel();
+            else
+                Fullscreen.all();
+
+            // Set Fullscreen to a specific element (bad practice)
+            // Fullscreen.enable( document.getElementById('img') )
+
+        }
 
         this.autoRefresh = false;
 

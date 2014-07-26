@@ -11,7 +11,8 @@ var app = angular.module('kitchenbattleWebApp', [
     'commonsModule',
     'courseBattleVotingModule',
     'battleResultModule',
-    'adminModule'
+    'adminModule',
+    'FBAngular'
 ]);
 
 app.config(function ($stateProvider, $urlRouterProvider) {
