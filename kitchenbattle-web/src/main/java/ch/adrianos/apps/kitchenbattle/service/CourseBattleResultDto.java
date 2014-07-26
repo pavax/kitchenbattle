@@ -46,7 +46,6 @@ public class CourseBattleResultDto {
         return courseTwo;
     }
 
-
     public int getTotalGuestVotes() {
         return totalGuestVotes;
     }

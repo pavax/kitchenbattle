@@ -27,7 +27,6 @@
       <div class="header">
         <ul class="nav nav-pills pull-right" >
           <li ><a ng-href="#">Home</a></li>
-          <li ng-class="{active: $state.includes('courseBattleResults')}"><a ui-sref="courseBattleResults.select">Course Battle Results</a></li>
           <li ng-class="{active: $state.includes('courseBattleVoting')}"><a ui-sref="courseBattleVoting.select">Course Battle Voting</a></li>
           <li ng-class="{active: $state.includes('battleResult')}"><a ui-sref="battleResult.show">Total Battle Result</a></li>
           <li ng-class="{active: $state.includes('admin')}"><a ui-sref="admin.teams">Admin</a></li>
@@ -66,27 +65,26 @@
         <script src="scripts/common/directives/courseBattlesDirectives.js"></script>
         <script src="scripts/common/resources/teamService.js"></script>
         <script src="scripts/common/resources/courseBattleService.js"></script>
-        <script src="scripts/common/resources/courseBattleResultService.js"></script>
+        <script src="scripts/common/resources/courseBattleSearchService.js"></script>
         <script src="scripts/common/resources/courseService.js"></script>
         <script src="scripts/common/resources/courseBattleVoteService.js"></script>
         <script src="scripts/common/resources/juryTeamVoteService.js"></script>
+        <script src="scripts/common/resources/eventService.js"></script>
         <script src="scripts/common/filters/courseTypeFilter.js"></script>
         <script src="scripts/common/filters/courseBattleStateFilter.js"></script>
-
-        <script src="scripts/course-battle-result/courseBattleResultModule.js"></script>
-        <script src="scripts/course-battle-result/courseBattleSelectionCtrl.js"></script>
-        <script src="scripts/course-battle-result/showCourseBattleVotingResultsCtrl.js"></script>
 
         <script src="scripts/course-battle-voting/courseBattleVotingModule.js"></script>
         <script src="scripts/course-battle-voting/courseBattleVotingSelectionCtrl.js"></script>
         <script src="scripts/course-battle-voting/courseBattleVotingCtrl.js"></script>
 
         <script src="scripts/admin/adminModule.js"></script>
+        <script src="scripts/admin/adminCtrl.js"></script>
         <script src="scripts/admin/teams/teamCtrl.js"></script>
         <script src="scripts/admin/courses/coursesCtrl.js"></script>
         <script src="scripts/admin/courses/courseFormDirective.js"></script>
         <script src="scripts/admin/courses/courseEditCtrl.js"></script>
         <script src="scripts/admin/course-battles/courseBattlesCtrl.js"></script>
+        <script src="scripts/admin/course-battles/courseBattleResultCtrl.js"></script>
 
         <script src="scripts/kitchenbattle-result/battleResultModule.js"></script>
         <script src="scripts/kitchenbattle-result/battleResultCtrl.js"></script>

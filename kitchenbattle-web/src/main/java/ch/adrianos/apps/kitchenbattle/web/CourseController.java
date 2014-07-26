@@ -31,7 +31,7 @@ public class CourseController {
 
     @RequestMapping(method = RequestMethod.POST, consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    public String createCourse(@RequestBody @Valid CreateCourseDto createCourseDto) throws TeamNotFoundException {
+    public String createCourse(@RequestBody @Valid CreateCourseDto createCourseDto) throws TeamNotFoundException, EventNotFoundException {
         return courseService.createNewCourse(createCourseDto);
     }
 

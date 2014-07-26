@@ -1,6 +1,6 @@
 'use strict';
 angular.module('adminModule')
-    .controller('TeamController', function ($scope, teams, $state, teamService) {
+    .controller('TeamController', function ($scope, teams, $state, teamService, selectedEventId) {
 
         var teamCtrl = this;
         this.teams = teams;
@@ -12,7 +12,7 @@ angular.module('adminModule')
 
         this.saveTeam = function () {
             if ($scope.createNewTeamForm.$valid) {
-                teamService.createTeam(teamCtrl.newTeam.name, teamCtrl.newTeam.description)
+                teamService.createTeam(teamCtrl.newTeam.name, teamCtrl.newTeam.description, selectedEventId)
                     .success(function () {
                         $state.forceReload();
                     })

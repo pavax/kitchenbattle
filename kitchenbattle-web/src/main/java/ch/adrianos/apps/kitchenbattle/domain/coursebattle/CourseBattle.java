@@ -3,6 +3,7 @@ package ch.adrianos.apps.kitchenbattle.domain.coursebattle;
 import ch.adrianos.apps.kitchenbattle.domain.course.Course;
 import ch.adrianos.apps.kitchenbattle.domain.course.CourseId;
 import ch.adrianos.apps.kitchenbattle.domain.course.CourseType;
+import ch.adrianos.apps.kitchenbattle.domain.event.EventId;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import org.springframework.util.Assert;
 
@@ -47,16 +48,23 @@ public class CourseBattle {
     @Enumerated(EnumType.STRING)
     private CourseBattleState state;
 
-    public CourseBattle(BattleId battleId, CourseType courseType, Course courseOneId, Course courseTwoId) {
+    @Embedded
+    @NotNull
+    @JsonUnwrapped
+    private EventId eventId;
+
+    public CourseBattle(BattleId battleId, CourseType courseType, Course courseOne, Course courseTwo) {
         Assert.notNull(battleId);
         Assert.notNull(courseType);
-        Assert.notNull(courseOneId);
-        Assert.notNull(courseTwoId);
+        Assert.notNull(courseOne);
+        Assert.notNull(courseTwo);
+        Assert.isTrue(courseOne.getEventId().equals(courseTwo.getEventId()));
         this.battleId = battleId;
         this.courseType = courseType;
-        this.courseOneId = courseOneId.getCourseId();
-        this.courseTwoId = courseTwoId.getCourseId();
+        this.courseOneId = courseOne.getCourseId();
+        this.courseTwoId = courseTwo.getCourseId();
         this.state = CourseBattleState.INITIALIZED;
+        this.eventId = courseOne.getEventId();
         this.createdAt = LocalDateTime.now();
     }
 
@@ -89,5 +97,9 @@ public class CourseBattle {
 
     public void setState(CourseBattleState state) {
         this.state = state;
+    }
+
+    public EventId getEventId() {
+        return eventId;
     }
 }

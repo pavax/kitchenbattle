@@ -15,7 +15,6 @@ public class CreateCourseBattleDto {
 
     @NotNull
     private CourseType courseType;
-
     public String getCourseOneId() {
         return courseOneId;
     }

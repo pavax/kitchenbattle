@@ -154,7 +154,9 @@
                                 </a>
                             </li>
                             <li class="divider"></li>
-                            <li><a href=""><span class="glyphicon glyphicon-stats"></span>Show Results</a></li>
+                            <li><a href="" ng-click="courseBattlesCtrl.showResults(battle.battleId)">
+                                <span class="glyphicon glyphicon-stats"></span>Show Results</a>
+                            </li>
                             <li class="divider"></li>
                             <li>
                                 <a href="" ng-click="courseBattlesCtrl.deleteCourseBattle(battle.battleId)">

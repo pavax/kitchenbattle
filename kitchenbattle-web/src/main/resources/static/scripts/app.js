@@ -9,7 +9,6 @@ var app = angular.module('kitchenbattleWebApp', [
     'ui.bootstrap',
     'lr.upload',
     'commonsModule',
-    'courseBattleResultModule',
     'courseBattleVotingModule',
     'battleResultModule',
     'adminModule'

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('adminModule')
-    .controller('CoursesController', function ($scope, teams, courses, selectedTeam, courseService, $state, $modal) {
+    .controller('CoursesController', function ($scope, teams, courses, selectedTeam, selectedEventId, courseService, $state, $modal) {
         this.teams = teams;
         this.courses = courses;
 
@@ -26,13 +26,14 @@ angular.module('adminModule')
                     coursesCtrl.selectedTeam.teamId,
                     coursesCtrl.newCourse.courseType,
                     coursesCtrl.newCourse.name,
-                    coursesCtrl.newCourse.description
+                    coursesCtrl.newCourse.description,
+                    selectedEventId
                 )
                     .success(function () {
                         $state.forceReload();
                     })
-                    .error(function () {
-                        alert("Oops an Error occured: " + error);
+                    .error(function (error) {
+                        alert("Oops an Error occured: " + error.data);
                     });
             }
         };

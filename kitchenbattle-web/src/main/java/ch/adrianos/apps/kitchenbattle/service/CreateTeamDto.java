@@ -11,6 +11,9 @@ public class CreateTeamDto {
 
     private String description;
 
+    @NotBlank
+    private String eventId;
+
     public String getName() {
         return name;
     }
@@ -33,5 +36,13 @@ public class CreateTeamDto {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getEventId() {
+        return eventId;
+    }
+
+    public void setEventId(String eventId) {
+        this.eventId = eventId;
     }
 }

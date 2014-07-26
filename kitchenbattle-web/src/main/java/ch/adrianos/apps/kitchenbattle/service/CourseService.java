@@ -4,7 +4,7 @@ import ch.adrianos.apps.kitchenbattle.domain.course.Image;
 
 public interface CourseService {
 
-    String createNewCourse(CreateCourseDto createCourseDto) throws TeamNotFoundException;
+    String createNewCourse(CreateCourseDto createCourseDto) throws TeamNotFoundException, EventNotFoundException;
 
     void updateCourse(String courseId, UpdateCourseDto updateCourseDto) throws CourseNotFoundException;
 

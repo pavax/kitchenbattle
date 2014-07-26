@@ -13,8 +13,8 @@ angular.module('courseBattleVotingModule', []
                 templateUrl: "scripts/course-battle-voting/courseBattleVotingSelection.html",
                 controller: 'CourseBattleVotingSelectionController as courseBattleSelection',
                 resolve: {
-                    battles: function (courseBattleService) {
-                        return courseBattleService.getAllCourseBattles().then(function (response) {
+                    battles: function (courseBattleSearchService) {
+                        return courseBattleSearchService.findAllCourseBattlesWithDetails().then(function (response) {
                             return response.data;
                         });
                     }

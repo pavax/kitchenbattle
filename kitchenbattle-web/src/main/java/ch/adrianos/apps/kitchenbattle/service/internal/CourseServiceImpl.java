@@ -3,6 +3,9 @@ package ch.adrianos.apps.kitchenbattle.service.internal;
 import ch.adrianos.apps.kitchenbattle.domain.course.*;
 import ch.adrianos.apps.kitchenbattle.domain.coursebattle.CourseBattle;
 import ch.adrianos.apps.kitchenbattle.domain.coursebattle.CourseBattleRepository;
+import ch.adrianos.apps.kitchenbattle.domain.event.Event;
+import ch.adrianos.apps.kitchenbattle.domain.event.EventId;
+import ch.adrianos.apps.kitchenbattle.domain.event.EventRepository;
 import ch.adrianos.apps.kitchenbattle.domain.team.Team;
 import ch.adrianos.apps.kitchenbattle.domain.team.TeamId;
 import ch.adrianos.apps.kitchenbattle.domain.team.TeamRepository;
@@ -19,23 +22,29 @@ public class CourseServiceImpl implements CourseService {
     private final CourseRepository courseRepository;
 
     private final TeamRepository teamRepository;
-    private CourseBattleRepository courseBattleRepository;
+    private final CourseBattleRepository courseBattleRepository;
+    private final EventRepository eventRepository;
 
     @Autowired
-    public CourseServiceImpl(CourseRepository courseRepository, TeamRepository teamRepository, CourseBattleRepository courseBattleRepository) {
+    public CourseServiceImpl(CourseRepository courseRepository, TeamRepository teamRepository, CourseBattleRepository courseBattleRepository, EventRepository eventRepository) {
         this.courseRepository = courseRepository;
         this.teamRepository = teamRepository;
         this.courseBattleRepository = courseBattleRepository;
+        this.eventRepository = eventRepository;
     }
 
     @Override
-    public String createNewCourse(CreateCourseDto createCourseDto) throws TeamNotFoundException {
+    public String createNewCourse(CreateCourseDto createCourseDto) throws TeamNotFoundException, EventNotFoundException {
         String teamId = createCourseDto.getTeamId();
         Team team = teamRepository.findOne(new TeamId(teamId));
         if (team == null) {
             throw new TeamNotFoundException(teamId);
         }
-        Course savedCourse = courseRepository.save(toCourse(createCourseDto, team));
+        Event event = eventRepository.findOne(new EventId(createCourseDto.getEventId()));
+        if (event == null){
+            throw new EventNotFoundException(createCourseDto.getEventId());
+        }
+        Course savedCourse = courseRepository.save(toCourse(createCourseDto, team, event));
         return savedCourse.getCourseId().getValue();
     }
 
@@ -79,7 +88,7 @@ public class CourseServiceImpl implements CourseService {
         course.removeImage(new CourseVariant(courseVariant));
     }
 
-    private static Course toCourse(CreateCourseDto createCourseDto, Team team) {
-        return new Course(new CourseId(), createCourseDto.getCourseName(), createCourseDto.getDescription(), team, createCourseDto.getCourseType());
+    private static Course toCourse(CreateCourseDto createCourseDto, Team team, Event event) {
+        return new Course(new CourseId(), createCourseDto.getCourseName(), createCourseDto.getDescription(), team, createCourseDto.getCourseType(), event);
     }
 }

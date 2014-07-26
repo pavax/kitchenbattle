@@ -64,6 +64,10 @@ angular.module('adminModule')
                 });
         };
 
+        this.showResults = function (courseBattleId) {
+            $state.go('admin.coursebattles.result', {battleId: courseBattleId})
+        };
+
         this.saveNewCourseBattle = function () {
             if ($scope.createNewCourseBattleForm.$valid) {
                 courseBattleService.createNewCourseBattle(

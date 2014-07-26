@@ -29,6 +29,12 @@ public class CourseBattleVoteController {
         courseBattleVoteRepository.save(new CourseBattleVote(new BattleId(createGuestCourseBattleVotingDto.getBattleId()), new CourseId(createGuestCourseBattleVotingDto.getVotedCourseId())));
     }
 
+    @RequestMapping(value = "search/countCourseVotes", method = RequestMethod.HEAD)
+    @ResponseStatus(HttpStatus.OK)
+    public Integer countVotes(@RequestParam String battleId, @RequestParam String courseId) {
+        return courseBattleVoteRepository.countVotesForCourse(new CourseId(courseId), new BattleId(battleId));
+    }
+
     public static class CreateGuestCourseBattleVotingDto {
 
         @NotBlank

@@ -22,6 +22,9 @@ public class CreateCourseDto {
     @NotNull
     private String teamId;
 
+    @NotNull
+    private String eventId;
+
     public String getCourseName() {
         return courseName;
     }
@@ -52,5 +55,13 @@ public class CreateCourseDto {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getEventId() {
+        return eventId;
+    }
+
+    public void setEventId(String eventId) {
+        this.eventId = eventId;
     }
 }

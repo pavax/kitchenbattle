@@ -4,6 +4,9 @@ import ch.adrianos.apps.kitchenbattle.domain.coursebattle.BattleId;
 import ch.adrianos.apps.kitchenbattle.domain.coursebattle.CourseBattle;
 import ch.adrianos.apps.kitchenbattle.domain.coursebattle.CourseBattleRepository;
 import ch.adrianos.apps.kitchenbattle.domain.course.*;
+import ch.adrianos.apps.kitchenbattle.domain.event.Event;
+import ch.adrianos.apps.kitchenbattle.domain.event.EventId;
+import ch.adrianos.apps.kitchenbattle.domain.event.EventRepository;
 import ch.adrianos.apps.kitchenbattle.domain.team.Team;
 import ch.adrianos.apps.kitchenbattle.domain.team.TeamId;
 import ch.adrianos.apps.kitchenbattle.domain.team.TeamRepository;
@@ -21,10 +24,11 @@ import org.springframework.transaction.support.TransactionTemplate;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDate;
 
 @Component
 @Profile("testdata")
-public class LoadTestData implements ApplicationListener<ContextRefreshedEvent> {
+public class TestdataLoader implements ApplicationListener<ContextRefreshedEvent> {
 
     public static final TeamId TEAM_1 = new TeamId("Team1");
     public static final TeamId TEAM_2 = new TeamId("Team2");
@@ -32,20 +36,26 @@ public class LoadTestData implements ApplicationListener<ContextRefreshedEvent> 
     public static final CourseId COURSE_TEAM2_1 = new CourseId("Course-T2-1");
     public static final CourseId COURSE_TEAM1_2 = new CourseId("Course-T1-2");
     public static final CourseId COURSE_TEAM2_2 = new CourseId("Course-T2-2");
+    public static final EventId EVENT_ID = new EventId("Event-1");
     private final TeamRepository teamRepository;
 
     private final CourseRepository courseRepository;
 
     private final CourseBattleRepository courseBattleRepository;
 
+    private final EventRepository eventRepository;
+
     private final TransactionTemplate transactionTemplate;
+
+    private Event event;
 
 
     @Autowired
-    public LoadTestData(PlatformTransactionManager platformTransactionManager, TeamRepository teamRepository, CourseRepository courseRepository, CourseBattleRepository courseBattleRepository) {
+    public TestdataLoader(PlatformTransactionManager platformTransactionManager, TeamRepository teamRepository, CourseRepository courseRepository, CourseBattleRepository courseBattleRepository, EventRepository eventRepository) {
         this.teamRepository = teamRepository;
         this.courseRepository = courseRepository;
         this.courseBattleRepository = courseBattleRepository;
+        this.eventRepository = eventRepository;
         this.transactionTemplate = new TransactionTemplate(platformTransactionManager);
     }
 
@@ -54,11 +64,16 @@ public class LoadTestData implements ApplicationListener<ContextRefreshedEvent> 
         this.transactionTemplate.execute(new TransactionCallbackWithoutResult() {
             @Override
             protected void doInTransactionWithoutResult(TransactionStatus status) {
+                loadEventData();
                 loadTeamTestData();
                 loadCourseTestData();
                 loadBattleTestData();
             }
         });
+    }
+
+    private void loadEventData() {
+        this.event = this.eventRepository.save(new Event(EVENT_ID, "Event One", LocalDate.now()));
     }
 
     private void loadBattleTestData() {
@@ -73,19 +88,19 @@ public class LoadTestData implements ApplicationListener<ContextRefreshedEvent> 
     }
 
     private void loadTeamTestData() {
-        teamRepository.save(new Team(TEAM_1, "Super-Team", "RED", "Blah blah 1"));
-        teamRepository.save(new Team(TEAM_2, "Ultra-Team", "BLUE", "Blah blah 2"));
+        teamRepository.save(new Team(TEAM_1, "Super-Team", "RED", "Blah blah 1", event));
+        teamRepository.save(new Team(TEAM_2, "Ultra-Team", "BLUE", "Blah blah 2", event));
     }
 
     private void loadCourseTestData() {
-        Course courseOne = courseRepository.save(new Course(COURSE_TEAM1_1, "Marinierte Oliven", "Feinste marinierte entsteinte Oliven mit frischen Kräutern und Feta-Käse", teamRepository.findOne(TEAM_1), CourseType.STARTER));
+        Course courseOne = courseRepository.save(new Course(COURSE_TEAM1_1, "Marinierte Oliven", "Feinste marinierte entsteinte Oliven mit frischen Kräutern und Feta-Käse", teamRepository.findOne(TEAM_1), CourseType.STARTER, event));
         setImage(courseOne, "oliven.png");
-        Course courseTwo = courseRepository.save(new Course(COURSE_TEAM2_1, "Bärlauchsuppe", "Bärlauch schmeckt frisch und herzhaft nach Knoblauch und verbündet sich gerne mit Kartoffeln zu diesem cremigen Frühlings-Partysüppchen", teamRepository.findOne(TEAM_2), CourseType.STARTER));
+        Course courseTwo = courseRepository.save(new Course(COURSE_TEAM2_1, "Bärlauchsuppe", "Bärlauch schmeckt frisch und herzhaft nach Knoblauch und verbündet sich gerne mit Kartoffeln zu diesem cremigen Frühlings-Partysüppchen", teamRepository.findOne(TEAM_2), CourseType.STARTER, event));
         setImage(courseTwo, "suppe.jpg");
 
-        Course courseThree = courseRepository.save(new Course(COURSE_TEAM1_2, "Marinierte Oliven (2)", "Feinste marinierte entsteinte Oliven mit frischen Kräutern und Feta-Käse", teamRepository.findOne(TEAM_1), CourseType.MAIN));
+        Course courseThree = courseRepository.save(new Course(COURSE_TEAM1_2, "Marinierte Oliven (2)", "Feinste marinierte entsteinte Oliven mit frischen Kräutern und Feta-Käse", teamRepository.findOne(TEAM_1), CourseType.MAIN, event));
         setImage(courseThree, "oliven.png");
-        Course courseFour = courseRepository.save(new Course(COURSE_TEAM2_2, "Bärlauchsuppe (2)", "Bärlauch schmeckt frisch und herzhaft nach Knoblauch und verbündet sich gerne mit Kartoffeln zu diesem cremigen Frühlings-Partysüppchen", teamRepository.findOne(TEAM_2), CourseType.MAIN));
+        Course courseFour = courseRepository.save(new Course(COURSE_TEAM2_2, "Bärlauchsuppe (2)", "Bärlauch schmeckt frisch und herzhaft nach Knoblauch und verbündet sich gerne mit Kartoffeln zu diesem cremigen Frühlings-Partysüppchen", teamRepository.findOne(TEAM_2), CourseType.MAIN, event));
         setImage(courseFour, "suppe.jpg");
     }
 

@@ -10,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/course-battles")
@@ -55,12 +54,6 @@ public class CourseBattleController {
     @ResponseStatus(HttpStatus.OK)
     public void updateBattleStatus(@PathVariable String battleId, @RequestBody CourseBattleStateResource courseBattleStateResource) throws CourseBattleNotFoundException {
         courseBattleService.updateCourseBattleStatus(battleId, courseBattleStateResource.nextState);
-    }
-
-    @RequestMapping(value = "/search/allBattles", method = RequestMethod.GET)
-    @ResponseStatus(HttpStatus.OK)
-    public List<CourseBattleSearchResultDto> searchAllCourseBattles() {
-        return courseBattleSearchService.searchAllCourseBattles();
     }
 
     public static final class CourseBattleStateResource {

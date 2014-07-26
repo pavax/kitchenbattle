@@ -1,5 +1,7 @@
 package ch.adrianos.apps.kitchenbattle.domain.course;
 
+import ch.adrianos.apps.kitchenbattle.domain.event.Event;
+import ch.adrianos.apps.kitchenbattle.domain.event.EventId;
 import ch.adrianos.apps.kitchenbattle.domain.team.Team;
 import ch.adrianos.apps.kitchenbattle.domain.team.TeamId;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
@@ -47,7 +49,12 @@ public class Course {
     @Valid
     private Set<CourseImage> courseImages = new HashSet<>();
 
-    public Course(CourseId courseId, String name, String description, Team teamId, CourseType courseType) {
+    @Embedded
+    @NotNull
+    @JsonUnwrapped
+    private EventId eventId;
+
+    public Course(CourseId courseId, String name, String description, Team teamId, CourseType courseType, Event event) {
         this.description = description;
         Assert.notNull(courseId);
         Assert.notNull(name);
@@ -57,6 +64,7 @@ public class Course {
         this.name = name;
         this.teamId = teamId.getTeamId();
         this.courseType = courseType;
+        this.eventId = event.getId();
     }
 
     protected Course() {
@@ -137,5 +145,9 @@ public class Course {
         if (hasBeenRemoved) {
             this.courseVariants.remove(courseVariant);
         }
+    }
+
+    public EventId getEventId() {
+        return eventId;
     }
 }

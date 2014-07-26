@@ -1,4 +1,4 @@
-package ch.adrianos.apps.kitchenbattle.domain.course;
+package ch.adrianos.apps.kitchenbattle.domain.event;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.validator.constraints.NotBlank;
@@ -12,19 +12,19 @@ import java.util.UUID;
 
 @Embeddable
 @AccessType(AccessType.Type.FIELD)
-public class CourseId implements Serializable {
+public class EventId implements Serializable {
 
-    @Column(name = "courseId")
+    @Column(name = "eventId")
     @NotBlank
-    @JsonProperty("courseId")
+    @JsonProperty("eventId")
     private String value;
 
-    public CourseId(String value) {
+    public EventId(String value) {
         Assert.notNull(value);
         this.value = value;
     }
 
-    public CourseId() {
+    public EventId() {
         this.value = UUID.randomUUID().toString();
     }
 
@@ -33,10 +33,19 @@ public class CourseId implements Serializable {
     }
 
     @Override
-    public String toString() {
-        final StringBuffer sb = new StringBuffer("CourseId{");
-        sb.append("value='").append(value).append('\'');
-        sb.append('}');
-        return sb.toString();
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        EventId eventId = (EventId) o;
+
+        if (!value.equals(eventId.value)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return value.hashCode();
     }
 }

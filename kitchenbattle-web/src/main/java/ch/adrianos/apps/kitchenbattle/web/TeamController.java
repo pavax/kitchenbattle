@@ -1,9 +1,11 @@
 package ch.adrianos.apps.kitchenbattle.web;
 
+import ch.adrianos.apps.kitchenbattle.domain.event.EventId;
 import ch.adrianos.apps.kitchenbattle.domain.team.Team;
 import ch.adrianos.apps.kitchenbattle.domain.team.TeamId;
 import ch.adrianos.apps.kitchenbattle.domain.team.TeamRepository;
 import ch.adrianos.apps.kitchenbattle.service.CreateTeamDto;
+import ch.adrianos.apps.kitchenbattle.service.EventNotFoundException;
 import ch.adrianos.apps.kitchenbattle.service.TeamNotFoundException;
 import ch.adrianos.apps.kitchenbattle.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,15 +31,15 @@ public class TeamController {
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public String createTeam(@RequestBody @Valid CreateTeamDto createTeamDto) {
+    public String createTeam(@RequestBody @Valid CreateTeamDto createTeamDto) throws EventNotFoundException {
         return teamService.createTeam(createTeamDto);
     }
 
 
     @RequestMapping(method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
-    public List<Team> getAllTeams() {
-        return teamRepository.findAll();
+    public List<Team> findTeamsForEvent(@RequestParam String eventId) {
+        return teamRepository.findAllTeamsForEvent(new EventId(eventId));
     }
 
     @RequestMapping(value = "/{teamId}", method = RequestMethod.GET)

@@ -28,13 +28,14 @@ angular.module('commons.resources.course', [])
                     return successResponse;
                 });
             },
-            createCourse: function (teamId, courseType, courseName, description) {
+            createCourse: function (teamId, courseType, courseName, description,eventId) {
                 return $http.post('api/courses',
                     {
                         description: description,
                         courseType: courseType,
                         courseName: courseName,
-                        teamId: teamId
+                        teamId: teamId,
+                        eventId: eventId
                     }
                 );
             },
