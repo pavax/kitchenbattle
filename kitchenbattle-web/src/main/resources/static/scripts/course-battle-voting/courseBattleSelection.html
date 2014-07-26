@@ -1,0 +1,40 @@
+<h1>Select a Battle</h1>
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Datum</th>
+            <th>Course Type</th>
+            <th>Status</th>
+            <th>Teams</th>
+            <th>Courses</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="battle in courseBattleSelectionCtrl.battles">
+            <td>{{battle.createdAt | date:'short'}}</td>
+            <td>{{battle.courseType | courseType}}
+            <td>
+                 <span ng-show="battle.state === 'INITIALIZED'"
+                       class="label label-success">{{battle.state | courseBattleState}}</span>
+                    <span ng-show="battle.state === 'VOTING_IN_PROGRESS'"
+                          class="label label-danger">{{battle.state | courseBattleState}}</span>
+                    <span ng-show="battle.state === 'CLOSED'"
+                          class="label label-info">{{battle.state | courseBattleState}}</span>
+            </td>
+            <td>{{battle.courseOne.teamName}} vs {{battle.courseTwo.teamName}}</td>
+            <td>{{battle.courseOne.courseName}} - {{battle.courseTwo.courseName}}</td>
+            <td>
+                <button type="button"
+                        class="btn btn-default"
+                        ng-disabled="{{battle.state !== 'VOTING_IN_PROGRESS'}}"
+                        ng-click="courseBattleSelectionCtrl.selectedBattle(battle)">
+                    Select
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

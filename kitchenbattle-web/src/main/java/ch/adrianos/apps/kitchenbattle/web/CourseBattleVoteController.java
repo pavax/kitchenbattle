@@ -1,9 +1,7 @@
 package ch.adrianos.apps.kitchenbattle.web;
 
-import ch.adrianos.apps.kitchenbattle.domain.coursebattle.BattleId;
+import ch.adrianos.apps.kitchenbattle.domain.coursebattle.*;
 import ch.adrianos.apps.kitchenbattle.domain.course.CourseId;
-import ch.adrianos.apps.kitchenbattle.domain.coursebattle.CourseBattleVote;
-import ch.adrianos.apps.kitchenbattle.domain.coursebattle.CourseBattleVoteRepository;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,14 +16,21 @@ public class CourseBattleVoteController {
 
     private final CourseBattleVoteRepository courseBattleVoteRepository;
 
+    private final CourseBattleRepository courseBattleRepository;
+
     @Autowired
-    public CourseBattleVoteController(CourseBattleVoteRepository courseBattleVoteRepository) {
+    public CourseBattleVoteController(CourseBattleVoteRepository courseBattleVoteRepository, CourseBattleRepository courseBattleRepository) {
         this.courseBattleVoteRepository = courseBattleVoteRepository;
+        this.courseBattleRepository = courseBattleRepository;
     }
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public void vote(@RequestBody @Valid CreateGuestCourseBattleVotingDto createGuestCourseBattleVotingDto) {
+        CourseBattle courseBattle = courseBattleRepository.findOne(new BattleId(createGuestCourseBattleVotingDto.getBattleId()));
+        if (courseBattle.getState() != CourseBattleState.VOTING_IN_PROGRESS) {
+            throw new IllegalStateException("Course-Battle Voting is not in Progress");
+        }
         courseBattleVoteRepository.save(new CourseBattleVote(new BattleId(createGuestCourseBattleVotingDto.getBattleId()), new CourseId(createGuestCourseBattleVotingDto.getVotedCourseId())));
     }
 

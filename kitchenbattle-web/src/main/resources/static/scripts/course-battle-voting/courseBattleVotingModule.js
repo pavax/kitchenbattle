@@ -8,20 +8,50 @@ angular.module('courseBattleVotingModule', []
                 template: "<div ui-view></div>",
                 abstract: true
             })
-            .state('courseBattleVoting.select', {
+            .state('courseBattleVoting.event', {
                 url: "",
-                templateUrl: "scripts/course-battle-voting/courseBattleVotingSelection.html",
-                controller: 'CourseBattleVotingSelectionController as courseBattleSelection',
+                templateUrl: "scripts/course-battle-voting/eventSelection.html",
+                controller: 'EventSelectionController as eventSelectionCtrl',
                 resolve: {
-                    battles: function (courseBattleSearchService) {
-                        return courseBattleSearchService.findAllCourseBattlesWithDetails().then(function (response) {
+                    events: function (eventsService) {
+                        return eventsService.findAllEvents()
+                            .then(function (response) {
+                                return response.data;
+                            });
+                    }
+                }
+            })
+            .state('courseBattleVoting.battles', {
+                url: "/battles?eventId",
+                template: "<div ui-view></div>",
+                abstract: true,
+                resolve: {
+                    selectedEventId: function ($stateParams) {
+                        if ($stateParams.eventId) {
+                            return $stateParams.eventId;
+                        } else {
+                            return null;
+                        }
+                    }
+                }
+            })
+            .state('courseBattleVoting.battles.master', {
+                url: "",
+                templateUrl: "scripts/course-battle-voting/courseBattleSelection.html",
+                controller: 'CourseBattleSelectionController as courseBattleSelectionCtrl',
+                resolve: {
+                    battles: function (courseBattleSearchService, selectedEventId) {
+                        if (selectedEventId === null) {
+                            return null;
+                        }
+                        return courseBattleSearchService.findAllCourseBattlesWithDetails(selectedEventId).then(function (response) {
                             return response.data;
                         });
                     }
                 }
             })
-            .state('courseBattleVoting.vote', {
-                url: "/vote?battleId",
+            .state('courseBattleVoting.battles.vote', {
+                url: "/:battleId/vote",
                 templateUrl: "scripts/course-battle-voting/courseBattleVoting.html",
                 controller: 'CourseBattleVotingCtrl as courseBattleVoting',
                 resolve: {
