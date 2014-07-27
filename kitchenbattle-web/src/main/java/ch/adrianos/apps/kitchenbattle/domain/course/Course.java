@@ -116,6 +116,13 @@ public class Course {
         return courseImageOptional.isPresent() ? courseImageOptional.get().getImage() : null;
     }
 
+    public void removeImage(CourseVariant courseVariant) {
+        boolean hasBeenRemoved = Iterables.removeIf(this.courseImages, input -> input.getVariant().equals(courseVariant));
+        if (hasBeenRemoved) {
+            this.courseVariants.remove(courseVariant);
+        }
+    }
+
     public Set<CourseVariant> getCourseVariants() {
         return courseVariants;
     }
@@ -139,13 +146,6 @@ public class Course {
 
     public void setCourseType(CourseType courseType) {
         this.courseType = courseType;
-    }
-
-    public void removeImage(CourseVariant courseVariant) {
-        boolean hasBeenRemoved = Iterables.removeIf(this.courseImages, input -> courseVariant.equals(input.getVariant()));
-        if (hasBeenRemoved) {
-            this.courseVariants.remove(courseVariant);
-        }
     }
 
     public EventId getEventId() {

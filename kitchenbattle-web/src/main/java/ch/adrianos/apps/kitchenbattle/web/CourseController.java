@@ -1,6 +1,7 @@
 package ch.adrianos.apps.kitchenbattle.web;
 
 import ch.adrianos.apps.kitchenbattle.domain.course.*;
+import ch.adrianos.apps.kitchenbattle.domain.event.EventId;
 import ch.adrianos.apps.kitchenbattle.domain.team.TeamId;
 import ch.adrianos.apps.kitchenbattle.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,12 @@ public class CourseController {
         this.courseRepository = courseRepository;
     }
 
+    @RequestMapping(method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    public List<Course> findCoursesByEvent(@RequestParam String eventId) {
+        return this.courseRepository.findByEventId(new EventId(eventId));
+    }
+
     @RequestMapping(method = RequestMethod.POST, consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
     @Secured({"ROLE_ADMIN"})
@@ -37,12 +44,6 @@ public class CourseController {
         return courseService.createNewCourse(createCourseDto);
     }
 
-    @RequestMapping(value = "/find/byTeamId", method = RequestMethod.GET)
-    @ResponseStatus(HttpStatus.OK)
-    @Secured({"ROLE_ADMIN"})
-    public List<Course> findCoursesByTeamId(@RequestParam String teamId) {
-        return courseRepository.findByTeamId(new TeamId(teamId));
-    }
 
     @RequestMapping(value = "/{courseId}", method = RequestMethod.GET)
     public ResponseEntity<Course> getCourse(@PathVariable String courseId) throws CourseNotFoundException {
@@ -81,7 +82,8 @@ public class CourseController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         final HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.parseMediaType(courseImage.getContentType()));
+        MediaType mediaType = MediaType.parseMediaType(courseImage.getContentType());
+        headers.setContentType(mediaType);
         return new ResponseEntity<>(courseImage.getContent(), headers, HttpStatus.OK);
     }
 
@@ -90,6 +92,13 @@ public class CourseController {
     public void deleteCourseImage(@PathVariable String courseId, @PathVariable String variant) throws CourseNotFoundException {
         Course course = getCourseInternally(courseId);
         courseService.deleteImage(courseId, variant);
+    }
+
+    @RequestMapping(value = "/find/byTeamId", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    @Secured({"ROLE_ADMIN"})
+    public List<Course> findCoursesByTeamId(@RequestParam String teamId) {
+        return courseRepository.findByTeamId(new TeamId(teamId));
     }
 
     private Course getCourseInternally(String courseId) throws CourseNotFoundException {

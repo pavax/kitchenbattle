@@ -78,8 +78,8 @@ angular.module('adminModule')
                     .success(function () {
                         $state.forceReload();
                     })
-                    .error(function () {
-                        alert("Oops an Error occured: " + error);
+                    .error(function (error) {
+                        alert("Oops an Error occured: " + error.message);
                     });
             }
 

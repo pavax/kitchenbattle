@@ -20,6 +20,14 @@ angular.module('commons.resources.course', [])
                     return successResponse;
                 });
             },
+            findCoursesByEvent: function (eventId) {
+                return $http.get('api/courses', {params: {eventId: eventId}}).then(function (successResponse) {
+                    angular.forEach(successResponse.data, function (course) {
+                        applyFurtherCourseProperties(course);
+                    });
+                    return successResponse;
+                });
+            },
             findCoursesByTeam: function (teamId) {
                 return $http.get('api/courses/find/byTeamId', {params: {teamId: teamId}}).then(function (successResponse) {
                     angular.forEach(successResponse.data, function (course) {
@@ -28,7 +36,7 @@ angular.module('commons.resources.course', [])
                     return successResponse;
                 });
             },
-            createCourse: function (teamId, courseType, courseName, description,eventId) {
+            createCourse: function (teamId, courseType, courseName, description, eventId) {
                 return $http.post('api/courses',
                     {
                         description: description,

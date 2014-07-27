@@ -2,7 +2,7 @@
 <html class="no-js">
 <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>Kitchen Battle App</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
@@ -25,16 +25,20 @@
 
 <!-- Add your site or application content here -->
 <div class="container-fluid">
-    <div class="header">
+    <div class="header" ng-controller="menuCtrl as menu">
         <ul class="nav nav-pills pull-right">
-            <li><a ng-href="#">Home</a></li>
-            <li ng-class="{active: $state.includes('courseBattleVoting')}"><a ui-sref="courseBattleVoting.event">Course
-                Battle Voting</a></li>
-            <li ng-class="{active: $state.includes('battleResult')}"><a ui-sref="battleResult.show">Total Battle
-                Result</a></li>
-            <li ng-class="{active: $state.includes('admin')}"><a ui-sref="admin.teams">Admin</a></li>
+            <li ng-class="{active: $state.includes('courseBattleVoting')}">
+                <a ui-sref="courseBattleVoting.event">Course Battle Voting</a>
+            </li>
+            <li ng-class="{active: $state.includes('admin')}"
+                ng-show="menu.currentUser.isAdmin">
+                <a ui-sref="admin.teams">Admin</a>
+            </li>
         </ul>
-        <h3 class="text-muted">Kitchen-Battle</h3>
+        <h3 class="text-muted">
+            Kitchen-Battle
+            <small>{{menu.currentUser.username}}</small>
+        </h3>
     </div>
 
     <div class="row" ui-view></div>
@@ -65,6 +69,7 @@
 
 <!-- build:js({.tmp,app}) scripts/scripts.js -->
 <script src="scripts/app.js"></script>
+<script src="scripts/menuCtrl.js"></script>
 
 <script src="scripts/common/commonsModule.js"></script>
 <script src="scripts/common/resources/teamService.js"></script>
@@ -74,6 +79,7 @@
 <script src="scripts/common/resources/courseBattleVoteService.js"></script>
 <script src="scripts/common/resources/juryTeamVoteService.js"></script>
 <script src="scripts/common/resources/eventService.js"></script>
+<script src="scripts/common/resources/currentUsersService.js"></script>
 <script src="scripts/common/filters/courseTypeFilter.js"></script>
 <script src="scripts/common/filters/courseBattleStateFilter.js"></script>
 

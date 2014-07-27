@@ -13,7 +13,7 @@ angular.module('courseBattleVotingModule')
                 .success(function (data) {
                     alert("Danke");
                 }).error(function (error) {
-                    alert("Ooops...Es ist ein Fehler aufgetreten");
+                    alert("Ooops...Es ist ein Fehler aufgetreten: " + error.message);
                 });
         };
     });

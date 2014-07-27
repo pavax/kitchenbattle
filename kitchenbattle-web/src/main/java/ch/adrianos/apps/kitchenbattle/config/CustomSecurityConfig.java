@@ -34,9 +34,9 @@ public class CustomSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.authorizeRequests()
                 .anyRequest().authenticated();
-        http.formLogin()
-                .and().httpBasic()
-                .and().logout().logoutUrl("/logout");
+        http.formLogin();
+        http.logout().logoutUrl("logout");
+        http.httpBasic().realmName("kitchenbattle-app");
     }
 
 }

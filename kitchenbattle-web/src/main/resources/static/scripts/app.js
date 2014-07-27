@@ -18,8 +18,7 @@ var app = angular.module('kitchenbattleWebApp', [
 app.config(function ($stateProvider, $urlRouterProvider) {
     //
     // For any unmatched url, redirect to /state1
-    //$urlRouterProvider.otherwise("/votingresults");
-
+    $urlRouterProvider.otherwise("/course-battle-voting");
 });
 
 app.config(function ($provide) {

@@ -30,19 +30,18 @@ public class TeamController {
         this.teamService = teamService;
     }
 
-    @RequestMapping(method = RequestMethod.POST)
-    @ResponseStatus(HttpStatus.CREATED)
-    @Secured ({"ROLE_ADMIN"})
-    public String createTeam(@RequestBody @Valid CreateTeamDto createTeamDto) throws EventNotFoundException {
-        return teamService.createTeam(createTeamDto);
-    }
-
-
     @RequestMapping(method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     @Secured({"ROLE_ADMIN"})
     public List<Team> findTeamsForEvent(@RequestParam String eventId) {
         return teamRepository.findAllTeamsForEvent(new EventId(eventId));
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.CREATED)
+    @Secured ({"ROLE_ADMIN"})
+    public String createTeam(@RequestBody @Valid CreateTeamDto createTeamDto) throws EventNotFoundException {
+        return teamService.createTeam(createTeamDto);
     }
 
     @RequestMapping(value = "/{teamId}", method = RequestMethod.GET)

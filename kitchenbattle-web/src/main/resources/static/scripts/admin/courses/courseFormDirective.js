@@ -5,7 +5,8 @@ angular.module('adminModule')
             restrict: "E",
             templateUrl: "scripts/admin/courses/courseForm.html",
             scope: {
-                course: "="
+                course: "=",
+                teams: "="
             }
         };
     });

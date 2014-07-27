@@ -94,21 +94,21 @@ public class TestdataLoader implements ApplicationListener<ContextRefreshedEvent
 
     private void loadCourseTestData() {
         Course courseOne = courseRepository.save(new Course(COURSE_TEAM1_1, "Marinierte Oliven", "Feinste marinierte entsteinte Oliven mit frischen Kräutern und Feta-Käse", teamRepository.findOne(TEAM_1), CourseType.STARTER, event));
-        setImage(courseOne, "oliven.png");
+        setImage(courseOne, "oliven.png", MediaType.IMAGE_PNG_VALUE);
         Course courseTwo = courseRepository.save(new Course(COURSE_TEAM2_1, "Bärlauchsuppe", "Bärlauch schmeckt frisch und herzhaft nach Knoblauch und verbündet sich gerne mit Kartoffeln zu diesem cremigen Frühlings-Partysüppchen", teamRepository.findOne(TEAM_2), CourseType.STARTER, event));
-        setImage(courseTwo, "suppe.jpg");
+        setImage(courseTwo, "suppe.jpg", MediaType.IMAGE_JPEG_VALUE);
 
         Course courseThree = courseRepository.save(new Course(COURSE_TEAM1_2, "Marinierte Oliven (2)", "Feinste marinierte entsteinte Oliven mit frischen Kräutern und Feta-Käse", teamRepository.findOne(TEAM_1), CourseType.MAIN, event));
-        setImage(courseThree, "oliven.png");
+        setImage(courseThree, "oliven.png", MediaType.IMAGE_PNG_VALUE);
         Course courseFour = courseRepository.save(new Course(COURSE_TEAM2_2, "Bärlauchsuppe (2)", "Bärlauch schmeckt frisch und herzhaft nach Knoblauch und verbündet sich gerne mit Kartoffeln zu diesem cremigen Frühlings-Partysüppchen", teamRepository.findOne(TEAM_2), CourseType.MAIN, event));
-        setImage(courseFour, "suppe.jpg");
+        setImage(courseFour, "suppe.jpg", MediaType.IMAGE_JPEG_VALUE);
     }
 
-    private void setImage(Course course, String name) {
+    private void setImage(Course course, String name, String contentType) {
         InputStream in = this.getClass().getClassLoader().getResourceAsStream(name);
         try {
             byte[] bytes = IOUtils.toByteArray(in);
-            course.addImage(new CourseVariant("NORMAL"), new Image(bytes, MediaType.IMAGE_GIF_VALUE));
+            course.addImage(new CourseVariant("NORMAL"), new Image(bytes, contentType));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

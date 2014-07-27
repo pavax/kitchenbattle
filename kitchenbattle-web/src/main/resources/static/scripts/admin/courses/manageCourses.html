@@ -1,21 +1,12 @@
 <div class="row page-header">
     <div class="col-md-6">
-        <div class="col-md-6">
-            <span class="h1">Manage Courses</span>
-        </div>
-        <div class="col-md-6">
-            <select class="form-control"
-                    ng-model="coursesCtrl.selectedTeam.teamId"
-                    ng-options="team.teamId as team.name for team in coursesCtrl.teams"
-                    ng-change="coursesCtrl.selectTeam(coursesCtrl.selectedTeam.teamId)">
-            </select>
-        </div>
+        <span class="h1">Manage Courses</span>
     </div>
     <div class="col-md-6">
-        <button ng-disabled="!coursesCtrl.selectedTeam.teamId" type="button" class="btn btn-primary pull-right"
+        <button type="button" class="btn btn-primary pull-right"
                 ng-click="coursesCtrl.toogleNewCourseForm()">
             <span class="glyphicon glyphicon-plus"></span>
-            Create Course
+            Create New Course
         </button>
     </div>
 </div>
@@ -29,7 +20,7 @@
         <div class="panel-body">
             <form class="form-horizontal" name="createNewCourseForm" novalidate>
 
-                <course-form course="coursesCtrl.newCourse"></course-form>
+                <course-form course="coursesCtrl.newCourse" teams="coursesCtrl.teams"></course-form>
 
                 <!-- Button -->
                 <div class="form-group">
@@ -53,20 +44,25 @@
 
 </div>
 
-<div class="row" ng-show="coursesCtrl.selectedTeam.teamId">
-    <div class="table-responsive">
-        <table class="table">
+<div class="row" ng-repeat="team in coursesCtrl.teams">
+    <h2>{{team.name}}</h2>
+
+    <div ng-show="{{(coursesCtrl.courses | filter:{'teamId':team.teamId}).length == 0}}">
+        No Courses found for this Team
+    </div>
+    <div class="table-responsive" ng-show="{{(coursesCtrl.courses | filter:{'teamId':team.teamId}).length > 0}}">
+        <table class="table table-striped">
             <thead>
             <tr>
-                <th>Course Typ</th>
-                <th>Course Name</th>
-                <th>Course Description</th>
-                <th>Course Images</th>
-                <th>Actions</th>
+                <th class="col-xs-1">Course Typ</th>
+                <th class="col-xs-3">Course Name</th>
+                <th class="col-xs-4">Course Description</th>
+                <th class="col-xs-3">Course Images</th>
+                <th class="col-xs-1">Actions</th>
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="course in coursesCtrl.courses">
+            <tr ng-repeat="course in coursesCtrl.courses | filter:{'teamId':team.teamId}">
                 <td>{{course.courseType | courseType}}</td>
                 <td>{{course.name}}</td>
                 <td>{{course.description}}</td>
@@ -96,3 +92,5 @@
         </table>
     </div>
 </div>
+
+

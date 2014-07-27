@@ -1,19 +1,13 @@
 'use strict';
 
 angular.module('adminModule')
-    .controller('CoursesController', function ($scope, teams, courses, selectedTeam, selectedEventId, courseService, $state, $modal) {
+    .controller('CoursesController', function ($scope, teams, courses, selectedEventId, courseService, $state, $modal) {
         this.teams = teams;
         this.courses = courses;
 
         var coursesCtrl = this;
 
         this.showCreateCourseForm = false;
-
-        this.selectedTeam = selectedTeam || {};
-
-        this.selectTeam = function (teamId) {
-            $state.go('admin.courses', {teamId: teamId})
-        };
 
         this.toogleNewCourseForm = function () {
             coursesCtrl.showCreateCourseForm = !coursesCtrl.showCreateCourseForm;
@@ -23,7 +17,7 @@ angular.module('adminModule')
         this.saveCourse = function () {
             if ($scope.createNewCourseForm.$valid) {
                 courseService.createCourse(
-                    coursesCtrl.selectedTeam.teamId,
+                    coursesCtrl.newCourse.teamId,
                     coursesCtrl.newCourse.courseType,
                     coursesCtrl.newCourse.name,
                     coursesCtrl.newCourse.description,
@@ -33,7 +27,7 @@ angular.module('adminModule')
                         $state.forceReload();
                     })
                     .error(function (error) {
-                        alert("Oops an Error occured: " + error.data);
+                        alert("Oops an Error occured: " + error.message);
                     });
             }
         };
@@ -46,7 +40,11 @@ angular.module('adminModule')
                 resolve: {
                     course: function () {
                         return course;
+                    },
+                    possibleTeams: function () {
+                        return teams;
                     }
+
                 }
             });
             modalInstance.result
@@ -63,7 +61,7 @@ angular.module('adminModule')
                     $state.forceReload();
                 })
                 .error(function (error) {
-                    alert('Ooops: ' + error)
+                    alert('Ooops: ' + error.message)
                 });
         };
     });

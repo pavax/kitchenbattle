@@ -22,9 +22,14 @@ angular.module('courseBattleVotingModule', []
                 }
             })
             .state('courseBattleVoting.battles', {
-                url: "/battles?eventId",
+                url: "/battles",
                 template: "<div ui-view></div>",
-                abstract: true,
+                abstract: true
+            })
+            .state('courseBattleVoting.battles.master', {
+                url: "?eventId",
+                templateUrl: "scripts/course-battle-voting/courseBattleSelection.html",
+                controller: 'CourseBattleSelectionController as courseBattleSelectionCtrl',
                 resolve: {
                     selectedEventId: function ($stateParams) {
                         if ($stateParams.eventId) {
@@ -32,14 +37,7 @@ angular.module('courseBattleVotingModule', []
                         } else {
                             return null;
                         }
-                    }
-                }
-            })
-            .state('courseBattleVoting.battles.master', {
-                url: "",
-                templateUrl: "scripts/course-battle-voting/courseBattleSelection.html",
-                controller: 'CourseBattleSelectionController as courseBattleSelectionCtrl',
-                resolve: {
+                    },
                     battles: function (courseBattleSearchService, selectedEventId) {
                         if (selectedEventId === null) {
                             return null;

@@ -1,8 +1,10 @@
 'use strict';
 angular.module('adminModule')
-    .controller('CourseEditController', function ($scope, $modalInstance, course, courseService, upload) {
+    .controller('CourseEditController', function ($scope, $modalInstance, course, possibleTeams, courseService, upload) {
 
         $scope.course = angular.copy(course);
+
+        $scope.possibleTeams = possibleTeams;
 
         $scope.imageUpload = {
             variantName: undefined
@@ -14,7 +16,7 @@ angular.module('adminModule')
                     $modalInstance.close();
                 })
                 .error(function (error) {
-                    alert('Ooops' + error);
+                    alert('Ooops' + error.message);
                 })
         };
 

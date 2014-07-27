@@ -51,25 +51,13 @@ angular.module('adminModule', []
                             return response.data;
                         });
                     },
-                    selectedTeam: function (teamService, $stateParams) {
-                        if ($stateParams.teamId) {
-                            return teamService.getTeam($stateParams.teamId).then(function (response) {
-                                return response.data;
-                            });
-                        } else {
+                    courses: function (courseService, selectedEventId){
+                        if (selectedEventId === null) {
                             return null;
                         }
-                    },
-                    courses: function (courseService, selectedTeam) {
-                        if (selectedTeam) {
-                            return courseService.findCoursesByTeam(selectedTeam.teamId)
-                                .then(function (response) {
-                                    return response.data;
-                                });
-                        } else {
-                            return null;
-                        }
-
+                        return courseService.findCoursesByEvent(selectedEventId).then(function (response) {
+                            return response.data;
+                        });
                     }
                 }
             })
@@ -96,7 +84,7 @@ angular.module('adminModule', []
                 }
             })
             .state('admin.coursebattles.result', {
-                url: "/results/:battleId",
+                url: "/:battleId/results",
                 templateUrl: "scripts/admin/course-battles/courseBattleVotingResult.html",
                 controller: 'CourseBattleResultController as courseBattleResultCtrl',
                 resolve: {
