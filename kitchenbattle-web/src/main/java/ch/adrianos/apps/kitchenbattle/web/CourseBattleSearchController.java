@@ -30,6 +30,7 @@ public class CourseBattleSearchController {
 
     @RequestMapping(value = "/results", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
+    @Secured({"ROLE_ADMIN"})
     public List<CourseBattleResultDto> getAllCourseBattleResultsForEvent(@RequestParam String eventId) {
         return courseBattleSearchService.getAllCourseBattleResultsForEvent(new EventId(eventId));
     }
