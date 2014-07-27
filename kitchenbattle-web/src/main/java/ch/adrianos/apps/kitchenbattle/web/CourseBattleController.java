@@ -20,13 +20,10 @@ public class CourseBattleController {
 
     private final CourseBattleRepository courseBattleRepository;
 
-    private final CourseBattleSearchService courseBattleSearchService;
-
     @Autowired
-    public CourseBattleController(CourseBattleService courseBattleService, CourseBattleRepository courseBattleRepository, CourseBattleSearchService courseBattleSearchService) {
+    public CourseBattleController(CourseBattleService courseBattleService, CourseBattleRepository courseBattleRepository) {
         this.courseBattleService = courseBattleService;
         this.courseBattleRepository = courseBattleRepository;
-        this.courseBattleSearchService = courseBattleSearchService;
     }
 
     @RequestMapping(method = RequestMethod.POST)
