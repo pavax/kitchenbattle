@@ -10,15 +10,15 @@ import ch.adrianos.apps.kitchenbattle.domain.event.EventRepository;
 import ch.adrianos.apps.kitchenbattle.domain.team.Team;
 import ch.adrianos.apps.kitchenbattle.domain.team.TeamId;
 import ch.adrianos.apps.kitchenbattle.domain.team.TeamRepository;
-import ch.adrianos.apps.kitchenbattle.service.CreateTeamDto;
-import ch.adrianos.apps.kitchenbattle.service.EventNotFoundException;
-import ch.adrianos.apps.kitchenbattle.service.TeamService;
+import ch.adrianos.apps.kitchenbattle.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional(rollbackFor = {EventNotFoundException.class})
 public class TeamServiceImpl implements TeamService {
 
     private final TeamRepository teamRepository;
@@ -51,15 +51,14 @@ public class TeamServiceImpl implements TeamService {
     public void deleteTeam(String teamId) {
         List<Course> courses = courseRepository.findByTeamId(new TeamId(teamId));
         deleteRelatedCourseBattles(courses);
-        courseRepository.deleteInBatch(courses);
+        courseRepository.delete(courses);
         teamRepository.delete(new TeamId(teamId));
-
     }
 
     private void deleteRelatedCourseBattles(List<Course> courses) {
         for (Course course : courses) {
             List<CourseBattle> courseBattlesByCourseId = courseBattleRepository.findCourseBattlesByCourseId(course.getCourseId());
-            courseBattleRepository.deleteInBatch(courseBattlesByCourseId);
+            courseBattleRepository.delete(courseBattlesByCourseId);
         }
     }
 }

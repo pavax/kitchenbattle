@@ -27,13 +27,13 @@ public class SwaggerConfig {
                 .includePatterns(".*api.*");
     }
 
-    @Bean
-    public SwaggerSpringMvcPlugin manageApi() {
-        return new SwaggerSpringMvcPlugin(this.springSwaggerConfig)
-                .apiInfo(manageApiInfo())
-                .swaggerGroup("manage")
-                .includePatterns(".*manage.*");
-    }
+//    @Bean
+//    public SwaggerSpringMvcPlugin manageApi() {
+//        return new SwaggerSpringMvcPlugin(this.springSwaggerConfig)
+//                .apiInfo(manageApiInfo())
+//                .swaggerGroup("manage")
+//                .includePatterns(".*manage.*");
+//    }
 
     private ApiInfo appApiInfo() {
         return new ApiInfo(

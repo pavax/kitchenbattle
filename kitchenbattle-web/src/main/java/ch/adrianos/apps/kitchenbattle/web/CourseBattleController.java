@@ -7,6 +7,7 @@ import ch.adrianos.apps.kitchenbattle.domain.coursebattle.CourseBattleState;
 import ch.adrianos.apps.kitchenbattle.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -30,6 +31,7 @@ public class CourseBattleController {
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
+    @Secured({"ROLE_ADMIN"})
     public String createNewBattle(@RequestBody @Valid CreateCourseBattleDto createCourseBattleDto) throws CourseNotFoundException {
         return courseBattleService.createNewCourseBattle(createCourseBattleDto);
     }
@@ -46,12 +48,14 @@ public class CourseBattleController {
 
     @RequestMapping(value = "/{battleId}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.OK)
+    @Secured({"ROLE_ADMIN"})
     public void deleteBattle(@PathVariable String battleId) throws CourseBattleNotFoundException {
         courseBattleService.deleteCourseBattle(battleId);
     }
 
     @RequestMapping(value = "{battleId}/state", method = RequestMethod.PATCH)
     @ResponseStatus(HttpStatus.OK)
+    @Secured({"ROLE_ADMIN"})
     public void updateBattleStatus(@PathVariable String battleId, @RequestBody CourseBattleStateResource courseBattleStateResource) throws CourseBattleNotFoundException {
         courseBattleService.updateCourseBattleStatus(battleId, courseBattleStateResource.nextState);
     }

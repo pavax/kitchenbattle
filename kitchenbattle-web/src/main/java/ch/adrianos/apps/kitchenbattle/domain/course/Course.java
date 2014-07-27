@@ -46,6 +46,7 @@ public class Course {
     private Set<CourseVariant> courseVariants = new HashSet<>();
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "courseId")
     @Valid
     private Set<CourseImage> courseImages = new HashSet<>();
 

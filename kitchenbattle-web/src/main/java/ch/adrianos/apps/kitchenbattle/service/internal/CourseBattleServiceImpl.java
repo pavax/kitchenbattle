@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Transactional
+@Transactional(rollbackFor = {CourseNotFoundException.class})
 public class CourseBattleServiceImpl implements CourseBattleService {
 
     private final CourseBattleRepository courseBattleRepository;
@@ -33,10 +33,10 @@ public class CourseBattleServiceImpl implements CourseBattleService {
     public String createNewCourseBattle(CreateCourseBattleDto createCourseBattleDto) throws CourseNotFoundException {
         Course courseOne = getCourse(createCourseBattleDto.getCourseOneId());
         Course courseTwo = getCourse(createCourseBattleDto.getCourseTwoId());
-        if (!courseOne.getCourseType().equals(createCourseBattleDto.getCourseType())){
+        if (!courseOne.getCourseType().equals(createCourseBattleDto.getCourseType())) {
             throw new IllegalArgumentException("CourseType of CourseOne does not match the expected Type of the CourseBattle");
         }
-        if (!courseTwo.getCourseType().equals(createCourseBattleDto.getCourseType())){
+        if (!courseTwo.getCourseType().equals(createCourseBattleDto.getCourseType())) {
             throw new IllegalArgumentException("CourseType of CourseOne does not match the expected Type of the CourseBattle");
         }
         // TODO check that there is no existing battle between the two teams

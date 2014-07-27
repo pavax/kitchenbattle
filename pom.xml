@@ -9,6 +9,10 @@
         <module>kitchenbattle-web</module>
     </modules>
 
+    <groupId>ch.adrianos.apps</groupId>
+    <artifactId>kitchenbattle</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -19,9 +23,15 @@
         <java.version>1.8</java.version>
     </properties>
 
-    <groupId>ch.adrianos.apps</groupId>
-    <artifactId>kitchenbattle</artifactId>
-    <version>1.0-SNAPSHOT</version>
-
+    <repositories>
+        <repository>
+            <id>spring-snapshots</id>
+            <name>Spring Snapshots</name>
+            <url>http://repo.spring.io/snapshot</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
 
 </project>

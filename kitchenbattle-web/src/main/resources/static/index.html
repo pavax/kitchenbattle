@@ -1,6 +1,6 @@
 <!doctype html>
 <html class="no-js">
-  <head>
+<head>
     <meta charset="utf-8">
     <title></title>
     <meta name="description" content="">
@@ -8,88 +8,91 @@
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
-    <link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.css"/>
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
 
-    <link rel="stylesheet" href="vendor/angular-upload/src/directives/btnUpload.min.css" />
-  </head>
-  <body ng-app="kitchenbattleWebApp">
-    <!--[if lt IE 9]>
-      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-    <![endif]-->
+    <link rel="stylesheet" href="vendor/angular-upload/src/directives/btnUpload.min.css"/>
+</head>
+<body ng-app="kitchenbattleWebApp">
+<!--[if lt IE 9]>
+<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+    your browser</a> to improve your experience.</p>
+<![endif]-->
 
-    <!-- Add your site or application content here -->
-    <div class="container-fluid">
-      <div class="header">
-        <ul class="nav nav-pills pull-right" >
-          <li ><a ng-href="#">Home</a></li>
-          <li ng-class="{active: $state.includes('courseBattleVoting')}"><a ui-sref="courseBattleVoting.event">Course Battle Voting</a></li>
-          <li ng-class="{active: $state.includes('battleResult')}"><a ui-sref="battleResult.show">Total Battle Result</a></li>
-          <li ng-class="{active: $state.includes('admin')}"><a ui-sref="admin.teams">Admin</a></li>
+<!-- Add your site or application content here -->
+<div class="container-fluid">
+    <div class="header">
+        <ul class="nav nav-pills pull-right">
+            <li><a ng-href="#">Home</a></li>
+            <li ng-class="{active: $state.includes('courseBattleVoting')}"><a ui-sref="courseBattleVoting.event">Course
+                Battle Voting</a></li>
+            <li ng-class="{active: $state.includes('battleResult')}"><a ui-sref="battleResult.show">Total Battle
+                Result</a></li>
+            <li ng-class="{active: $state.includes('admin')}"><a ui-sref="admin.teams">Admin</a></li>
         </ul>
         <h3 class="text-muted">Kitchen-Battle</h3>
-      </div>
-
-     <div class="row" ui-view></div>
-
-      <div class="footer">
-        <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
-      </div>
     </div>
 
-    <!-- build:js(.) scripts/vendor.js -->
-    <!-- bower:js -->
-    <script src="vendor/jquery/dist/jquery.js"></script>
-    <script src="vendor/angular/angular.js"></script>
-    <script src="vendor/json3/lib/json3.js"></script>
-    <script src="vendor/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="vendor/angular-upload/angular-upload.js"></script>
-    <script src="vendor/angular-resource/angular-resource.js"></script>
-    <script src="vendor/angular-cookies/angular-cookies.js"></script>
-    <script src="vendor/angular-sanitize/angular-sanitize.js"></script>
-    <script src="vendor/angular-touch/angular-touch.js"></script>
-    <script src="vendor/angular-ui-router/release/angular-ui-router.js"></script>
-    <script src="vendor/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <div class="row" ui-view></div>
 
-    <!-- endbower -->
-    <script src="vendor/angular-i18n/angular-locale_de-ch.js"></script>
-    <!-- endbuild -->
-    <script src="vendor/angular-fullscreen/angular-fullscreen.js"></script>
+    <div class="footer">
+        <p><span class="glyphicon glyphicon-heart"></span> mimacom ag</p>
+    </div>
+</div>
 
-        <!-- build:js({.tmp,app}) scripts/scripts.js -->
-        <script src="scripts/app.js"></script>
+<!-- build:js(.) scripts/vendor.js -->
+<!-- bower:js -->
+<script src="vendor/jquery/dist/jquery.js"></script>
+<script src="vendor/angular/angular.js"></script>
+<script src="vendor/json3/lib/json3.js"></script>
+<script src="vendor/bootstrap/dist/js/bootstrap.js"></script>
+<script src="vendor/angular-upload/angular-upload.js"></script>
+<script src="vendor/angular-resource/angular-resource.js"></script>
+<script src="vendor/angular-cookies/angular-cookies.js"></script>
+<script src="vendor/angular-sanitize/angular-sanitize.js"></script>
+<script src="vendor/angular-touch/angular-touch.js"></script>
+<script src="vendor/angular-ui-router/release/angular-ui-router.js"></script>
+<script src="vendor/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 
-        <script src="scripts/common/commonsModule.js"></script>
-        <script src="scripts/common/resources/teamService.js"></script>
-        <script src="scripts/common/resources/courseBattleService.js"></script>
-        <script src="scripts/common/resources/courseBattleSearchService.js"></script>
-        <script src="scripts/common/resources/courseService.js"></script>
-        <script src="scripts/common/resources/courseBattleVoteService.js"></script>
-        <script src="scripts/common/resources/juryTeamVoteService.js"></script>
-        <script src="scripts/common/resources/eventService.js"></script>
-        <script src="scripts/common/filters/courseTypeFilter.js"></script>
-        <script src="scripts/common/filters/courseBattleStateFilter.js"></script>
+<!-- endbower -->
+<script src="vendor/angular-i18n/angular-locale_de-ch.js"></script>
+<!-- endbuild -->
+<script src="vendor/angular-fullscreen/angular-fullscreen.js"></script>
 
-        <script src="scripts/course-battle-voting/courseBattleVotingModule.js"></script>
-        <script src="scripts/course-battle-voting/eventSelectionCtrl.js"></script>
-        <script src="scripts/course-battle-voting/courseBattleSelectionCtrl.js"></script>
-        <script src="scripts/course-battle-voting/courseBattleVotingCtrl.js"></script>
+<!-- build:js({.tmp,app}) scripts/scripts.js -->
+<script src="scripts/app.js"></script>
 
-        <script src="scripts/admin/adminModule.js"></script>
-        <script src="scripts/admin/adminCtrl.js"></script>
-        <script src="scripts/admin/teams/teamCtrl.js"></script>
-        <script src="scripts/admin/courses/coursesCtrl.js"></script>
-        <script src="scripts/admin/courses/courseFormDirective.js"></script>
-        <script src="scripts/admin/courses/courseEditCtrl.js"></script>
-        <script src="scripts/admin/course-battles/courseBattlesCtrl.js"></script>
-        <script src="scripts/admin/course-battles/courseBattleResultCtrl.js"></script>
+<script src="scripts/common/commonsModule.js"></script>
+<script src="scripts/common/resources/teamService.js"></script>
+<script src="scripts/common/resources/courseBattleService.js"></script>
+<script src="scripts/common/resources/courseBattleSearchService.js"></script>
+<script src="scripts/common/resources/courseService.js"></script>
+<script src="scripts/common/resources/courseBattleVoteService.js"></script>
+<script src="scripts/common/resources/juryTeamVoteService.js"></script>
+<script src="scripts/common/resources/eventService.js"></script>
+<script src="scripts/common/filters/courseTypeFilter.js"></script>
+<script src="scripts/common/filters/courseBattleStateFilter.js"></script>
 
-        <script src="scripts/kitchenbattle-result/battleResultModule.js"></script>
-        <script src="scripts/kitchenbattle-result/battleResultCtrl.js"></script>
-        <!-- endbuild -->
+<script src="scripts/course-battle-voting/courseBattleVotingModule.js"></script>
+<script src="scripts/course-battle-voting/eventSelectionCtrl.js"></script>
+<script src="scripts/course-battle-voting/courseBattleSelectionCtrl.js"></script>
+<script src="scripts/course-battle-voting/courseBattleVotingCtrl.js"></script>
+
+<script src="scripts/admin/adminModule.js"></script>
+<script src="scripts/admin/adminCtrl.js"></script>
+<script src="scripts/admin/teams/teamCtrl.js"></script>
+<script src="scripts/admin/courses/coursesCtrl.js"></script>
+<script src="scripts/admin/courses/courseFormDirective.js"></script>
+<script src="scripts/admin/courses/courseEditCtrl.js"></script>
+<script src="scripts/admin/course-battles/courseBattlesCtrl.js"></script>
+<script src="scripts/admin/course-battles/courseBattleResultCtrl.js"></script>
+
+<script src="scripts/kitchenbattle-result/battleResultModule.js"></script>
+<script src="scripts/kitchenbattle-result/battleResultCtrl.js"></script>
+<!-- endbuild -->
 </body>
 </html>

@@ -8,6 +8,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -31,12 +32,14 @@ public class CourseController {
 
     @RequestMapping(method = RequestMethod.POST, consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
+    @Secured({"ROLE_ADMIN"})
     public String createCourse(@RequestBody @Valid CreateCourseDto createCourseDto) throws TeamNotFoundException, EventNotFoundException {
         return courseService.createNewCourse(createCourseDto);
     }
 
     @RequestMapping(value = "/find/byTeamId", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
+    @Secured({"ROLE_ADMIN"})
     public List<Course> findCoursesByTeamId(@RequestParam String teamId) {
         return courseRepository.findByTeamId(new TeamId(teamId));
     }
@@ -49,18 +52,21 @@ public class CourseController {
 
     @RequestMapping(value = "/{courseId}", method = RequestMethod.PATCH, consumes = "application/json")
     @ResponseStatus(HttpStatus.OK)
+    @Secured({"ROLE_ADMIN"})
     public void updateCourse(@PathVariable String courseId, @RequestBody @Valid UpdateCourseDto updateCourseDto) throws CourseNotFoundException {
         courseService.updateCourse(courseId, updateCourseDto);
     }
 
     @RequestMapping(value = "/{courseId}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.OK)
+    @Secured({"ROLE_ADMIN"})
     public void deleteCourse(@PathVariable String courseId) throws CourseNotFoundException {
         courseService.deleteCourse(courseId);
     }
 
     @RequestMapping(value = "/{courseId}/image/{variant}", method = RequestMethod.POST, consumes = "multipart/form-data")
     @ResponseStatus(HttpStatus.OK)
+    @Secured({"ROLE_ADMIN"})
     public void updateCourseImage(@PathVariable String courseId, @PathVariable String variant, @RequestParam("file") MultipartFile file) throws IOException, CourseNotFoundException {
         if (!file.isEmpty()) {
             courseService.addImage(courseId, variant, new Image(file.getBytes(), file.getContentType()));
@@ -80,6 +86,7 @@ public class CourseController {
     }
 
     @RequestMapping(value = "/{courseId}/image/{variant}", method = RequestMethod.DELETE)
+    @Secured({"ROLE_ADMIN"})
     public void deleteCourseImage(@PathVariable String courseId, @PathVariable String variant) throws CourseNotFoundException {
         Course course = getCourseInternally(courseId);
         courseService.deleteImage(courseId, variant);

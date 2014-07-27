@@ -13,6 +13,7 @@ public class CourseImage {
 
     @NotNull
     @Valid
+    @Embedded
     private CourseVariant variant;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

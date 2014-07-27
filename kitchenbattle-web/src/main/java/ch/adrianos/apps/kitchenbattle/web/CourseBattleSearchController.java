@@ -6,6 +6,7 @@ import ch.adrianos.apps.kitchenbattle.service.CourseBattleSearchResultDto;
 import ch.adrianos.apps.kitchenbattle.service.CourseBattleSearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,6 +36,7 @@ public class CourseBattleSearchController {
 
     @RequestMapping(value = "/results/{battleId}", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
+    @Secured({"ROLE_ADMIN"})
     public CourseBattleResultDto getCourseBattleResult(@PathVariable String battleId) {
         return courseBattleSearchService.getCourseBattleResult(battleId);
     }

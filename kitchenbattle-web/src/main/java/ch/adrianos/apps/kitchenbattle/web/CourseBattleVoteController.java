@@ -5,6 +5,7 @@ import ch.adrianos.apps.kitchenbattle.domain.course.CourseId;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -36,6 +37,7 @@ public class CourseBattleVoteController {
 
     @RequestMapping(value = "search/countCourseVotes", method = RequestMethod.HEAD)
     @ResponseStatus(HttpStatus.OK)
+    @Secured({"ROLE_ADMIN"})
     public Integer countVotes(@RequestParam String battleId, @RequestParam String courseId) {
         return courseBattleVoteRepository.countVotesForCourse(new CourseId(courseId), new BattleId(battleId));
     }
