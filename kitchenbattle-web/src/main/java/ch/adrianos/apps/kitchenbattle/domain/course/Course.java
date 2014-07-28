@@ -16,8 +16,7 @@ import org.springframework.util.Assert;
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 public class Course {
@@ -43,7 +42,8 @@ public class Course {
     private CourseType courseType;
 
     @ElementCollection
-    private Set<CourseVariant> courseVariants = new HashSet<>();
+    @OrderColumn(name = "Order")
+    private List<CourseVariant> courseVariants = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "courseId")
@@ -56,11 +56,11 @@ public class Course {
     private EventId eventId;
 
     public Course(CourseId courseId, String name, String description, Team teamId, CourseType courseType, Event event) {
-        this.description = description;
         Assert.notNull(courseId);
         Assert.notNull(name);
         Assert.notNull(teamId);
         Assert.notNull(courseType);
+        this.description = description;
         this.courseId = courseId;
         this.name = name;
         this.teamId = teamId.getTeamId();
@@ -124,7 +124,7 @@ public class Course {
     }
 
     public Set<CourseVariant> getCourseVariants() {
-        return courseVariants;
+        return Collections.unmodifiableSet(new LinkedHashSet<>(this.courseVariants));
     }
 
     @Override

@@ -1,12 +1,17 @@
 package ch.adrianos.apps.kitchenbattle.domain.course;
 
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.validation.constraints.NotNull;
 
 @Embeddable
+@Access(AccessType.FIELD)
 public class CourseVariant {
 
     @NotNull
+    @Column(name = "courseVariant")
     private String value;
 
     public CourseVariant(String value) {

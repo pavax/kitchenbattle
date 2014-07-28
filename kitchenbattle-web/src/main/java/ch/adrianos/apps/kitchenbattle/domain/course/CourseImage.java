@@ -1,5 +1,7 @@
 package ch.adrianos.apps.kitchenbattle.domain.course;
 
+import org.springframework.util.Assert;
+
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -16,11 +18,13 @@ public class CourseImage {
     @Embedded
     private CourseVariant variant;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @Valid
     private Image image;
 
     public CourseImage(CourseVariant variant, Image image) {
+        Assert.notNull(variant);
+        Assert.notNull(variant);
         this.id = UUID.randomUUID().toString();
         this.variant = variant;
         this.image = image;
