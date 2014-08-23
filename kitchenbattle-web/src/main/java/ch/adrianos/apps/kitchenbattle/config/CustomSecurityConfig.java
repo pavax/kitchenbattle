@@ -1,42 +1,53 @@
 package ch.adrianos.apps.kitchenbattle.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configurers.GlobalAuthenticationConfigurerAdapter;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 @Configuration
-@EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
-public class CustomSecurityConfig extends WebSecurityConfigurerAdapter {
+public class CustomSecurityConfig {
 
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+//    @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
+//    protected static class ApplicationSecurity extends WebSecurityConfigurerAdapter {
+//
+//        @Autowired
+//        private SecurityProperties security;
+//
+//        @Override
+//        protected void configure(HttpSecurity http) throws Exception {
+//            http.authorizeRequests().anyRequest().fullyAuthenticated().and().formLogin().permitAll();
+//            http.csrf().disable();
+//        }
+//    }
+//
+//    @Bean
+//    public ApplicationSecurity applicationSecurity() {
+//        return new ApplicationSecurity();
+//    }
 
-        auth.inMemoryAuthentication()
-                .withUser("user").password("secret").roles("USER")
-                .and()
-                .withUser("admin").password("secret").roles("USER", "ADMIN");
+    @Bean
+    public AuthenticationSecurity authenticationSecurity() {
+        return new AuthenticationSecurity();
     }
 
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        // Ignore any request that starts with "/resources/".
-        web.ignoring().antMatchers("/error");
-    }
+    @Order(Ordered.HIGHEST_PRECEDENCE + 10)
+    protected static class AuthenticationSecurity extends GlobalAuthenticationConfigurerAdapter {
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable();
-        http.authorizeRequests()
-                .anyRequest().authenticated();
-        http.formLogin();
-        http.logout().logoutUrl("logout");
-        http.httpBasic().realmName("kitchenbattle-app");
+        @Override
+        public void init(AuthenticationManagerBuilder auth) throws Exception {
+            auth.inMemoryAuthentication()
+                    .withUser("admin").password("secret").roles("ADMIN", "USER")
+                    .and()
+                    .withUser("user").password("secret").roles("USER");
+        }
     }
-
 }

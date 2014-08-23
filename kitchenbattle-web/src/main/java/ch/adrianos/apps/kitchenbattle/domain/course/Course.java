@@ -42,7 +42,7 @@ public class Course {
     private CourseType courseType;
 
     @ElementCollection
-    @OrderColumn(name = "Order")
+    @OrderColumn
     private List<CourseVariant> courseVariants = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
