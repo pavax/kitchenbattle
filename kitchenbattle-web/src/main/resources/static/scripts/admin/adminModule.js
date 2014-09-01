@@ -20,6 +20,15 @@ angular.module('adminModule', []
                         } else {
                             return null;
                         }
+                    },
+                    selectedEvent: function (selectedEventId, eventsService) {
+                        if (selectedEventId) {
+                            return eventsService.getEvent(selectedEventId).then(function (response) {
+                                return response.data;
+                            });
+                        } else {
+                            return null;
+                        }
                     }
                 }
             })
@@ -51,7 +60,7 @@ angular.module('adminModule', []
                             return response.data;
                         });
                     },
-                    courses: function (courseService, selectedEventId){
+                    courses: function (courseService, selectedEventId) {
                         if (selectedEventId === null) {
                             return null;
                         }

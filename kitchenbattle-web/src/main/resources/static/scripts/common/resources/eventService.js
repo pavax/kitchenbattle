@@ -6,6 +6,9 @@ angular.module('commons.resources.events', [])
             findAllEvents: function () {
                 return $http.get('api/events');
             },
+            getEvent: function (eventId) {
+                return $http.get('api/events/' + eventId);
+            },
             createEvent: function () {
                 return $http.post('api/events', {name: name, eventDate: eventDate});
             }

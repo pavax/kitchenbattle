@@ -32,4 +32,22 @@ public class TeamId implements Serializable {
     public String getValue() {
         return value;
     }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        TeamId teamId = (TeamId) o;
+
+        if (value != null ? !value.equals(teamId.value) : teamId.value != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return value != null ? value.hashCode() : 0;
+    }
 }

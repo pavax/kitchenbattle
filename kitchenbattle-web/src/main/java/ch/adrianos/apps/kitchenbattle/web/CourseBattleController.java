@@ -31,11 +31,13 @@ public class CourseBattleController {
     @Secured({"ROLE_ADMIN"})
     public String createNewBattle(@RequestBody @Valid CreateCourseBattleDto createCourseBattleDto) throws CourseNotFoundException {
         return courseBattleService.createNewCourseBattle(createCourseBattleDto);
+
     }
 
     @RequestMapping(value = "/{battleId}", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     public CourseBattle getBattle(@PathVariable String battleId) throws CourseBattleNotFoundException {
+        System.out.println("000009999");
         CourseBattle courseBattle = courseBattleRepository.findOne(new BattleId(battleId));
         if (courseBattle == null) {
             throw new CourseBattleNotFoundException(battleId);

@@ -39,4 +39,21 @@ public class CourseId implements Serializable {
         sb.append('}');
         return sb.toString();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        CourseId courseId = (CourseId) o;
+
+        if (!value.equals(courseId.value)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return value.hashCode();
+    }
 }

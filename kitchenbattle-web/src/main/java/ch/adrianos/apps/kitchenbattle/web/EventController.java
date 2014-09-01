@@ -3,6 +3,7 @@ package ch.adrianos.apps.kitchenbattle.web;
 import ch.adrianos.apps.kitchenbattle.domain.event.Event;
 import ch.adrianos.apps.kitchenbattle.domain.event.EventId;
 import ch.adrianos.apps.kitchenbattle.domain.event.EventRepository;
+import ch.adrianos.apps.kitchenbattle.service.EventNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,6 +28,15 @@ public class EventController {
     @RequestMapping(method = RequestMethod.GET)
     public List<Event> findEvents() {
         return eventRepository.findAll();
+    }
+
+    @RequestMapping(value = "/{eventId}", method = RequestMethod.GET)
+    public Event getEvent(@PathVariable String eventId) throws EventNotFoundException {
+        Event event = eventRepository.findOne(new EventId(eventId));
+        if (event == null){
+          throw new EventNotFoundException(eventId);
+        }
+        return event;
     }
 
     @RequestMapping(value = "/{eventId}", method = RequestMethod.DELETE)

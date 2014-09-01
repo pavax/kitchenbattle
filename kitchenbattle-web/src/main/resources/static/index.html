@@ -25,19 +25,19 @@
 
 <!-- Add your site or application content here -->
 <div class="container-fluid">
-    <div class="header" ng-controller="menuCtrl as menu">
+    <div class="header" ng-controller="menuCtrl as menuCtrl">
         <ul class="nav nav-pills pull-right">
             <li ng-class="{active: $state.includes('courseBattleVoting')}">
                 <a ui-sref="courseBattleVoting.event">Course Battle Voting</a>
             </li>
             <li ng-class="{active: $state.includes('admin')}"
-                ng-show="menu.currentUser.isAdmin">
-                <a ui-sref="admin.teams">Admin</a>
+                ng-show="menuCtrl.currentUser.isAdmin">
+                <a ui-sref="admin.teams({ eventId: menuCtrl.menu.admin.selectedEventId})">Admin</a>
             </li>
         </ul>
         <h3 class="text-muted">
             Kitchen-Battle
-            <small>{{menu.currentUser.username}}</small>
+            <small>{{menuCtrl.currentUser.username}}</small>
         </h3>
     </div>
 
