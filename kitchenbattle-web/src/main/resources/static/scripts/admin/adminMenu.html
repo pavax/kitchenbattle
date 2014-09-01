@@ -10,31 +10,29 @@
                 ng-change="adminCtrl.selectEvent(adminCtrl.selectedEventId)">
         </select>
     </div>
+    <div class="dropdown">
+        <a href="" class="dropdown-toggle">
+            Event Actions
+        </a>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+            <li role="presentation">
+                <a role="menuitem" tabindex="-1" href="" ng-click="adminCtrl.createNewEventModal()">
+                    <span class="glyphicon glyphicon-plus"></span> Create New Event
+                </a>
+            </li>
 
-    <div>
-        <button type="button"
-                class="btn btn-default btn-xs"
-                ng-click="adminCtrl.createNewEventModal()">
-            <span class="glyphicon glyphicon-plus"></span> Create New Event
-        </button>
-    </div>
+            <li role="presentation" ng-show="adminCtrl.selectedEventId">
+                <a role="menuitem" tabindex="-1" href="" ng-click="adminCtrl.editEventModal()">
+                    <span class="glyphicon glyphicon-edit"></span> Update Event
+                </a>
+            </li>
 
-    <div>
-        <button type="button"
-                class="btn btn-default btn-xs"
-                ng-click="adminCtrl.editEventModal()"
-                ng-show="adminCtrl.selectedEventId">
-            <span class="glyphicon glyphicon-edit"></span> Update Event
-        </button>
-    </div>
-
-    <div>
-        <button type="button"
-                class="btn btn-default btn-xs"
-                ng-click="adminCtrl.deleteEvent(adminCtrl.selectedEventId)"
-                ng-show="adminCtrl.selectedEventId">
-            <span class="glyphicon glyphicon-trash"></span> Delete Event
-        </button>
+            <li role="presentation" ng-show="adminCtrl.selectedEventId" ng-show="adminCtrl.selectedEventId">
+                <a role="menuitem" tabindex="-1" href="" ng-click="adminCtrl.deleteEvent(adminCtrl.selectedEventId)">
+                    <span class="glyphicon glyphicon-trash"></span> Delete Event
+                </a>
+            </li>
+        </ul>
     </div>
 
     <div class="spacer10"></div>
