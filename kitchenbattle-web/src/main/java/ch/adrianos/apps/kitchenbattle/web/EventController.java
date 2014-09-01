@@ -5,6 +5,7 @@ import ch.adrianos.apps.kitchenbattle.domain.event.EventId;
 import ch.adrianos.apps.kitchenbattle.domain.event.EventRepository;
 import ch.adrianos.apps.kitchenbattle.service.EventNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,8 +22,10 @@ public class EventController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public void createEvent(@RequestBody Event event) {
-        eventRepository.save(event);
+    @ResponseStatus(HttpStatus.CREATED)
+    public String createEvent(@RequestBody Event event) {
+        Event save = eventRepository.save(event);
+        return save.getId().getValue();
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -33,10 +36,15 @@ public class EventController {
     @RequestMapping(value = "/{eventId}", method = RequestMethod.GET)
     public Event getEvent(@PathVariable String eventId) throws EventNotFoundException {
         Event event = eventRepository.findOne(new EventId(eventId));
-        if (event == null){
-          throw new EventNotFoundException(eventId);
+        if (event == null) {
+            throw new EventNotFoundException(eventId);
         }
         return event;
+    }
+
+    @RequestMapping(value = "/{eventId}", method = RequestMethod.PUT)
+    public void updateEvent(@RequestBody Event event) {
+        eventRepository.save(event);
     }
 
     @RequestMapping(value = "/{eventId}", method = RequestMethod.DELETE)

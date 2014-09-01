@@ -9,8 +9,14 @@ angular.module('commons.resources.events', [])
             getEvent: function (eventId) {
                 return $http.get('api/events/' + eventId);
             },
-            createEvent: function () {
+            createEvent: function (name, eventDate) {
                 return $http.post('api/events', {name: name, eventDate: eventDate});
+            },
+            deleteEvent: function (eventId) {
+                return $http.delete('api/events/' + eventId);
+            },
+            updateEvent: function (eventData) {
+                return $http.put('api/events/' + eventData.eventId, eventData);
             }
         }
     });

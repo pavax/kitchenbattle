@@ -1,11 +1,41 @@
 <div class="col-md-2">
 
-    <label for="events">Selected Event</label>
-    <select id="events" class="form-control"
-            ng-model="adminCtrl.selectedEventId"
-            ng-options="event.eventId as (event.name+' '+event.eventDate|date) for event in adminCtrl.events"
-            ng-change="adminCtrl.selectEvent(adminCtrl.selectedEventId)">
-    </select>
+    <div ng-if="adminCtrl.events.length > 0">
+        <label for="events">Selected Event</label>
+        <select id="events"
+                class="form-control"
+
+                ng-model="adminCtrl.selectedEventId"
+                ng-options="event.eventId as (event.name+' '+event.eventDate|date) for event in adminCtrl.events"
+                ng-change="adminCtrl.selectEvent(adminCtrl.selectedEventId)">
+        </select>
+    </div>
+
+    <div>
+        <button type="button"
+                class="btn btn-default btn-xs"
+                ng-click="adminCtrl.createNewEventModal()">
+            <span class="glyphicon glyphicon-plus"></span> Create New Event
+        </button>
+    </div>
+
+    <div>
+        <button type="button"
+                class="btn btn-default btn-xs"
+                ng-click="adminCtrl.editEventModal()"
+                ng-show="adminCtrl.selectedEventId">
+            <span class="glyphicon glyphicon-edit"></span> Update Event
+        </button>
+    </div>
+
+    <div>
+        <button type="button"
+                class="btn btn-default btn-xs"
+                ng-click="adminCtrl.deleteEvent(adminCtrl.selectedEventId)"
+                ng-show="adminCtrl.selectedEventId">
+            <span class="glyphicon glyphicon-trash"></span> Delete Event
+        </button>
+    </div>
 
     <div class="spacer10"></div>
 
@@ -16,6 +46,10 @@
             Course-Battles</a></li>
     </ul>
 </div>
+
 <div class="col-md-10 main">
-    <div ui-view></div>
+    <div ui-view ng-show="adminCtrl.selectedEventId"></div>
+    <div ng-if="!adminCtrl.selectedEventId">
+        <div class="alert alert-info" role="alert"><strong>Info!</strong> No Event has been selected yet.</div>
+    </div>
 </div>

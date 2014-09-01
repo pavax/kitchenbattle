@@ -1,0 +1,39 @@
+<div class="modal-header">
+    <h3 class="modal-title">
+        <span ng-if="!newEvent.eventId">Create a new Event</span>
+        <span ng-if="newEvent.eventId">Edit Event</span>
+    </h3>
+</div>
+<div class="modal-body">
+
+    <form name="eventForm" class="form-horizontal" novalidate>
+        <fieldset>
+
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="eventName">Event Name</label>
+
+                <div class="col-md-4">
+                    <input id="eventName" name="eventName" type="text" placeholder="Event Name"
+                           class="form-control" ng-model="newEvent.eventName" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-4 control-label">Event Date</label>
+
+                <div class="col-md-4">
+                    <div style="display:inline-block; min-height:290px;">
+                        <datepicker id="eventDate" name="eventDate" ng-model="newEvent.eventDate"
+                                    required
+                                    min-date="minDate"
+                                    show-weeks="true" class="well well-sm"></datepicker>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="ok()" ng-disabled="eventForm.$invalid">Save</button>
+    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</div>
