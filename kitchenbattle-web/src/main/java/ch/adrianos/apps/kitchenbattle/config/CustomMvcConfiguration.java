@@ -7,11 +7,15 @@ import org.springframework.boot.context.embedded.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.mvc.WebContentInterceptor;
 
 import javax.servlet.MultipartConfigElement;
 
 @Configuration
-public class CustomMvcConfiguration {
+public class CustomMvcConfiguration extends WebMvcConfigurerAdapter {
 
     @Bean
     public ObjectMapper buildObjectMapper() {
@@ -23,13 +27,23 @@ public class CustomMvcConfiguration {
         return jackson2ObjectMapperFactoryBean.getObject();
     }
 
-
     @Bean
     MultipartConfigElement multipartConfigElement() {
         MultipartConfigFactory factory = new MultipartConfigFactory();
         factory.setMaxFileSize("1024KB");
         factory.setMaxRequestSize("1024KB");
         return factory.createMultipartConfig();
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        WebContentInterceptor webContentInterceptor = new WebContentInterceptor();
+        webContentInterceptor.setCacheSeconds(0);
+        webContentInterceptor.setUseExpiresHeader(true);
+        webContentInterceptor.setUseCacheControlHeader(true);
+        webContentInterceptor.setUseCacheControlNoStore(true);
+        InterceptorRegistration interceptorRegistration = registry.addInterceptor(webContentInterceptor);
+        interceptorRegistration.addPathPatterns("/api/**/*");
     }
 
 }
