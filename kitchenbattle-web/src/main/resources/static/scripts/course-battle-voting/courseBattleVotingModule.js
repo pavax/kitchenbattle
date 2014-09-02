@@ -38,6 +38,15 @@ angular.module('courseBattleVotingModule', []
                             return null;
                         }
                     },
+                    selectedEvent: function (selectedEventId, eventsService) {
+                        if (selectedEventId) {
+                            return eventsService.getEvent(selectedEventId).then(function (response) {
+                                return response.data;
+                            });
+                        } else {
+                            return null;
+                        }
+                    },
                     battles: function (courseBattleSearchService, selectedEventId) {
                         if (selectedEventId === null) {
                             return null;

@@ -1,6 +1,19 @@
-<h1>Select a Battle</h1>
+<div class="page-header">
+    <h1>Select a Battle
+        <small>
+            {{courseBattleSelectionCtrl.selectedEvent.name}} {{courseBattleSelectionCtrl.selectedEvent.eventDate |
+            date}}
+        </small>
+    </h1>
+</div>
 
-<div class="table-responsive">
+<div class="table-responsive" ng-if="courseBattleSelectionCtrl.battles.length == 0">
+    <div>
+        <div class="alert alert-info" role="alert"><strong>Info!</strong> No Battles have been created yet.</div>
+    </div>
+</div>
+
+<div class="table-responsive" ng-if="courseBattleSelectionCtrl.battles.length > 0">
     <table class="table table-striped">
         <thead>
         <tr>

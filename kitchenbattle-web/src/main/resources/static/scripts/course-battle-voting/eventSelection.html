@@ -1,3 +1,11 @@
+<div class="page-header">
+    <h1>Select a Event</h1>
+</div>
 <ul class="list-group" ng-repeat="event in eventSelectionCtrl.events">
-    <li class="list-group-item"><a href="" ng-click="eventSelectionCtrl.selectEvent(event.eventId)">{{event.name}}</a></li>
+    <li class="list-group-item">
+        <a href="" ng-click="eventSelectionCtrl.selectEvent(event.eventId)">
+            {{event.name}}
+            <small>{{event.eventDate | date}}</small>
+        </a>
+    </li>
 </ul>
