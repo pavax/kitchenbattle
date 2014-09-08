@@ -10,6 +10,8 @@ angular.module('adminModule')
 
         this.selectedEvent = selectedEvent;
 
+        this.showSelectionDropdown = selectedEvent == null;
+
         $rootScope.$broadcast('admin.selectedEvent', selectedEventId);
 
         this.selectEvent = function (selectedEventId) {

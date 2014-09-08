@@ -1,48 +1,61 @@
 <div class="col-md-2">
+    <div class="row">
+        <ul class="nav nav-pills nav-stacked">
+            <li>
+                <div class="input-group" ng-if="adminCtrl.events.length > 0">
+                    <select id="events2"
+                            class="form-control input-"
+                            ng-model="adminCtrl.selectedEventId"
+                            ng-options="event.eventId as (event.name+' '+event.eventDate|date) for event in adminCtrl.events"
+                            ng-change="adminCtrl.selectEvent(adminCtrl.selectedEventId)">
+                    </select>
 
-    <div ng-if="adminCtrl.events.length > 0">
-        <label for="events">Selected Event</label>
-        <select id="events"
-                class="form-control"
+                    <div class="input-group-btn dropdown">
 
-                ng-model="adminCtrl.selectedEventId"
-                ng-options="event.eventId as (event.name+' '+event.eventDate|date) for event in adminCtrl.events"
-                ng-change="adminCtrl.selectEvent(adminCtrl.selectedEventId)">
-        </select>
-    </div>
-    <div class="dropdown">
-        <a href="" class="dropdown-toggle">
-            Event Actions
-        </a>
-        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-            <li role="presentation">
-                <a role="menuitem" tabindex="-1" href="" ng-click="adminCtrl.createNewEventModal()">
-                    <span class="glyphicon glyphicon-plus"></span> Create New Event
-                </a>
-            </li>
+                        <button type="button" class="btn btn-default dropdown-toggle">
+                            <span class="glyphicon glyphicon-wrench"></span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
+                            <li role="presentation">
+                                <a role="menuitem" tabindex="-1" href="" ng-click="adminCtrl.createNewEventModal()">
+                                    <span class="glyphicon glyphicon-plus"></span> Create New Event
+                                </a>
+                            </li>
 
-            <li role="presentation" ng-show="adminCtrl.selectedEventId">
-                <a role="menuitem" tabindex="-1" href="" ng-click="adminCtrl.editEventModal()">
-                    <span class="glyphicon glyphicon-edit"></span> Update Event
-                </a>
-            </li>
+                            <li role="presentation" ng-show="adminCtrl.selectedEventId">
+                                <a role="menuitem" tabindex="-1" href="" ng-click="adminCtrl.editEventModal()">
+                                    <span class="glyphicon glyphicon-edit"></span> Update Event
+                                </a>
+                            </li>
 
-            <li role="presentation" ng-show="adminCtrl.selectedEventId" ng-show="adminCtrl.selectedEventId">
-                <a role="menuitem" tabindex="-1" href="" ng-click="adminCtrl.deleteEvent(adminCtrl.selectedEventId)">
-                    <span class="glyphicon glyphicon-trash"></span> Delete Event
-                </a>
+                            <li role="presentation" ng-show="adminCtrl.selectedEventId">
+                                <a role="menuitem" tabindex="-1" href=""
+                                   ng-click="adminCtrl.deleteEvent(adminCtrl.selectedEventId)">
+                                    <span class="glyphicon glyphicon-trash"></span> Delete Event
+                                </a>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+                <div ng-if="adminCtrl.events.length == 0">
+                    <a role="menuitem" tabindex="-1" href=""
+                       ng-click="adminCtrl.createNewEventModal()">
+                        <span class="glyphicon glyphicon-plus"></span> Create New Event
+                    </a>
+                </div>
             </li>
         </ul>
     </div>
 
-    <div class="spacer10"></div>
-
-    <ul class="nav nav-pills nav-stacked" ng-show="adminCtrl.selectedEventId">
-        <li ng-class="{active: $state.includes('admin.teams')}"><a ui-sref="admin.teams">Manage Teams</a></li>
-        <li ng-class="{active: $state.includes('admin.courses')}"><a ui-sref="admin.courses">Manage Courses</a></li>
-        <li ng-class="{active: $state.includes('admin.coursebattles')}"><a ui-sref="admin.coursebattles.master">Manage
-            Course-Battles</a></li>
-    </ul>
+    <div class="row" ng-show="adminCtrl.selectedEventId">
+        <ul class="nav nav-pills nav-stacked" ng-show="adminCtrl.selectedEventId">
+            <li ng-class="{active: $state.includes('admin.teams')}"><a ui-sref="admin.teams">Manage Teams</a></li>
+            <li ng-class="{active: $state.includes('admin.courses')}"><a ui-sref="admin.courses">Manage Courses</a></li>
+            <li ng-class="{active: $state.includes('admin.coursebattles')}"><a ui-sref="admin.coursebattles.master">Manage
+                Course-Battles</a></li>
+        </ul>
+    </div>
 </div>
 
 <div class="col-md-10 main">
