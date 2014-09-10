@@ -4,7 +4,7 @@
   "dependencies": {
     "angular": "1.2.23",
     "json3": "~3.3.1",
-    "bootstrap": "~3.1.1",
+    "bootstrap": "3.2.0",
     "angular-resource": "1.2.23",
     "angular-cookies": "1.2.23",
     "angular-sanitize": "1.2.23",

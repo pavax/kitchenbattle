@@ -6,9 +6,11 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import org.springframework.boot.context.embedded.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
 import org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.mvc.WebContentInterceptor;
 
@@ -30,8 +32,8 @@ public class CustomMvcConfiguration extends WebMvcConfigurerAdapter {
     @Bean
     MultipartConfigElement multipartConfigElement() {
         MultipartConfigFactory factory = new MultipartConfigFactory();
-        factory.setMaxFileSize("1024KB");
-        factory.setMaxRequestSize("1024KB");
+        factory.setMaxFileSize("2048KB");
+        factory.setMaxRequestSize("2048KB");
         return factory.createMultipartConfig();
     }
 
@@ -43,7 +45,14 @@ public class CustomMvcConfiguration extends WebMvcConfigurerAdapter {
         webContentInterceptor.setUseCacheControlHeader(true);
         webContentInterceptor.setUseCacheControlNoStore(true);
         InterceptorRegistration interceptorRegistration = registry.addInterceptor(webContentInterceptor);
+        //interceptorRegistration.excludePathPatterns("**/image/**");
         interceptorRegistration.addPathPatterns("/api/**/*");
+    }
+
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/login").setViewName("login");
+        registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
     }
 
 }

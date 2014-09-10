@@ -5,6 +5,8 @@ angular.module('adminModule')
 
         var courseBattleResultCtrl = this;
 
+        this.showTeamInfo = false;
+
         function init() {
             courseBattleSearchService.findCourseBattleResults(battleId)
                 .then(function (successResponse) {

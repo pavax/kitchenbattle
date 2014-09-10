@@ -5,23 +5,22 @@
     </h3>
 </div>
 <div class="modal-body">
-
     <form name="eventForm" class="form-horizontal" novalidate>
         <fieldset>
 
             <div class="form-group">
-                <label class="col-md-4 control-label" for="eventName">Event Name</label>
+                <label class="col-xs-4 control-label" for="eventName">Event Name</label>
 
-                <div class="col-md-4">
+                <div class="col-xs-4">
                     <input id="eventName" name="eventName" type="text" placeholder="Event Name"
                            class="form-control" ng-model="newEvent.eventName" required>
                 </div>
             </div>
 
             <div class="form-group">
-                <label class="col-md-4 control-label">Event Date</label>
+                <label class="col-xs-4 control-label">Event Date</label>
 
-                <div class="col-md-4">
+                <div class="col-xs-4">
                     <div style="display:inline-block; min-height:290px;">
                         <datepicker id="eventDate" name="eventDate" ng-model="newEvent.eventDate"
                                     required

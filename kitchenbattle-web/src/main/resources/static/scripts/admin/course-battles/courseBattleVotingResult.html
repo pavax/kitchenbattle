@@ -4,33 +4,54 @@ Auto-Refresh: <input type="checkbox" ng-model="courseBattleResultCtrl.autoRefres
 
 <div class="container-full" ng-if="courseBattleResultCtrl.votingResult" fullscreen>
 
-    <h2>{{courseBattleResultCtrl.votingResult.courseOne.courseName}} -
-        {{courseBattleResultCtrl.votingResult.courseOne.teamName}}</h2>
-
-    <div class="row">
-        <div class="col-md-3">
-            <img ng-src="{{courseBattleResultCtrl.votingResult.courseOne.imageUrl}}" class="img-responsive">
+    <div class="col-xs-12">
+        <div class="row">
+            <div class="col-xs-12">
+                <h2>
+                    {{courseBattleResultCtrl.votingResult.courseOne.courseName}}
+                    <a href="" ng-click="courseBattleResultCtrl.showTeamInfo = !courseBattleResultCtrl.showTeamInfo">
+                        <small ng-show="courseBattleResultCtrl.showTeamInfo">
+                            {{courseBattleResultCtrl.votingResult.courseOne.teamName}}
+                        </small>
+                        <span ng-hide="courseBattleResultCtrl.showTeamInfo">???</span>
+                    </a>
+                </h2>
+            </div>
+            <div class="row">
+                <div class="col-xs-3">
+                    <img ng-src="{{courseBattleResultCtrl.votingResult.courseOne.imageUrl}}" class="img-responsive">
+                </div>
+                <div class="col-xs-9">
+                    <progressbar class="progress-striped active"
+                                 value="courseBattleResultCtrl.votingResult.courseOne.percentGuestCount">
+                        <span>Votes: {{courseBattleResultCtrl.votingResult.courseOne.totalGuestVotes}} ({{courseBattleResultCtrl.votingResult.courseOne.percentGuestCount | number:2}}%)</span>
+                    </progressbar>
+                </div>
+            </div>
         </div>
-        <div class="col-md-9">
-            <progressbar class="progress-striped active"
-                         value="courseBattleResultCtrl.votingResult.courseOne.percentGuestCount">
-                <span>Votes: {{courseBattleResultCtrl.votingResult.courseOne.totalGuestVotes}} ({{courseBattleResultCtrl.votingResult.courseOne.percentGuestCount | number:2}}%)</span>
-            </progressbar>
-        </div>
-    </div>
-
-    <h2>{{courseBattleResultCtrl.votingResult.courseTwo.courseName}} -
-        {{courseBattleResultCtrl.votingResult.courseTwo.teamName}}</h2>
-
-    <div class="row">
-        <div class="col-md-3">
-            <img ng-src="{{courseBattleResultCtrl.votingResult.courseTwo.imageUrl}}" class="img-responsive">
-        </div>
-        <div class="col-md-9">
-            <progressbar class="progress-striped active"
-                         value="courseBattleResultCtrl.votingResult.courseTwo.percentGuestCount">
-                <span>Votes: {{courseBattleResultCtrl.votingResult.courseTwo.totalGuestVotes}} ({{courseBattleResultCtrl.votingResult.courseTwo.percentGuestCount | number:2}}%)</span>
-            </progressbar>
+        <div class="row">
+            <div class="col-xs-12">
+                <h2>
+                    {{courseBattleResultCtrl.votingResult.courseTwo.courseName}}
+                    <a href="" ng-click="courseBattleResultCtrl.showTeamInfo = !courseBattleResultCtrl.showTeamInfo">
+                        <small ng-show="courseBattleResultCtrl.showTeamInfo">
+                            {{courseBattleResultCtrl.votingResult.courseTwo.teamName}}
+                        </small>
+                        <span ng-hide="courseBattleResultCtrl.showTeamInfo">???</span>
+                    </a>
+                </h2>
+            </div>
+            <div class="row">
+                <div class="col-xs-3">
+                    <img ng-src="{{courseBattleResultCtrl.votingResult.courseTwo.imageUrl}}" class="img-responsive">
+                </div>
+                <div class="col-xs-9">
+                    <progressbar class="progress-striped active"
+                                 value="courseBattleResultCtrl.votingResult.courseTwo.percentGuestCount">
+                        <span>Votes: {{courseBattleResultCtrl.votingResult.courseTwo.totalGuestVotes}} ({{courseBattleResultCtrl.votingResult.courseTwo.percentGuestCount | number:2}}%)</span>
+                    </progressbar>
+                </div>
+            </div>
         </div>
     </div>
 </div>

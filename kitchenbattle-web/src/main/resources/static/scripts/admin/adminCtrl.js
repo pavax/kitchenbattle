@@ -4,7 +4,12 @@ angular.module('adminModule')
 
         this.events = events;
 
+        if (events.length == 1){
+            $state.go($state.current.name, {eventId: events[0].eventId})
+        }
+
         var adminCtrl = this;
+
 
         this.selectedEventId = selectedEventId;
 
@@ -56,6 +61,7 @@ angular.module('adminModule')
             return $modal.open({
                 templateUrl: 'scripts/admin/eventModal.html',
                 controller: EventModalInstanceCtrl,
+                //size: 'sm',
                 resolve: {
                     selectedEvent: function () {
                         return selectedEvent;

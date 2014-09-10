@@ -17,6 +17,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 public class CustomSecurityConfig implements InitializingBean {
@@ -70,10 +71,15 @@ public class CustomSecurityConfig implements InitializingBean {
                     .antMatchers("/vendor/**");
         }
 
-        //        @Override
+        @Override
         protected void configure(HttpSecurity http) throws Exception {
-            http.authorizeRequests().anyRequest().fullyAuthenticated()
-                    .and().httpBasic().realmName("KB APP");
+            http.authorizeRequests()
+                    .antMatchers("/login").permitAll()
+                    .anyRequest().fullyAuthenticated()
+                    .and().formLogin()
+                    .loginPage("/login").passwordParameter("password").usernameParameter("username")
+                    .and().logout().logoutUrl("/logout")
+            ;
             http.csrf().disable();
         }
 

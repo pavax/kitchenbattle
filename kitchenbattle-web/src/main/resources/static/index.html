@@ -4,9 +4,10 @@
     <meta charset="utf-8">
     <title>Kitchen Battle App</title>
     <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, minimal-ui">
+    <meta name="viewport" content="width=device-width">
 
     <meta name="apple-mobile-web-app-title" content="Kitchenbattle Voting App">
+    <meta name="apple-mobile-web-app-capable" content="yes">
 
     <link rel="apple-touch-icon" sizes="57x57" href="images/apple-touch-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
@@ -37,7 +38,7 @@
     your browser</a> to improve your experience.</p>
 <![endif]-->
 
-<div class="navbar navbar-inverse" role="navigation">
+<div class="navbar navbar-inverse" role="navigation" ng-controller="menuCtrl as menuCtrl">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
@@ -48,16 +49,24 @@
             </button>
             <a class="navbar-brand">Kitchen-Battle</a>
         </div>
-        <div class="collapse navbar-collapse" ng-controller="menuCtrl as menuCtrl">
+        <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
                 <li ng-class="{active: $state.includes('courseBattleVoting')}">
-                    <a ui-sref="courseBattleVoting.event">Course Battle Voting</a>
+                    <a ui-sref="courseBattleVoting.event">
+                        <span class="glyphicon glyphicon-list-alt"></span> Course Battle Voting
+                    </a>
                 </li>
                 <li ng-class="{active: $state.includes('admin')}"
                     ng-show="menuCtrl.currentUser.isAdmin">
-                    <a ui-sref="admin.teams({ eventId: menuCtrl.menu.admin.selectedEventId})">Admin</a>
+                    <a ui-sref="admin.teams({ eventId: menuCtrl.menu.admin.selectedEventId})">
+                        <span class="glyphicon glyphicon-wrench"></span> Admin
+                    </a>
                 </li>
             </ul>
+            <ul class="nav pull-right">
+                <li><p class="navbar-text">Logged in as {{menuCtrl.currentUser.username}}</p></li>
+            </ul>
+
         </div>
         <!--/.nav-collapse -->
     </div>
