@@ -11,7 +11,6 @@ var app = angular.module('kitchenbattleWebApp', [
     'lr.upload',
     'commonsModule',
     'courseBattleVotingModule',
-    'battleResultModule',
     'adminModule',
     'FBAngular'
 ]);
