@@ -14,11 +14,13 @@ angular.module('adminModule')
                     courseBattleResultCtrl.votingResult = votingResult;
                     var totalGuestVotes = votingResult.totalGuestVotes;
                     courseBattleResultCtrl.votingResult.courseOne.percentGuestCount = votingResult.courseOne.totalGuestVotes * 100 / totalGuestVotes;
-                    courseBattleResultCtrl.votingResult.courseOne.imageUrl = courseBattleResultCtrl.votingResult.courseOne.courseVariants[0].imageUrl;
-
-                    courseBattleResultCtrl.votingResult.courseTwo.percentGuestCount = votingResult.courseTwo.totalGuestVotes * 100 / totalGuestVotes;
-                    courseBattleResultCtrl.votingResult.courseTwo.imageUrl = courseBattleResultCtrl.votingResult.courseTwo.courseVariants[0].imageUrl;
-
+                    courseBattleResultCtrl.votingResult.courseTwo.percentGuestCount = votingResult.courseTwo.totalGuestVotes * 100 / totalGuestVotes
+                    if (courseBattleResultCtrl.votingResult.courseOne.courseVariants.length > 0) {
+                        courseBattleResultCtrl.votingResult.courseOne.imageUrl = courseBattleResultCtrl.votingResult.courseOne.courseVariants[0].imageUrl;
+                    }
+                    if (courseBattleResultCtrl.votingResult.courseTwo.courseVariants.length > 0) {
+                        courseBattleResultCtrl.votingResult.courseTwo.imageUrl = courseBattleResultCtrl.votingResult.courseTwo.courseVariants[0].imageUrl;
+                    }
                     courseBattleResultCtrl.autoRefresh = votingResult.state === 'VOTING_IN_PROGRESS';
                 });
         }

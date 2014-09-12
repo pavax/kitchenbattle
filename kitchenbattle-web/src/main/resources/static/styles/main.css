@@ -1,7 +1,5 @@
 /* Space out content a bit */
 
-
-
 /* Everything but the jumbotron gets side spacing for mobile first views */
 .header,
 .marketing,
@@ -104,6 +102,15 @@
 
 .main .page-header {
     margin-top: 0;
+}
+.reveal-animation {
+    -webkit-animation: boingInUp 2s; /* Safari/Chrome */
+    animation: boingInUp 2s; /* IE10+ and Future Browsers */
+}
+
+.reveal-animation.ng-hide {
+    -webkit-animation: boingOutDown 1s; /* Safari/Chrome */
+    animation: boingOutDown 1s; /* IE10+ and Future Browsers */
 }
 
 .spacer5 {

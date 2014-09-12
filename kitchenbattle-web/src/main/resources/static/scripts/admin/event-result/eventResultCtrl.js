@@ -1,6 +1,6 @@
 'use strict';
 angular.module('adminModule')
-    .controller('EventResultCtrl', function ($scope, teams, courseBattleResults, $filter) {
+    .controller('EventResultCtrl', function ($scope, teams, courseBattleResults, $filter, Fullscreen) {
 
         var eventResultCtrl = this;
 
@@ -52,7 +52,6 @@ angular.module('adminModule')
             }
             return  guestCoureResult
         }
-
 
         function initGuestCourseTotal(guestCourseResults) {
             var guestCourseTotalResult = {

@@ -11,6 +11,7 @@ angular.module('commonsModule',
         'commons.resources.teams',
         'commons.resources.events',
         'commons.filters.courseBattleState',
-        'commons.resources.currentUser'
+        'commons.resources.currentUser',
+        'commons.directives.disableNgAnimate'
     ]
 );

@@ -1,4 +1,8 @@
-<div class="container-full">
+<button class="btn btn-default" ng-controller="fullscreenCtrl as fullscreenCtrl"
+        ng-click="fullscreenCtrl.goFullscreen()">
+    <span class="glyphicon glyphicon-screenshot"></span> Go Fullscreen
+</button>
+<div id="fullscreen" class="container-full">
     <table class="table table-responsive h3">
         <thead>
         <tr>
@@ -14,9 +18,12 @@
                    ng-click="guestCourseResult.showResult = !guestCourseResult.showResult">
                     {{guestCourseResult.courseType | courseType}}
                 </a>
+                <span ng-hide="guestCourseResult.teamLeft && guestCourseResult.teamRight">
+                    {{guestCourseResult.courseType | courseType}}
+                </span>
             </td>
             <td class="text-center">
-                <div ng-show="guestCourseResult.teamLeft && guestCourseResult.showResult">
+                <div ng-show="guestCourseResult.teamLeft && guestCourseResult.showResult" class="reveal-animation">
                     <span class="label label-default"
                           ng-class="{'label-success': guestCourseResult.teamLeft.winner}">
                         {{guestCourseResult.teamLeft.points}}
@@ -28,7 +35,7 @@
                 </div>
             </td>
             <td class="text-center">
-                <div ng-show="guestCourseResult.teamRight  && guestCourseResult.showResult">
+                <div ng-show="guestCourseResult.teamRight  && guestCourseResult.showResult" class="reveal-animation">
                     <span class="label label-default"
                           ng-class="{'label-success': guestCourseResult.teamRight.winner}">
                         {{guestCourseResult.teamRight.points}}

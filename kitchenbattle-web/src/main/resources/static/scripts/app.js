@@ -3,6 +3,7 @@
 var app = angular.module('kitchenbattleWebApp', [
     'ngCookies',
     'ngResource',
+    'ngAnimate',
     'ngSanitize',
     'ngTouch',
     'ui.router',
@@ -16,7 +17,6 @@ var app = angular.module('kitchenbattleWebApp', [
 ]);
 
 app.config(function ($stateProvider, $urlRouterProvider) {
-    //
     // For any unmatched url, redirect to /state1
     $urlRouterProvider.otherwise("/course-battle-voting");
 });

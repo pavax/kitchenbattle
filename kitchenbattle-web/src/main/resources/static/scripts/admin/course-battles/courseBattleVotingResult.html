@@ -1,8 +1,13 @@
 <h1>Show Battle Results</h1>
 
+<button class="btn btn-default" ng-controller="fullscreenCtrl as fullscreenCtrl"
+        ng-click="fullscreenCtrl.goFullscreen()">
+    <span class="glyphicon glyphicon-screenshot"></span> Go Fullscreen
+</button>
+
 Auto-Refresh: <input type="checkbox" ng-model="courseBattleResultCtrl.autoRefresh">
 
-<div class="container-full" ng-if="courseBattleResultCtrl.votingResult" fullscreen>
+<div id="fullscreen" class="container-full" ng-if="courseBattleResultCtrl.votingResult" >
 
     <div class="col-xs-12">
         <div class="row">
