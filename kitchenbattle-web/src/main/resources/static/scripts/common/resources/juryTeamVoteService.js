@@ -11,8 +11,8 @@ angular.module('commons.resources.juryTeamVote', [])
                     }
                 );
             },
-            getAllJuryVotes: function () {
-                return $http.get('api/jury-team-votes');
+            findAllJuryVotesForEvent: function (eventId) {
+                return $http.get('api/jury-team-votes', { params: {eventId: eventId}});
             }
         }
     });

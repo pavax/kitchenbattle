@@ -7,8 +7,24 @@
         <thead>
         <tr>
             <th>Gang</th>
-            <th class="text-center">{{eventResultCtrl.teams[0].name}}</th>
-            <th class="text-center">{{eventResultCtrl.teams[1].name}}</th>
+            <th class="text-center">
+                {{eventResultCtrl.teams[0].name}}
+                <progressbar max="100"
+                             value="eventResultCtrl.winnerResult.teamLeft.totalPoints * 100 / (eventResultCtrl.winnerResult.teamLeft.totalPoints + eventResultCtrl.winnerResult.teamRight.totalPoints)"
+                             type="{{eventResultCtrl.winnerResult.teamLeft.winner ? 'success': 'warning'}}">
+                    Total: {{eventResultCtrl.winnerResult.teamLeft.totalPoints}}
+                </progressbar>
+            </th>
+            <th class="text-center">
+                {{eventResultCtrl.teams[1].name}}
+
+                <progressbar max="100"
+                             value="eventResultCtrl.winnerResult.teamRight.totalPoints * 100 / (eventResultCtrl.winnerResult.teamLeft.totalPoints + eventResultCtrl.winnerResult.teamRight.totalPoints)"
+                             type="{{eventResultCtrl.winnerResult.teamRight.winner ? 'success': 'warning'}}">
+                    Total: {{eventResultCtrl.winnerResult.teamRight.totalPoints}}
+                </progressbar>
+
+            </th>
         </tr>
         </thead>
         <tbody>
@@ -25,7 +41,7 @@
             <td class="text-center">
                 <div ng-show="guestCourseResult.teamLeft && guestCourseResult.showResult" class="reveal-animation">
                     <span class="label label-default"
-                          ng-class="{'label-success': guestCourseResult.teamLeft.winner}">
+                          ng-class="{'label-info': guestCourseResult.teamLeft.winner}">
                         {{guestCourseResult.teamLeft.points}}
                     </span>
 
@@ -37,7 +53,7 @@
             <td class="text-center">
                 <div ng-show="guestCourseResult.teamRight  && guestCourseResult.showResult" class="reveal-animation">
                     <span class="label label-default"
-                          ng-class="{'label-success': guestCourseResult.teamRight.winner}">
+                          ng-class="{'label-info': guestCourseResult.teamRight.winner}">
                         {{guestCourseResult.teamRight.points}}
                     </span>
 
@@ -47,27 +63,86 @@
                 </div>
             </td>
         </tr>
-        <tr>
+        <tr class="bg-info">
             <td>
                 Total Guest Votes
             </td>
             <td class="text-center">
-                <div>
                 <span class="label label-default"
-                      ng-class="{'label-success': eventResultCtrl.guestCourseTotalResult.teamLeft.winner}">
+                      ng-class="{'label-info': eventResultCtrl.guestCourseTotalResult.teamLeft.winner}">
                    {{eventResultCtrl.guestCourseTotalResult.teamLeft.totalPoints}}
                 </span>
+            </td>
+            <td class="text-center">
+                <span class="label label-default"
+                      ng-class="{'label-info': eventResultCtrl.guestCourseTotalResult.teamRight.winner}">
+                   {{eventResultCtrl.guestCourseTotalResult.teamRight.totalPoints}}
+                </span>
+            </td>
+        </tr>
+        <tr>
+            <th>Jury</th>
+            <th class="text-center"></th>
+            <th class="text-center"></th>
+        </tr>
+        <tr ng-repeat="juryVoteResult in eventResultCtrl.juryVoteResults">
+            <td>
+                <a href=""
+                   ng-click="juryVoteResult.showResult = !juryVoteResult.showResult">
+                    {{juryVoteResult.juryName}}
+                </a>
+            </td>
+            <td class="text-center">
+                <div ng-show="juryVoteResult.showResult" class="reveal-animation">
+                    <span class="label label-default"
+                          ng-class="{'label-warning': juryVoteResult.teamLeft.points !== 0}">
+                        {{juryVoteResult.teamLeft.points}}
+                    </span>
                 </div>
             </td>
             <td class="text-center">
-                <div>
-                <span class="label label-default"
-                      ng-class="{'label-success': eventResultCtrl.guestCourseTotalResult.teamRight.winner}">
-                   {{eventResultCtrl.guestCourseTotalResult.teamRight.totalPoints}}
-                </span>
+                <div ng-show="juryVoteResult.showResult" class="reveal-animation">
+                    <span class="label label-default"
+                          ng-class="{'label-warning': juryVoteResult.teamRight.points !== 0}">
+                        {{juryVoteResult.teamRight.points}}
+                    </span>
                 </div>
             </td>
         </tr>
+        <tr class="bg-warning">
+            <td>
+                Total Jury Votes
+            </td>
+            <td class="text-center">
+                <span class="label label-default"
+                      ng-class="{'label-warning': eventResultCtrl.juryVotesTotalResult.teamLeft.winner}">
+                   {{eventResultCtrl.juryVotesTotalResult.teamLeft.totalPoints}}
+                </span>
+            </td>
+            <td class="text-center">
+                <span class="label label-default"
+                      ng-class="{'label-warning': eventResultCtrl.juryVotesTotalResult.teamRight.winner}">
+                   {{eventResultCtrl.juryVotesTotalResult.teamRight.totalPoints}}
+                </span>
+            </td>
+        </tr>
+        <!--<tr class="bg-success">
+            <td>
+                TOTAL
+            </td>
+            <td class="text-center">
+                <span class="label label-default"
+                      ng-class="{'label-primary': eventResultCtrl.winnerResult.teamLeft.winner}">
+                   {{eventResultCtrl.winnerResult.teamLeft.totalPoints}}
+                </span>
+            </td>
+            <td class="text-center">
+                <span class="label label-default"
+                      ng-class="{'label-primary': eventResultCtrl.winnerResult.teamRight.winner}">
+                   {{eventResultCtrl.winnerResult.teamRight.totalPoints}}
+                </span>
+            </td>
+        </tr>-->
         </tbody>
     </table>
 </div>

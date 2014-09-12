@@ -1,7 +1,11 @@
 package ch.adrianos.apps.kitchenbattle.domain.team;
 
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -11,12 +15,18 @@ public class JuryTeamVote {
     @Id
     private String id;
 
+    @Valid
+    @NotNull
+    @JsonUnwrapped
     private TeamId teamId;
 
-    private int votes;
+    @NotNull
+    private Integer votes;
 
+    @NotNull
     private String juryName;
 
+    @NotNull
     private LocalDateTime createdAt;
 
     public JuryTeamVote(int votes, String juryName, TeamId teamId1) {

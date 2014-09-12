@@ -1,5 +1,6 @@
 package ch.adrianos.apps.kitchenbattle.web;
 
+import ch.adrianos.apps.kitchenbattle.domain.event.EventId;
 import ch.adrianos.apps.kitchenbattle.domain.team.JuryTeamVote;
 import ch.adrianos.apps.kitchenbattle.domain.team.JuryTeamVoteRepository;
 import ch.adrianos.apps.kitchenbattle.domain.team.TeamId;
@@ -31,8 +32,8 @@ public class JuryTeamVoteController {
 
     @RequestMapping(method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
-    public List<JuryTeamVote> allTeamVotes() {
-        return juryTeamVoteRepository.findAll();
+    public List<JuryTeamVote> findJuryTeamVotesForEvent(@RequestParam String eventId) {
+        return juryTeamVoteRepository.findAllJuryTeamVotesForEvent(new EventId(eventId));
     }
 
     private static class CreateJuryTeamVoteDto {

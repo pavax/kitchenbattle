@@ -102,6 +102,23 @@ angular.module('adminModule', []
                     }
                 }
             })
+            .state('admin.juryvotes', {
+                url: "/juryvotes",
+                templateUrl: "scripts/admin/jury-votes/manageJuryVotes.html",
+                controller: 'JuryVotesCtrl as juryVotesCtrl',
+                resolve: {
+                    teams: function (teamService, selectedEventId) {
+                        return teamService.findAllTeams(selectedEventId).then(function (response) {
+                            return response.data;
+                        });
+                    },
+                    juryVotes: function(juryTeamVoteService,selectedEventId){
+                        return juryTeamVoteService.findAllJuryVotesForEvent(selectedEventId).then(function (response) {
+                            return response.data;
+                        });
+                    }
+                }
+            })
             .state('admin.eventresult', {
                 url: "/eventresult",
                 templateUrl: "scripts/admin/event-result/eventResult.html",
@@ -114,6 +131,11 @@ angular.module('adminModule', []
                     },
                     teams: function (teamService, selectedEventId) {
                         return teamService.findAllTeams(selectedEventId).then(function (response) {
+                            return response.data;
+                        });
+                    },
+                    juryVotes: function(juryTeamVoteService,selectedEventId){
+                        return juryTeamVoteService.findAllJuryVotesForEvent(selectedEventId).then(function (response) {
                             return response.data;
                         });
                     },
