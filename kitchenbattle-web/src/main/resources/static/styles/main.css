@@ -113,6 +113,15 @@
     animation: boingOutDown 1s; /* IE10+ and Future Browsers */
 }
 
+
+.form-group .help-block {
+    display: none;
+}
+
+.form-group.has-error .help-block {
+    display: block;
+}
+
 .spacer5 {
     height: 5px;
     width: 100%;

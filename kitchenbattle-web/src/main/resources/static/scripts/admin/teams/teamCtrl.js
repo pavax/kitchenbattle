@@ -6,11 +6,13 @@ angular.module('adminModule')
         this.teams = teams;
         this.showCreateNewTeamForm = false;
         this.toogleNewTeamForm = function () {
+            $scope.$broadcast('show-errors-reset');
             teamCtrl.showCreateNewTeamForm = !teamCtrl.showCreateNewTeamForm;
             teamCtrl.newTeam = {};
         };
 
         this.saveTeam = function () {
+            $scope.$broadcast('show-errors-check-validity');
             if ($scope.createNewTeamForm.$valid) {
                 teamService.createTeam(teamCtrl.newTeam.name, teamCtrl.newTeam.description, selectedEventId)
                     .success(function () {
@@ -23,13 +25,15 @@ angular.module('adminModule')
         };
 
         this.deleteTeam = function (teamId) {
-            teamService.deleteTeam(teamId)
-                .success(function () {
-                    $state.forceReload();
-                })
-                .error(function (error) {
-                    alert("Oops an Error occured: " + error);
-                });
+            if (window.confirm("Sure?")) {
+                teamService.deleteTeam(teamId)
+                    .success(function () {
+                        $state.forceReload();
+                    })
+                    .error(function (error) {
+                        alert("Oops an Error occured: " + error);
+                    });
+            }
         };
 
     });

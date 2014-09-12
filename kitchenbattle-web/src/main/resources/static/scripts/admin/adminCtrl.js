@@ -4,7 +4,7 @@ angular.module('adminModule')
 
         this.events = events;
 
-        if (events.length == 1){
+        if (events.length == 1) {
             $state.go($state.current.name, {eventId: events[0].eventId})
         }
 
@@ -24,12 +24,14 @@ angular.module('adminModule')
         };
 
         this.deleteEvent = function (selectedEventId) {
-            eventsService.deleteEvent(selectedEventId)
-                .then(function () {
-                    $state.go($state.current.name, {eventId: null})
-                }, function (errorResponse) {
-                    alert("Ooops" + errorResponse.data.message);
-                });
+            if (window.confirm("Sure?")) {
+                eventsService.deleteEvent(selectedEventId)
+                    .then(function () {
+                        $state.go($state.current.name, {eventId: null})
+                    }, function (errorResponse) {
+                        alert("Ooops" + errorResponse.data.message);
+                    });
+            }
         };
 
         this.editEventModal = function () {

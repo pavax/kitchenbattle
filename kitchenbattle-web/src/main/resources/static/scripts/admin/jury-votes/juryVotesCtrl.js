@@ -20,15 +20,29 @@ angular.module('adminModule')
         });
 
         juryVotesCtrl.toggleNewJuryVoteForm = function () {
+            $scope.$broadcast('show-errors-reset');
             juryVotesCtrl.showNewJuryVoteForm = !juryVotesCtrl.showNewJuryVoteForm;
         };
 
         juryVotesCtrl.saveVote = function () {
-            juryTeamVoteService.voteTeam(juryVotesCtrl.newVote.teamId, juryVotesCtrl.newVote.juryName, 5)
-                .then(function (successResponse) {
-                    $state.forceReload();
-                });
+            $scope.$broadcast('show-errors-check-validity');
+            if ($scope.juryVoteForm.$valid) {
+                juryTeamVoteService.voteTeam(juryVotesCtrl.newVote.teamId, juryVotesCtrl.newVote.juryName, 5)
+                    .then(function (successResponse) {
+                        $state.forceReload();
+                    });
+            }
+        };
+
+        juryVotesCtrl.deleteVote = function (juryVoteId) {
+            if (window.confirm("Sure?")) {
+                juryTeamVoteService.deleteVote(juryVoteId)
+                    .then(function (successResponse) {
+                        $state.forceReload();
+                    });
+            }
         }
 
 
-    });
+    })
+;

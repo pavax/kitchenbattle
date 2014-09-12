@@ -1,22 +1,23 @@
 <div ng-form="courseInnerForm">
 
     <!-- Text input-->
-    <div class="form-group" ng-if="teams" ng-class="{'has-error': courseInnerForm.courseName.$invalid}">
+    <div class="form-group" ng-if="teams" show-errors>
         <label class="col-md-4 control-label" for="teamSelection">Team</label>
 
         <div class="col-md-4">
-            <select id="teamSelection" class="form-control"
+            <select id="teamSelection"
+                    name="teamSelection"
+                    class="form-control"
                     required
                     ng-model="course.teamId"
                     ng-options="team.teamId as team.name for team in teams">
             </select>
-            <span class="help-block"></span>
+            <p class="help-block" ng-if="courseInnerForm.teamSelection.$error.required">A Team must be selected</p>
         </div>
     </div>
 
-    <div class="form-group" ng-class="{'has-error': courseInnerForm.courseType.$invalid}">
+    <div class="form-group" show-errors>
         <label class="col-md-4 control-label" for="courseType">Course Type</label>
-
         <div class="col-md-4">
             <select id="courseType"
                     name="courseType"
@@ -27,11 +28,11 @@
                 <option value="MAIN">{{'MAIN' | courseType}}</option>
                 <option value="DESSERT">{{'DESSERT' | courseType}}</option>
             </select>
-            <span class="help-block"></span>
+            <p class="help-block" ng-if="courseInnerForm.courseType.$error.required">Field is required</p>
         </div>
     </div>
     <!-- Text input-->
-    <div class="form-group" ng-class="{'has-error': courseInnerForm.courseName.$invalid}">
+    <div class="form-group" show-errors>
         <label class="col-md-4 control-label" for="courseNameInput">Course Name</label>
 
         <div class="col-md-4">
@@ -41,17 +42,18 @@
                    type="text"
                    required
                    class="form-control input-md">
-            <span class="help-block"></span>
+            <p class="help-block" ng-if="courseInnerForm.courseName.$error.required">A Course Name must be set</p>
         </div>
     </div>
 
     <!-- Textarea -->
-    <div class="form-group">
+    <div class="form-group" show-errors>
         <label class="col-md-4 control-label" for="courseDescription">Course Description</label>
 
         <div class="col-md-4">
             <textarea class="form-control" id="courseDescription" name="courseDescription" required
                       ng-model="course.description">Course Description</textarea>
+            <p class="help-block" ng-if="courseInnerForm.courseDescription.$error.required">A Course Description must be set</p>
         </div>
     </div>
 </div>

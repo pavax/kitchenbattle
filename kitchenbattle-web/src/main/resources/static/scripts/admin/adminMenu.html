@@ -24,12 +24,12 @@
 
                             <li role="presentation" ng-show="adminCtrl.selectedEventId">
                                 <a role="menuitem" tabindex="-1" href="" ng-click="adminCtrl.editEventModal()">
-                                    <span class="glyphicon glyphicon-edit"></span> Update Event
+                                    <span class="glyphicon glyphicon-edit"></span> Edit Event
                                 </a>
                             </li>
 
                             <li role="presentation" ng-show="adminCtrl.selectedEventId">
-                                <a role="menuitem" tabindex="-1" href=""
+                                <a role="menuitem" tabindex="-1" href="" class="text-danger"
                                    ng-click="adminCtrl.deleteEvent(adminCtrl.selectedEventId)">
                                     <span class="glyphicon glyphicon-trash"></span> Delete Event
                                 </a>
@@ -56,7 +56,8 @@
             <li ng-class="{active: $state.includes('admin.courses')}"><a ui-sref="admin.courses">Manage Courses</a></li>
             <li ng-class="{active: $state.includes('admin.coursebattles')}"><a ui-sref="admin.coursebattles.master">Manage
                 Course-Battles</a>
-            <li ng-class="{active: $state.includes('admin.juryvotes')}"><a ui-sref="admin.juryvotes">Manage Jury Votes</a></li>
+            <li ng-class="{active: $state.includes('admin.juryvotes')}"><a ui-sref="admin.juryvotes">Manage Jury
+                Votes</a></li>
             <li ng-class="{active: $state.includes('admin.eventresult')}"><a ui-sref="admin.eventresult">Result</a></li>
         </ul>
     </div>

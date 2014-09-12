@@ -12,6 +12,7 @@ angular.module('commonsModule',
         'commons.resources.events',
         'commons.filters.courseBattleState',
         'commons.resources.currentUser',
-        'commons.directives.disableNgAnimate'
+        'commons.directives.disableNgAnimate',
+        'commons.directives.showErrors'
     ]
 );

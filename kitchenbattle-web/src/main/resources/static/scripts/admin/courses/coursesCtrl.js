@@ -10,11 +10,17 @@ angular.module('adminModule')
         this.showCreateCourseForm = false;
 
         this.toogleNewCourseForm = function () {
+            $scope.$broadcast('show-errors-reset');
             coursesCtrl.showCreateCourseForm = !coursesCtrl.showCreateCourseForm;
             coursesCtrl.newCourse = {};
         };
 
+        $scope.saveCourse = function(){
+            coursesCtrl.saveCourse();
+        };
+
         this.saveCourse = function () {
+            $scope.$broadcast('show-errors-check-validity');
             if ($scope.createNewCourseForm.$valid) {
                 courseService.createCourse(
                     coursesCtrl.newCourse.teamId,
@@ -56,12 +62,14 @@ angular.module('adminModule')
         };
 
         this.deleteCourse = function (course) {
-            courseService.deleteCourse(course.courseId)
-                .success(function () {
-                    $state.forceReload();
-                })
-                .error(function (error) {
-                    alert('Ooops: ' + error.message)
-                });
+            if (window.confirm("Sure?")) {
+                courseService.deleteCourse(course.courseId)
+                    .success(function () {
+                        $state.forceReload();
+                    })
+                    .error(function (error) {
+                        alert('Ooops: ' + error.message)
+                    });
+            }
         };
     });

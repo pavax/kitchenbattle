@@ -15,25 +15,27 @@
 
 <div ng-show="teamCtrl.showCreateNewTeamForm">
     <div class="row">
-        <form class="form-horizontal" name="createNewTeamForm" novalidate>
+        <form class="form-horizontal" name="createNewTeamForm" novalidate ng-submit="teamCtrl.saveTeam()">
             <fieldset>
                 <!-- Form Name -->
                 <legend>Create New Team</legend>
 
                 <!-- Text input-->
-                <div class="form-group">
+                <div class="form-group" show-errors>
                     <label class="col-md-4 control-label" for="textinput">Team Name</label>
 
                     <div class="col-md-4">
                         <input id="textinput" name="teamName" ng-model="teamCtrl.newTeam.name" type="text" required
                                placeholder="Team Name"
                                class="form-control input-md">
-                        <span class="help-block"></span>
+
+                        <p class="help-block" ng-if="createNewTeamForm.teamName.$error.required">The Team Name is
+                            required</p>
                     </div>
                 </div>
 
                 <!-- Textarea -->
-                <div class="form-group">
+                <div class="form-group" show-errors>
                     <label class="col-md-4 control-label" for="textarea">Team Description</label>
 
                     <div class="col-md-4">
@@ -46,15 +48,11 @@
                 <div class="form-group">
                     <div class="col-md-4 control-label"></div>
                     <div class="col-md-4">
-                        <button name="cancelButton" class="btn btn-default"
+                        <button type="button" name="cancelButton" class="btn btn-default"
                                 ng-click="teamCtrl.toogleNewTeamForm()">
                             Cancel
                         </button>
-                        <button name="saveButton" class="btn btn-primary"
-                                ng-disabled="createNewTeamForm.$invalid"
-                                ng-click="teamCtrl.saveTeam()">
-                            Save New Team
-                        </button>
+                        <input type="submit" name="saveButton" class="btn btn-primary" value="Save New Team"/>
                     </div>
                 </div>
 
@@ -86,7 +84,8 @@
                         Action <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="" ng-click="teamCtrl.deleteTeam(team.teamId)">Delete</a></li>
+                        <li><a href="" class="text-danger" ng-click="teamCtrl.deleteTeam(team.teamId)"><span
+                                class="glyphicon glyphicon-trash"></span> Delete</a></li>
                         <li><a href="">Edit</a></li>
                     </ul>
                 </div>

@@ -11,6 +11,9 @@ angular.module('commons.resources.juryTeamVote', [])
                     }
                 );
             },
+            deleteVote: function (juryVoteId) {
+                return $http.delete('api/jury-team-votes/' + juryVoteId);
+            },
             findAllJuryVotesForEvent: function (eventId) {
                 return $http.get('api/jury-team-votes', { params: {eventId: eventId}});
             }

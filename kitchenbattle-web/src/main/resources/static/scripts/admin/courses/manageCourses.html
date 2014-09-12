@@ -14,11 +14,11 @@
 <div class="spacer20"></div>
 
 <div class="row" ng-show="coursesCtrl.showCreateCourseForm">
-    <div class="panel panel-default" ng-show="coursesCtrl.showCreateCourseForm">
+    <div class="panel panel-default">
         <!-- Default panel contents -->
         <div class="panel-heading">Create New Course</div>
         <div class="panel-body">
-            <form class="form-horizontal" name="createNewCourseForm" novalidate>
+            <form class="form-horizontal" name="createNewCourseForm" novalidate ng-submit="saveCourse()">
 
                 <course-form course="coursesCtrl.newCourse" teams="coursesCtrl.teams"></course-form>
 
@@ -26,15 +26,11 @@
                 <div class="form-group">
                     <div class="col-md-4 control-label"></div>
                     <div class="col-md-4">
-                        <button name="cancelButton" class="btn btn-default"
+                        <button type="button" name="cancelButton" class="btn btn-default"
                                 ng-click="coursesCtrl.toogleNewCourseForm()">
                             Cancel
                         </button>
-                        <button name="saveButton" class="btn btn-primary"
-                                ng-disabled="createNewCourseForm.$invalid"
-                                ng-click="coursesCtrl.saveCourse()">
-                            Save New Course
-                        </button>
+                        <input  type="submit" name="saveButton" class="btn btn-primary" value="Save New Course"/>
                     </div>
                 </div>
             </form>
@@ -82,8 +78,16 @@
                             Action <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="" ng-click="coursesCtrl.deleteCourse(course)">Delete</a></li>
-                            <li><a href="" ng-click="coursesCtrl.editCourse(course)">Edit</a></li>
+                            <li>
+                                <a href="" ng-click="coursesCtrl.editCourse(course)">
+                                    <span class="glyphicon glyphicon-edit"></span> Edit
+                                </a>
+                            </li>
+                            <li>
+                                <a href="" class="text-danger" ng-click="coursesCtrl.deleteCourse(course)">
+                                    <span class="glyphicon glyphicon-trash"></span> Delete
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </td>

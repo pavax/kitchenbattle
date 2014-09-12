@@ -10,14 +10,17 @@ angular.module('adminModule')
             variantName: undefined
         };
 
-        $scope.ok = function () {
-            courseService.updateCourse($scope.course.courseId, $scope.course.courseType, $scope.course.name, $scope.course.description)
-                .success(function (data) {
-                    $modalInstance.close();
-                })
-                .error(function (error) {
-                    alert('Ooops' + error.message);
-                })
+        $scope.ok = function (editCourseForm) {
+            $scope.$broadcast('show-errors-check-validity');
+            if (editCourseForm.$valid) {
+                courseService.updateCourse($scope.course.courseId, $scope.course.courseType, $scope.course.name, $scope.course.description)
+                    .success(function (data) {
+                        $modalInstance.close();
+                    })
+                    .error(function (error) {
+                        alert('Ooops' + error.message);
+                    })
+            }
         };
 
         $scope.cancel = function () {
