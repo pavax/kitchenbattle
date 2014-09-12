@@ -102,4 +102,41 @@ angular.module('adminModule', []
                     }
                 }
             })
+            .state('admin.eventresult', {
+                url: "/eventresult",
+                templateUrl: "scripts/admin/event-result/eventResult.html",
+                controller: 'EventResultCtrl as eventResultCtrl',
+                resolve: {
+                    courseBattles: function (courseBattleSearchService, selectedEventId) {
+                        return courseBattleSearchService.findAllCourseBattlesWithDetails(selectedEventId).then(function (response) {
+                            return response.data;
+                        });
+                    },
+                    teams: function (teamService, selectedEventId) {
+                        return teamService.findAllTeams(selectedEventId).then(function (response) {
+                            return response.data;
+                        });
+                    },
+                    courseBattleResults: function ($q, courseBattles, courseBattleSearchService) {
+                        var deferred = $q.defer();
+                        var allCourseBattleResults = [];
+                        var asyncFetchedResults = 0;
+                        for (var i = 0; i < courseBattles.length; i++) {
+                            var courseBattle = courseBattles[i];
+                            courseBattleSearchService.findCourseBattleResults(courseBattle.battleId)
+                                .then(function (successResponse) {
+                                    asyncFetchedResults++;
+                                    var courseBattleResult = successResponse.data;
+                                    if (courseBattleResult.state == 'CLOSED') {
+                                        allCourseBattleResults.push(courseBattleResult);
+                                    }
+                                    if (asyncFetchedResults == courseBattles.length) {
+                                        deferred.resolve(allCourseBattleResults);
+                                    }
+                                });
+                        }
+                        return deferred.promise;
+                    }
+                }
+            })
     });

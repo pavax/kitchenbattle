@@ -37,7 +37,6 @@ public class CourseBattleController {
     @RequestMapping(value = "/{battleId}", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     public CourseBattle getBattle(@PathVariable String battleId) throws CourseBattleNotFoundException {
-        System.out.println("000009999");
         CourseBattle courseBattle = courseBattleRepository.findOne(new BattleId(battleId));
         if (courseBattle == null) {
             throw new CourseBattleNotFoundException(battleId);
