@@ -3,7 +3,6 @@ package ch.adrianos.apps.kitchenbattle.config;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import org.springframework.boot.context.embedded.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
@@ -13,8 +12,6 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.mvc.WebContentInterceptor;
-
-import javax.servlet.MultipartConfigElement;
 
 @Configuration
 public class CustomMvcConfiguration extends WebMvcConfigurerAdapter {
@@ -27,14 +24,6 @@ public class CustomMvcConfiguration extends WebMvcConfigurerAdapter {
         jackson2ObjectMapperFactoryBean.setFeaturesToDisable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
         jackson2ObjectMapperFactoryBean.afterPropertiesSet();
         return jackson2ObjectMapperFactoryBean.getObject();
-    }
-
-    @Bean
-    MultipartConfigElement multipartConfigElement() {
-        MultipartConfigFactory factory = new MultipartConfigFactory();
-        factory.setMaxFileSize("2048KB");
-        factory.setMaxRequestSize("2048KB");
-        return factory.createMultipartConfig();
     }
 
     @Override

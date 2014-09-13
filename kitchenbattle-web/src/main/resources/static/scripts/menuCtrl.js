@@ -9,6 +9,9 @@ angular.module('kitchenbattleWebApp')
                 selectedEventId: undefined
             }
         };
+
+        this.logoutUrl = window.location.protocol + "//" + window.location.host + "/logout";
+
         currentUserService.getCurrentUser()
             .then(function (successResponse) {
                 menuCtrl.currentUser = successResponse.data;
