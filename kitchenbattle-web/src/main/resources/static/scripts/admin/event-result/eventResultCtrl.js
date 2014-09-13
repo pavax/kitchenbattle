@@ -1,6 +1,6 @@
 'use strict';
 angular.module('adminModule')
-    .controller('EventResultCtrl', function ($scope, teams, courseBattleResults, juryVotes, $filter, Fullscreen) {
+    .controller('EventResultCtrl', function ($scope, selectedEventId, teams, courseBattleResults, juryVotes, $filter, juryTeamVoteService, $timeout) {
 
         var eventResultCtrl = this;
 
@@ -9,13 +9,14 @@ angular.module('adminModule')
         initModel();
 
         function initModel() {
-            var teamIds = [];
-            angular.forEach(teams, function (value) {
-                teamIds.push(value.teamId);
+            var teamIds = teams.map(function (aTeam) {
+                return aTeam.teamId;
             });
+            eventResultCtrl.teamIds = teamIds;
+
             eventResultCtrl.guestCourseResults = [];
             angular.forEach($filter("orderBy")(courseBattleResults, 'courseType', true), function (courseBattleResult) {
-                eventResultCtrl.guestCourseResults.push(initGuestCourseResult(courseBattleResult.courseType, teamIds));
+                eventResultCtrl.guestCourseResults.push(initGuestCourseResult(courseBattleResult, teamIds));
             });
             $scope.guestCourseResults = eventResultCtrl.guestCourseResults;
 
@@ -24,123 +25,115 @@ angular.module('adminModule')
                 eventResultCtrl.juryVoteResults.push(initJuryVote(juryVote, teamIds));
             });
             $scope.juryVoteResults = eventResultCtrl.juryVoteResults;
-
-
         }
 
-        $scope.$watch('guestCourseResults', function () {
-            eventResultCtrl.guestCourseTotalResult = initGuestCourseTotal(eventResultCtrl.guestCourseResults);
-            eventResultCtrl.winnerResult = initWinnerResult();
+        $scope.$watch('guestCourseResults', function (updatedGuestCourseResults) {
+            eventResultCtrl.guestCourseTotalResult = initTotalResultEntry(updatedGuestCourseResults);
+            eventResultCtrl.winnerResult = initTotalResultEntry([eventResultCtrl.guestCourseTotalResult, eventResultCtrl.juryVotesTotalResult]);
         }, true);
 
-        $scope.$watch('juryVoteResults', function () {
-            eventResultCtrl.juryVotesTotalResult = initJuryVotesTotalResult(eventResultCtrl.juryVoteResults);
-            eventResultCtrl.winnerResult = initWinnerResult();
+        $scope.$watch('juryVoteResults', function (updatedJuryVoteResults) {
+            eventResultCtrl.juryVotesTotalResult = initTotalResultEntry(updatedJuryVoteResults);
+            eventResultCtrl.winnerResult = initTotalResultEntry([eventResultCtrl.guestCourseTotalResult, eventResultCtrl.juryVotesTotalResult]);
         }, true);
 
-        function initGuestCourseResult(courseType, teamIds) {
-            var aCourseBattle = $filter("filter")(courseBattleResults, {courseType: courseType})[0];
-            var guestCourseResult = {
+        function initGuestCourseResult(aCourseBattle, teamIds) {
+            var guestVoteEntry = {
+                id: aCourseBattle.battleId,
                 showResult: false,
-                courseType: courseType,
-                teamLeft: findCourseResult(teamIds[0], aCourseBattle),
-                teamRight: findCourseResult(teamIds[1], aCourseBattle)
+                courseType: aCourseBattle.courseType,
+                teamLeft: teamIds[0] === aCourseBattle.courseOne.teamId ? aCourseBattle.courseOne : aCourseBattle.courseTwo,
+                teamRight: teamIds[1] === aCourseBattle.courseOne.teamId ? aCourseBattle.courseOne : aCourseBattle.courseTwo,
             };
-            if (guestCourseResult.teamLeft && guestCourseResult.teamRight) {
-                if (guestCourseResult.teamLeft.totalGuestVotes > guestCourseResult.teamRight.totalGuestVotes) {
-                    guestCourseResult.teamLeft.points = 10;
-                    guestCourseResult.teamRight.points = 0;
-                    guestCourseResult.teamLeft.winner = true;
-                } else if (guestCourseResult.teamRight.totalGuestVotes > guestCourseResult.teamLeft.totalGuestVotes) {
-                    guestCourseResult.teamRight.points = 10;
-                    guestCourseResult.teamLeft.points = 0;
-                    guestCourseResult.teamRight.winner = true;
-                } else {
-                    // untentschieden
-                    guestCourseResult.teamLeft.points = 5;
-                    guestCourseResult.teamRight.points = 5;
-                }
+            if (guestVoteEntry.teamLeft.totalGuestVotes > guestVoteEntry.teamRight.totalGuestVotes) {
+                guestVoteEntry.teamLeft.points = 10;
+                guestVoteEntry.teamRight.points = 0;
+                guestVoteEntry.teamLeft.winner = true;
+            } else if (guestVoteEntry.teamRight.totalGuestVotes > guestVoteEntry.teamLeft.totalGuestVotes) {
+                guestVoteEntry.teamRight.points = 10;
+                guestVoteEntry.teamLeft.points = 0;
+                guestVoteEntry.teamRight.winner = true;
+            } else {
+                // unentschieden
+                guestVoteEntry.teamLeft.points = 5;
+                guestVoteEntry.teamRight.points = 5;
             }
-            return  guestCourseResult
+            return  guestVoteEntry
         }
 
-        function initGuestCourseTotal(guestCourseResults) {
-            var guestCourseTotalResult = {
-                teamLeft: {totalPoints: 0, winner: false},
-                teamRight: {totalPoints: 0, winner: false}
-            };
-            angular.forEach(guestCourseResults, function (guestCourseResult) {
-                if (guestCourseResult.teamLeft && guestCourseResult.teamRight && guestCourseResult.showResult) {
-                    guestCourseTotalResult.teamLeft.totalPoints += guestCourseResult.teamLeft.points;
-                    guestCourseTotalResult.teamRight.totalPoints += guestCourseResult.teamRight.points;
-                }
-            });
-            if (guestCourseTotalResult.teamLeft.totalPoints > guestCourseTotalResult.teamRight.totalPoints) {
-                guestCourseTotalResult.teamLeft.winner = true;
-            } else if (guestCourseTotalResult.teamRight.totalPoints > guestCourseTotalResult.teamLeft.totalPoints) {
-                guestCourseTotalResult.teamRight.winner = true;
-            }
-            return guestCourseTotalResult;
-        }
-
-        function initJuryVotesTotalResult(juryVoteResults) {
-            var juryVotesTotalResult = {
-                teamLeft: {totalPoints: 0, winner: false},
-                teamRight: {totalPoints: 0, winner: false}
-            };
-            angular.forEach(juryVoteResults, function (juryResult) {
-                if (juryResult.teamLeft && juryResult.teamRight && juryResult.showResult) {
-                    juryVotesTotalResult.teamLeft.totalPoints += juryResult.teamLeft.points;
-                    juryVotesTotalResult.teamRight.totalPoints += juryResult.teamRight.points;
-                }
-            });
-            if (juryVotesTotalResult.teamLeft.totalPoints > juryVotesTotalResult.teamRight.totalPoints) {
-                juryVotesTotalResult.teamLeft.winner = true;
-            } else if (juryVotesTotalResult.teamRight.totalPoints > juryVotesTotalResult.teamLeft.totalPoints) {
-                juryVotesTotalResult.teamRight.winner = true;
-            }
-            return juryVotesTotalResult;
-        }
-
-
-        function findCourseResult(teamName, courseBattle) {
-            if (courseBattle === undefined) {
-                return undefined;
-            }
-            if (courseBattle.courseOne.teamId === teamName) {
-                return courseBattle.courseOne;
-            } else if (courseBattle.courseTwo.teamId === teamName) {
-                return courseBattle.courseTwo;
-            }
-        }
-
-
-        function initJuryVote(juryVote, teamIds) {
+        function initJuryVote(juryVote, teamIds, showResult) {
+            showResult = showResult || false;
             return {
-                showResult: false,
+                id: juryVote.id,
+                showResult: showResult,
                 juryName: juryVote.juryName,
                 teamLeft: {
-                    points: juryVote.teamId === teamIds[0] ? 5 : 0
+                    points: juryVote.teamId === teamIds[0] ? 5 : 0,
+                    winner: juryVote.teamId === teamIds[0]
                 },
                 teamRight: {
-                    points: juryVote.teamId === teamIds[1] ? 5 : 0
+                    points: juryVote.teamId === teamIds[1] ? 5 : 0,
+                    winner: juryVote.teamId === teamIds[1]
                 }
             };
         }
 
-        function initWinnerResult() {
-            var winnerResult = {
-                teamLeft: {
-                    totalPoints: eventResultCtrl.guestCourseTotalResult.teamLeft.totalPoints + eventResultCtrl.juryVotesTotalResult.teamLeft.totalPoints
-                },
-                teamRight: {
-                    totalPoints: eventResultCtrl.guestCourseTotalResult.teamRight.totalPoints + eventResultCtrl.juryVotesTotalResult.teamRight.totalPoints
-                }
+        function initTotalResultEntry(resultEntries) {
+            resultEntries = resultEntries.filter(function (n) {
+                return n != undefined
+            });
+            var totalResultEntry = {
+                teamLeft: {points: 0, winner: false},
+                teamRight: {points: 0, winner: false}
             };
-            winnerResult.teamLeft.winner = winnerResult.teamLeft.totalPoints > winnerResult.teamRight.totalPoints;
-            winnerResult.teamRight.winner = winnerResult.teamLeft.totalPoints < winnerResult.teamRight.totalPoints;
-            return winnerResult;
+            angular.forEach(resultEntries, function (result) {
+                if (result.teamLeft && result.teamRight && (result.showResult !== undefined ? result.showResult : true)) {
+                    totalResultEntry.teamLeft.points += result.teamLeft.points;
+                    totalResultEntry.teamRight.points += result.teamRight.points;
+                }
+            });
+            if (totalResultEntry.teamLeft.points > totalResultEntry.teamRight.points) {
+                totalResultEntry.teamLeft.winner = true;
+            } else if (totalResultEntry.teamRight.points > totalResultEntry.teamLeft.points) {
+                totalResultEntry.teamRight.winner = true;
+            }
+            return totalResultEntry;
         }
 
-    })
-;
+        function refreshJuryVotes() {
+            juryTeamVoteService.findAllJuryVotesForEvent(selectedEventId)
+                .then(function (successResponse) {
+                    var newJuryVotes = successResponse.data;
+                    var existingJuryVoteResults = eventResultCtrl.juryVoteResults;
+                    angular.forEach(newJuryVotes, function (newJuryVote) {
+                        if (!containsJuryVoteId(newJuryVote.id, existingJuryVoteResults)) {
+                            // a new jury vote occured
+                            existingJuryVoteResults.push(initJuryVote(newJuryVote, eventResultCtrl.teamIds, true))
+                        }
+                    });
+                    angular.forEach(existingJuryVoteResults, function (existingJuryVote, key) {
+                        if (!containsJuryVoteId(existingJuryVote.id, newJuryVotes)) {
+                            // a jury vote has been deleted
+                            existingJuryVoteResults.splice(key, 1);
+                        }
+                    });
+                });
+            function containsJuryVoteId(juryVoteId, juryVoteResults) {
+                return juryVoteResults.some(function (aJuryVoteResult) {
+                    return aJuryVoteResult.id === juryVoteId;
+                })
+            }
+        }
+
+        function startInterval() {
+            var timer = $timeout(function () {
+                refreshJuryVotes();
+                startInterval();
+            }, 2000);
+            $scope.$on('$destroy', function () {
+                $timeout.cancel(timer);
+            });
+        }
+
+        startInterval();
+    });

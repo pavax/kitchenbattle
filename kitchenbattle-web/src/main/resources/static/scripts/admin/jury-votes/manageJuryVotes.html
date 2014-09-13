@@ -11,44 +11,54 @@
     </div>
 </div>
 
-<form class="form-horizontal" ng-show="juryVotesCtrl.showNewJuryVoteForm">
+<form name="juryVoteForm" class="form-horizontal" ng-show="juryVotesCtrl.showNewJuryVoteForm" novalidate
+      ng-submit="juryVotesCtrl.saveVote()">
     <fieldset>
         <!-- Form Name -->
         <legend>New Jury Vote</legend>
 
-        <div class="form-group">
+        <div class="form-group" show-errors>
             <label class="col-md-4 control-label" for="textinput">Jury Name</label>
 
             <div class="col-md-4">
-                <input id="textinput"
-                       name="textinput"
+                <input id="juryNameInput"
+                       name="juryNameInput"
                        required
                        type="text"
                        ng-model="juryVotesCtrl.newVote.juryName"
                        placeholder="Jury Name" class="form-control input-md">
+
+                <p class="help-block" ng-if="juryVoteForm.juryNameInput.$error.required">The jury name is required</p>
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" show-errors>
             <label class="col-md-4 control-label" for="teamSelection">Select Team</label>
 
             <div class="col-md-4">
-                <select id="teamSelection" class="form-control"
+                <select id="teamSelection"
+                        name="teamSelection"
+                        class="form-control"
                         required
                         ng-model="juryVotesCtrl.newVote.teamId"
                         ng-options="team.teamId as team.name for team in juryVotesCtrl.teams">
                 </select>
+
+                <p class="help-block" ng-if="juryVoteForm.teamSelection.$error.required">A Team must be selected</p>
             </div>
         </div>
         <div class="form-group">
+            <div class="col-md-4 control-label"></div>
             <div class="col-md-4">
-                <button name="cancelButton" class="btn btn-default"
+                <button type="button" name="cancelButton" class="btn btn-default"
                         ng-click="juryVotesCtrl.toggleNewJuryVoteForm()">
                     Cancel
                 </button>
-                <button id="singlebutton" name="singlebutton" class="btn btn-primary"
-                        ng-click="juryVotesCtrl.saveVote()">Save Vote
-                </button>
+                <input id="singlebutton"
+                       type="submit"
+                       name="singlebutton"
+                       class="btn btn-primary"
+                       value="Save Vote"/>
             </div>
         </div>
 
@@ -62,13 +72,19 @@
         <th>Jury Name</th>
         <th>Team</th>
         <th>Date</th>
+        <th>Actions</th>
     </tr>
     </thead>
     <tbody>
     <tr ng-repeat="juryVote in juryVotesCtrl.juryVotes">
         <td>{{juryVote.juryName}}</td>
         <td>{{juryVote.teamName}}</td>
-        <td>{{juryVote.createdAt}}</td>
+        <td>{{juryVote.createdAt | date}}</td>
+        <td>
+            <button class="btn btn-danger" ng-click="juryVotesCtrl.deleteVote(juryVote.id)">
+                <span class="glyphicon glyphicon-trash"></span> Delete
+            </button>
+        </td>
     </tr>
     </tbody>
 </table>

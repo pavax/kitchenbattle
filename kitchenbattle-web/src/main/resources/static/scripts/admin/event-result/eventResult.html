@@ -10,18 +10,18 @@
             <th class="text-center">
                 {{eventResultCtrl.teams[0].name}}
                 <progressbar max="100"
-                             value="eventResultCtrl.winnerResult.teamLeft.totalPoints * 100 / (eventResultCtrl.winnerResult.teamLeft.totalPoints + eventResultCtrl.winnerResult.teamRight.totalPoints)"
+                             value="eventResultCtrl.winnerResult.teamLeft.points * 100 / (eventResultCtrl.winnerResult.teamLeft.points + eventResultCtrl.winnerResult.teamRight.points)"
                              type="{{eventResultCtrl.winnerResult.teamLeft.winner ? 'success': 'warning'}}">
-                    Total: {{eventResultCtrl.winnerResult.teamLeft.totalPoints}}
+                    Total: {{eventResultCtrl.winnerResult.teamLeft.points}}
                 </progressbar>
             </th>
             <th class="text-center">
                 {{eventResultCtrl.teams[1].name}}
 
                 <progressbar max="100"
-                             value="eventResultCtrl.winnerResult.teamRight.totalPoints * 100 / (eventResultCtrl.winnerResult.teamLeft.totalPoints + eventResultCtrl.winnerResult.teamRight.totalPoints)"
+                             value="eventResultCtrl.winnerResult.teamRight.points * 100 / (eventResultCtrl.winnerResult.teamLeft.points + eventResultCtrl.winnerResult.teamRight.points)"
                              type="{{eventResultCtrl.winnerResult.teamRight.winner ? 'success': 'warning'}}">
-                    Total: {{eventResultCtrl.winnerResult.teamRight.totalPoints}}
+                    Total: {{eventResultCtrl.winnerResult.teamRight.points}}
                 </progressbar>
 
             </th>
@@ -70,13 +70,13 @@
             <td class="text-center">
                 <span class="label label-default"
                       ng-class="{'label-info': eventResultCtrl.guestCourseTotalResult.teamLeft.winner}">
-                   {{eventResultCtrl.guestCourseTotalResult.teamLeft.totalPoints}}
+                   {{eventResultCtrl.guestCourseTotalResult.teamLeft.points}}
                 </span>
             </td>
             <td class="text-center">
                 <span class="label label-default"
                       ng-class="{'label-info': eventResultCtrl.guestCourseTotalResult.teamRight.winner}">
-                   {{eventResultCtrl.guestCourseTotalResult.teamRight.totalPoints}}
+                   {{eventResultCtrl.guestCourseTotalResult.teamRight.points}}
                 </span>
             </td>
         </tr>
@@ -116,13 +116,13 @@
             <td class="text-center">
                 <span class="label label-default"
                       ng-class="{'label-warning': eventResultCtrl.juryVotesTotalResult.teamLeft.winner}">
-                   {{eventResultCtrl.juryVotesTotalResult.teamLeft.totalPoints}}
+                   {{eventResultCtrl.juryVotesTotalResult.teamLeft.points}}
                 </span>
             </td>
             <td class="text-center">
                 <span class="label label-default"
                       ng-class="{'label-warning': eventResultCtrl.juryVotesTotalResult.teamRight.winner}">
-                   {{eventResultCtrl.juryVotesTotalResult.teamRight.totalPoints}}
+                   {{eventResultCtrl.juryVotesTotalResult.teamRight.points}}
                 </span>
             </td>
         </tr>
@@ -133,13 +133,13 @@
             <td class="text-center">
                 <span class="label label-default"
                       ng-class="{'label-primary': eventResultCtrl.winnerResult.teamLeft.winner}">
-                   {{eventResultCtrl.winnerResult.teamLeft.totalPoints}}
+                   {{eventResultCtrl.winnerResult.teamLeft.points}}
                 </span>
             </td>
             <td class="text-center">
                 <span class="label label-default"
                       ng-class="{'label-primary': eventResultCtrl.winnerResult.teamRight.winner}">
-                   {{eventResultCtrl.winnerResult.teamRight.totalPoints}}
+                   {{eventResultCtrl.winnerResult.teamRight.points}}
                 </span>
             </td>
         </tr>-->
