@@ -7,7 +7,17 @@
     <packaging>pom</packaging>
     <modules>
         <module>kitchenbattle-web</module>
+        <module>kichtenbattle-distribution</module>
     </modules>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>ch.adrianos.apps</groupId>
+                <artifactId>kitchenbattle-web</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <groupId>ch.adrianos.apps</groupId>
     <artifactId>kitchenbattle</artifactId>

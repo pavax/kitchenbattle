@@ -1,0 +1,1 @@
+java -jar kitchenbattle-web-${project.version}.jar
