@@ -9,7 +9,7 @@
     "angular-cookies": "1.2.23",
     "angular-sanitize": "1.2.23",
     "angular-touch": "1.2.23",
-    "angular-ui-router": "0.2.10",
+    "angular-ui-router": "0.2.11",
     "angular-bootstrap": "0.11.0",
     "angular-i18n": "1.2.23",
     "angular-upload": "~1.0.11"
