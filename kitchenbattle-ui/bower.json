@@ -8,15 +8,17 @@
     "angular-resource": "1.2.23",
     "angular-cookies": "1.2.23",
     "angular-sanitize": "1.2.23",
+    "angular-animate": "1.2.23",
     "angular-touch": "1.2.23",
     "angular-ui-router": "0.2.11",
     "angular-bootstrap": "0.11.0",
     "angular-i18n": "1.2.23",
-    "angular-upload": "~1.0.11"
+    "angular-upload": "1.0.11",
+    "angular-fullscreen": "1.0.0"
   },
   "devDependencies": {
     "angular-mocks": "1.2.23",
     "angular-scenario": "1.2.23"
   },
-  "appPath": "src/main/resources/static"
+  "appPath": "app"
 }

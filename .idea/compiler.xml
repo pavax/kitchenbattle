@@ -22,10 +22,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
+        <module name="kitchenbattle-ui" />
         <module name="kitchenbattle-web" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="kitchenbattle-ui" target="1.8" />
       <module name="kitchenbattle-web" target="1.8" />
     </bytecodeTargetLevel>
   </component>

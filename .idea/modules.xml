@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/kitchenbattle.iml" filepath="$PROJECT_DIR$/kitchenbattle.iml" />
+      <module fileurl="file://$PROJECT_DIR$/kitchenbattle-ui/kitchenbattle-ui.iml" filepath="$PROJECT_DIR$/kitchenbattle-ui/kitchenbattle-ui.iml" />
       <module fileurl="file://$PROJECT_DIR$/kitchenbattle-web/kitchenbattle-web.iml" filepath="$PROJECT_DIR$/kitchenbattle-web/kitchenbattle-web.iml" />
     </modules>
   </component>

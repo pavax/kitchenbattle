@@ -1,0 +1,7 @@
+dist
+.tmp
+.sass-cache
+node_modules
+bower_components
+node
+src/main/resources/META-INF/resources
