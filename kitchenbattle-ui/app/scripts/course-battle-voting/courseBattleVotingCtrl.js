@@ -1,19 +1,30 @@
 'use strict';
 
 angular.module('courseBattleVotingModule')
-    .controller('CourseBattleVotingCtrl', function ($scope, battle, courseOne, courseTwo, courseBattleVoteService) {
+    .controller('CourseBattleVotingCtrl', function ($scope, $state, battle, courseOne, courseTwo, courseBattleVoteService, $timeout, $modal) {
+
         this.battle = battle;
 
         this.courseOne = courseOne;
 
         this.courseTwo = courseTwo;
 
-        this.voteCourse = function (courseId) {
-            courseBattleVoteService.voteCourse(courseId, this.battle.battleId)
-                .success(function (data) {
-                    alert("Danke");
-                }).error(function (error) {
-                    alert("Ooops...Es ist ein Fehler aufgetreten: " + error.message);
+        this.voteCourse = function (course) {
+            courseBattleVoteService.voteCourse(course.courseId, this.battle.battleId)
+                .then(function () {
+                    var modalInstance = $modal.open({
+                        templateUrl: 'scripts/course-battle-voting/voteConfirmationModal.html'
+                    });
+                    $timeout(function () {
+                        modalInstance.close();
+                    }, 1200);
+                }, function (errorResponse) {
+                    if (errorResponse.status === 409) {
+                        window.alert('Diese Abstimmung wurde beendet');
+                        $state.go('courseBattleVoting.battles.master', {eventId: battle.eventId});
+                    } else {
+                        window.alert('Ooops...Es ist ein Fehler aufgetreten: ' + errorResponse.status);
+                    }
                 });
         };
     });

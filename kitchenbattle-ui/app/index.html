@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js">
+<html class="no-js" lang="de">
 <head>
     <meta charset="utf-8">
     <title>Kitchen Battle App</title>
@@ -91,7 +91,9 @@
 </div>
 
 <div class="footer">
-    <p><span class="glyphicon glyphicon-heart"></span> mimacom ag</p>
+    <p>app sponsored by <a target="_blank" href="http://www.mimacom.com">
+        <img alt="mimacom" src="images/logo-mimacom.png" height="22px"/></a>
+    </p>
 </div>
 
 
@@ -99,8 +101,6 @@
 <!-- bower:js -->
 <script src="bower_components/jquery/dist/jquery.js"></script>
 <script src="bower_components/angular/angular.js"></script>
-<script src="bower_components/json3/lib/json3.js"></script>
-<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
 <script src="bower_components/angular-resource/angular-resource.js"></script>
 <script src="bower_components/angular-cookies/angular-cookies.js"></script>
 <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
@@ -109,11 +109,12 @@
 <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
 <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 <script src="bower_components/angular-upload/angular-upload.js"></script>
+<script src="bower_components/json3/lib/json3.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
 <!-- endbower -->
 <script src="bower_components/angular-i18n/angular-locale_de-ch.js"></script>
 <script src="bower_components/angular-fullscreen/src/angular-fullscreen.js"></script>
 <!-- endbuild -->
-
 
 
 <!-- build:js({.tmp,app}) scripts/scripts.js -->
@@ -134,6 +135,7 @@
 <script src="scripts/common/filters/courseBattleStateFilter.js"></script>
 <script src="scripts/common/directives/disableNgAnimate.js"></script>
 <script src="scripts/common/directives/showErros.js"></script>
+<script src="scripts/common/directives/fullScreenHeader.js"></script>
 
 <script src="scripts/course-battle-voting/courseBattleVotingModule.js"></script>
 <script src="scripts/course-battle-voting/eventSelectionCtrl.js"></script>

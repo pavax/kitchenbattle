@@ -3,18 +3,35 @@ package ch.adrianos.apps.kitchenbattle.config;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import org.springframework.boot.context.embedded.ServletContextInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean;
+import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.mvc.WebContentInterceptor;
 
+import javax.servlet.DispatcherType;
+import javax.servlet.ServletContext;
+import java.util.EnumSet;
+
 @Configuration
 public class CustomMvcConfiguration extends WebMvcConfigurerAdapter {
+
+    @Bean
+    public ServletContextInitializer servletContextInitializer() {
+        return (ServletContext servletContext) -> {
+            final CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
+            characterEncodingFilter.setEncoding("UTF-8");
+            characterEncodingFilter.setForceEncoding(true);
+            servletContext.addFilter("characterEncodingFilter", characterEncodingFilter)
+                    .addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST), false, "/*");
+        };
+    }
 
     @Bean
     public ObjectMapper buildObjectMapper() {
@@ -43,5 +60,6 @@ public class CustomMvcConfiguration extends WebMvcConfigurerAdapter {
         registry.addViewController("/login").setViewName("login");
         registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
     }
+
 
 }

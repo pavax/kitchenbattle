@@ -1,11 +1,15 @@
 'use strict';
 
 angular.module('adminModule')
-    .controller('CourseBattleResultController', function ($scope, battleId, courseBattleSearchService, courseService, $timeout, Fullscreen) {
+    .controller('CourseBattleResultController', function ($scope, selectedEvent,battleId, courseBattleSearchService, courseService, $timeout, Fullscreen) {
 
         var courseBattleResultCtrl = this;
 
+        this.selectedEvent = selectedEvent;
+
         this.showTeamInfo = false;
+
+        this.fullscreen = Fullscreen;
 
         function init() {
             courseBattleSearchService.findCourseBattleResults(battleId)
@@ -37,7 +41,7 @@ angular.module('adminModule')
             // Set Fullscreen to a specific element (bad practice)
             // Fullscreen.enable( document.getElementById('img') )
 
-        }
+        };
 
         this.autoRefresh = false;
 

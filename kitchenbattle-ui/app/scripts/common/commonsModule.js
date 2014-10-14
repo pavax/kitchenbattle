@@ -13,6 +13,7 @@ angular.module('commonsModule',
         'commons.filters.courseBattleState',
         'commons.resources.currentUser',
         'commons.directives.disableNgAnimate',
-        'commons.directives.showErrors'
+        'commons.directives.showErrors',
+        'commons.directives.fullScreenHeader'
     ]
 );

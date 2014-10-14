@@ -2,28 +2,21 @@
         ng-click="fullscreenCtrl.goFullscreen()">
     <span class="glyphicon glyphicon-screenshot"></span> Go Fullscreen
 </button>
-<div id="fullscreen" class="container-full">
-    <table class="table table-responsive h3">
+<div id="fullscreen">
+
+    <div ng-if="eventResultCtrl.fullscreen.isEnabled()" full-screen-header event="eventResultCtrl.selectedEvent">
+        <h2>Team Battle Ergebnisse</h2>
+    </div>
+
+    <table class="table table-responsive h4">
         <thead>
-        <tr >
+        <tr>
             <th>Publikum-Votes</th>
             <th class="text-center">
-                {{eventResultCtrl.teams[0].name}}
-                <progressbar max="100"
-                             value="eventResultCtrl.winnerResult.teamLeft.points * 100 / (eventResultCtrl.winnerResult.teamLeft.points + eventResultCtrl.winnerResult.teamRight.points)"
-                             type="{{eventResultCtrl.winnerResult.teamLeft.winner ? 'success': 'warning'}}">
-                    Total: {{eventResultCtrl.winnerResult.teamLeft.points}}
-                </progressbar>
+                <h3>{{eventResultCtrl.teams[0].name}}</h3>
             </th>
             <th class="text-center">
-                {{eventResultCtrl.teams[1].name}}
-
-                <progressbar max="100"
-                             value="eventResultCtrl.winnerResult.teamRight.points * 100 / (eventResultCtrl.winnerResult.teamLeft.points + eventResultCtrl.winnerResult.teamRight.points)"
-                             type="{{eventResultCtrl.winnerResult.teamRight.winner ? 'success': 'warning'}}">
-                    Total: {{eventResultCtrl.winnerResult.teamRight.points}}
-                </progressbar>
-
+                <h3>{{eventResultCtrl.teams[1].name}}</h3>
             </th>
         </tr>
         </thead>
@@ -76,7 +69,7 @@
                 </span>
             </td>
         </tr>
-        <tr>
+        <tr class="spaceTop">
             <th>Jury-Votes</th>
             <th class="text-center"></th>
             <th class="text-center"></th>
@@ -118,23 +111,25 @@
                 </span>
             </td>
         </tr>
-        <!--<tr class="bg-success">
-            <td>
+        <tr class="spaceTop">
+            <th>
                 TOTAL
-            </td>
-            <td class="text-center">
-                <span class="label label-default"
+            </th>
+            <th class="text-center">
+                <span ng-show="eventResultCtrl.winnerResult.teamLeft.winner"><img src="images/apple-touch-icon-57x57.png"></span>
+                <span class="label label-default" style="font-size: x-large"
                       ng-class="{'label-primary': eventResultCtrl.winnerResult.teamLeft.winner}">
                    {{eventResultCtrl.winnerResult.teamLeft.points}}
                 </span>
-            </td>
-            <td class="text-center">
-                <span class="label label-default"
+            </th>
+            <th class="text-center">
+                <span ng-show="eventResultCtrl.winnerResult.teamRight.winner"><img src="images/apple-touch-icon-57x57.png"></span>
+                <span class="label label-default" style="font-size: x-large"
                       ng-class="{'label-primary': eventResultCtrl.winnerResult.teamRight.winner}">
                    {{eventResultCtrl.winnerResult.teamRight.points}}
                 </span>
-            </td>
-        </tr>-->
+            </th>
+        </tr>
         </tbody>
     </table>
 </div>

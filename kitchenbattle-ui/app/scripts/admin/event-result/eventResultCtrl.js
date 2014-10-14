@@ -1,10 +1,16 @@
 'use strict';
 angular.module('adminModule')
-    .controller('EventResultCtrl', function ($scope, selectedEventId, teams, courseBattleResults, juryVotes, $filter, juryTeamVoteService, $timeout) {
+    .controller('EventResultCtrl', function ($scope, selectedEvent, teams, courseBattleResults, juryVotes, $filter, juryTeamVoteService, $timeout, Fullscreen) {
 
         var eventResultCtrl = this;
 
+        eventResultCtrl.selectedEvent = selectedEvent;
+
         eventResultCtrl.teams = teams;
+
+        eventResultCtrl.fullscreen = Fullscreen;
+
+        var selectedEventId = selectedEvent.eventId;
 
         initModel();
 

@@ -1,7 +1,7 @@
 package ch.adrianos.apps.kitchenbattle.web;
 
-import ch.adrianos.apps.kitchenbattle.domain.coursebattle.*;
 import ch.adrianos.apps.kitchenbattle.domain.course.CourseId;
+import ch.adrianos.apps.kitchenbattle.domain.coursebattle.*;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,7 +9,6 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 
 @RestController
 @RequestMapping("/api/course-battle-votes")
@@ -27,10 +26,10 @@ public class CourseBattleVoteController {
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public void vote(@RequestBody @Valid CreateGuestCourseBattleVotingDto createGuestCourseBattleVotingDto) {
+    public void vote(@RequestBody @Valid CreateGuestCourseBattleVotingDto createGuestCourseBattleVotingDto) throws CourseBattleNotInProgressException {
         CourseBattle courseBattle = courseBattleRepository.findOne(new BattleId(createGuestCourseBattleVotingDto.getBattleId()));
         if (courseBattle.getState() != CourseBattleState.VOTING_IN_PROGRESS) {
-            throw new IllegalStateException("Course-Battle Voting is not in Progress");
+            throw new CourseBattleNotInProgressException("Course-Battle Voting is not in Progress");
         }
         courseBattleVoteRepository.save(new CourseBattleVote(new BattleId(createGuestCourseBattleVotingDto.getBattleId()), new CourseId(createGuestCourseBattleVotingDto.getVotedCourseId())));
     }
@@ -40,6 +39,12 @@ public class CourseBattleVoteController {
     @Secured({"ROLE_ADMIN"})
     public Integer countVotes(@RequestParam String battleId, @RequestParam String courseId) {
         return courseBattleVoteRepository.countVotesForCourse(new CourseId(courseId), new BattleId(battleId));
+    }
+
+    @ResponseStatus(value=HttpStatus.CONFLICT)
+    @ExceptionHandler(CourseBattleNotInProgressException.class)
+    public void handleCourseBattleNotInProgressException() {
+        // Nothing to do
     }
 
     public static class CreateGuestCourseBattleVotingDto {
@@ -64,6 +69,12 @@ public class CourseBattleVoteController {
 
         public void setVotedCourseId(String votedCourseId) {
             this.votedCourseId = votedCourseId;
+        }
+    }
+
+    public static class CourseBattleNotInProgressException extends Exception {
+        public CourseBattleNotInProgressException(String s) {
+            super(s);
         }
     }
 }

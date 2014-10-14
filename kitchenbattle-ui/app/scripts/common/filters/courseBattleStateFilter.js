@@ -5,7 +5,7 @@ angular.module('commons.filters.courseBattleState', [])
                 case 'INITIALIZED':
                     return 'Initalisiert';
                 case 'VOTING_IN_PROGRESS':
-                    return 'Abstimmung läuft';
+                    return 'Gestartet';
                 case 'CLOSED':
                     return 'Beendet';
                 default:
