@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('adminModule')
-    .controller('CourseBattleResultController', function ($scope, selectedEvent,battleId, courseBattleSearchService, courseService, $timeout, Fullscreen) {
+    .controller('CourseBattleResultController', function ($scope, selectedEvent, battleId, courseBattleSearchService, courseService, $timeout, Fullscreen) {
 
         var courseBattleResultCtrl = this;
 

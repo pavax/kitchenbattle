@@ -2,134 +2,164 @@
         ng-click="fullscreenCtrl.goFullscreen()">
     <span class="glyphicon glyphicon-screenshot"></span> Go Fullscreen
 </button>
-<div id="fullscreen">
-
-    <div ng-if="eventResultCtrl.fullscreen.isEnabled()" full-screen-header event="eventResultCtrl.selectedEvent">
-        <h2>Team Battle Ergebnisse</h2>
-    </div>
-
-    <table class="table table-responsive h4">
-        <thead>
-        <tr>
-            <th>Publikum-Votes</th>
-            <th class="text-center">
-                <h3>{{eventResultCtrl.teams[0].name}}</h3>
-            </th>
-            <th class="text-center">
-                <h3>{{eventResultCtrl.teams[1].name}}</h3>
-            </th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr ng-repeat="guestCourseResult in eventResultCtrl.guestCourseResults">
-            <td>
-                <a ng-show="guestCourseResult.teamLeft && guestCourseResult.teamRight" href=""
-                   ng-click="guestCourseResult.showResult = !guestCourseResult.showResult">
-                    {{guestCourseResult.courseType | courseType}}
-                </a>
+<div id="fullscreen" class="container-full">
+    <div class="row">
+        <div ng-if="eventResultCtrl.fullscreen.isEnabled()" full-screen-header event="eventResultCtrl.selectedEvent">
+            <h2>Team Battle Ergebnisse</h2>
+        </div>
+        <div class="col-xs-12">
+            <div class="col-xs-6">
+                <table class="table table-responsive bg-info" style="font-size: x-large">
+                    <thead>
+                    <tr>
+                        <td></td>
+                        <td class="text-center">
+                            {{eventResultCtrl.teams[0].name}}
+                        </td>
+                        <td class="text-center">
+                            {{eventResultCtrl.teams[1].name}}
+                        </td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="guestCourseResult in eventResultCtrl.guestCourseResults">
+                        <td>
+                            <a ng-show="guestCourseResult.teamLeft && guestCourseResult.teamRight" href=""
+                               ng-click="guestCourseResult.showResult = !guestCourseResult.showResult">
+                                {{guestCourseResult.courseType | courseType}}
+                            </a>
                 <span ng-hide="guestCourseResult.teamLeft && guestCourseResult.teamRight">
                     {{guestCourseResult.courseType | courseType}}
                 </span>
-            </td>
-            <td class="text-center">
-                <div ng-show="guestCourseResult.teamLeft && guestCourseResult.showResult" class="reveal-animation">
+                        </td>
+                        <td class="text-center">
+                            <div ng-show="guestCourseResult.teamLeft && guestCourseResult.showResult"
+                                 class="reveal-animation">
                     <span class="label label-default">
                         {{guestCourseResult.teamLeft.points}}
                     </span>
 
-                    <div>
-                        <small>({{guestCourseResult.teamLeft.totalGuestVotes}} Votes)</small>
-                    </div>
-                </div>
-            </td>
-            <td class="text-center">
-                <div ng-show="guestCourseResult.teamRight  && guestCourseResult.showResult" class="reveal-animation">
+                                <div>
+                                    <small>({{guestCourseResult.teamLeft.totalGuestVotes}} Votes)</small>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <div ng-show="guestCourseResult.teamRight  && guestCourseResult.showResult"
+                                 class="reveal-animation">
                     <span class="label label-default">
                         {{guestCourseResult.teamRight.points}}
                     </span>
 
-                    <div>
-                        <small>({{guestCourseResult.teamRight.totalGuestVotes}} Votes)</small>
-                    </div>
-                </div>
-            </td>
-        </tr>
-        <tr class="bg-info">
-            <td>
-                Total Publikum Votes
-            </td>
-            <td class="text-center">
+                                <div>
+                                    <small>({{guestCourseResult.teamRight.totalGuestVotes}} Votes)</small>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="bg-info">
+                        <td>
+                            Total Publikum Votes
+                        </td>
+                        <td class="text-center">
                 <span class="label label-info">
                    {{eventResultCtrl.guestCourseTotalResult.teamLeft.points}}
                 </span>
-            </td>
-            <td class="text-center">
+                        </td>
+                        <td class="text-center">
                 <span class="label label-info">
                    {{eventResultCtrl.guestCourseTotalResult.teamRight.points}}
                 </span>
-            </td>
-        </tr>
-        <tr class="spaceTop">
-            <th>Jury-Votes</th>
-            <th class="text-center"></th>
-            <th class="text-center"></th>
-        </tr>
-        <tr ng-repeat="juryVoteResult in eventResultCtrl.juryVoteResults">
-            <td>
-                <a href=""
-                   ng-click="juryVoteResult.showResult = !juryVoteResult.showResult">
-                    {{juryVoteResult.juryName}}
-                </a>
-            </td>
-            <td class="text-center">
-                <div ng-show="juryVoteResult.showResult" class="reveal-animation">
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-xs-6">
+                <table class="table table-responsive bg-warning" style="font-size: x-large">
+                    <thead>
+                    <tr>
+                        <td></td>
+                        <td class="text-center">
+                            {{eventResultCtrl.teams[0].name}}
+                        </td>
+                        <td class="text-center">
+                            {{eventResultCtrl.teams[1].name}}
+                        </td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="juryVoteResult in eventResultCtrl.juryVoteResults">
+                        <td>
+                            <a href=""
+                               ng-click="juryVoteResult.showResult = !juryVoteResult.showResult">
+                                {{juryVoteResult.juryName}}
+                            </a>
+                        </td>
+                        <td class="text-center">
+                            <div ng-show="juryVoteResult.showResult" class="reveal-animation">
                     <span class="label label-default">
                         {{juryVoteResult.teamLeft.points}}
                     </span>
-                </div>
-            </td>
-            <td class="text-center">
-                <div ng-show="juryVoteResult.showResult" class="reveal-animation">
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <div ng-show="juryVoteResult.showResult" class="reveal-animation">
                     <span class="label label-default">
                         {{juryVoteResult.teamRight.points}}
                     </span>
-                </div>
-            </td>
-        </tr>
-        <tr class="bg-warning">
-            <td>
-                Total Jury Votes
-            </td>
-            <td class="text-center">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="bg-warning">
+                        <td>
+                            Total Jury Votes
+                        </td>
+                        <td class="text-center">
                 <span class="label label-danger">
                    {{eventResultCtrl.juryVotesTotalResult.teamLeft.points}}
                 </span>
-            </td>
-            <td class="text-center">
+                        </td>
+                        <td class="text-center">
                 <span class="label label-danger">
                    {{eventResultCtrl.juryVotesTotalResult.teamRight.points}}
                 </span>
-            </td>
-        </tr>
-        <tr class="spaceTop">
-            <th>
-                TOTAL
-            </th>
-            <th class="text-center">
-                <span ng-show="eventResultCtrl.winnerResult.teamLeft.winner"><img src="images/apple-touch-icon-57x57.png"></span>
-                <span class="label label-default" style="font-size: x-large"
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="row" style="font-size: xx-large">
+
+            <div class="col-xs-3"></div>
+
+            <div class="col-xs-6">
+                <div class="col-xs-6 text-center">
+                    <div>{{eventResultCtrl.teams[0].name}}</div>
+            <span ng-show="eventResultCtrl.winnerResult.teamLeft.winner">
+                    <img src="images/apple-touch-icon-57x57.png"></span>
+                    <span class="label label-default" style="font-size: x-large"
                       ng-class="{'label-primary': eventResultCtrl.winnerResult.teamLeft.winner}">
-                   {{eventResultCtrl.winnerResult.teamLeft.points}}
-                </span>
-            </th>
-            <th class="text-center">
-                <span ng-show="eventResultCtrl.winnerResult.teamRight.winner"><img src="images/apple-touch-icon-57x57.png"></span>
-                <span class="label label-default" style="font-size: x-large"
-                      ng-class="{'label-primary': eventResultCtrl.winnerResult.teamRight.winner}">
-                   {{eventResultCtrl.winnerResult.teamRight.points}}
-                </span>
-            </th>
-        </tr>
-        </tbody>
-    </table>
+                        {{eventResultCtrl.winnerResult.teamLeft.points}}
+                    </span>
+                </div>
+
+                <div class="col-xs-6 text-center">
+                    <div>{{eventResultCtrl.teams[1].name}}</div>
+                    <span ng-show="eventResultCtrl.winnerResult.teamRight.winner">
+                        <img src="images/apple-touch-icon-57x57.png">
+                    </span>
+                     <span class="label label-default" style="font-size: x-large"
+                           ng-class="{'label-primary': eventResultCtrl.winnerResult.teamRight.winner}">
+                        {{eventResultCtrl.winnerResult.teamRight.points}}
+                    </span>
+                </div>
+            </div>
+
+            <div class="col-xs-3"></div>
+        </div>
+    </div>
 </div>

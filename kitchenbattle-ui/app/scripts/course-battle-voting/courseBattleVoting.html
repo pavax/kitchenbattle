@@ -30,6 +30,7 @@
                     </carousel>
                     <br>
                     <a href="" class="btn btn-primary btn-lg btn-block"
+                       ng-hide="courseBattleVoting.voteRequestInProgress"
                        ng-click="courseBattleVoting.voteCourse(courseBattleVoting.courseOne)">
                         <span class="glyphicon glyphicon-star"></span> Stimme geben
                     </a>
@@ -62,6 +63,7 @@
                     </carousel>
                     <br>
                     <a href="" class="btn btn-primary btn-lg btn-block"
+                       ng-hide="courseBattleVoting.voteRequestInProgress"
                        ng-click="courseBattleVoting.voteCourse(courseBattleVoting.courseTwo)">
                         <span class="glyphicon glyphicon-star"></span> Stimme geben
                     </a>
