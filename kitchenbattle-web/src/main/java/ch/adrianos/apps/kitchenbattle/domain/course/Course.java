@@ -45,7 +45,7 @@ public class Course {
     @OrderColumn
     private List<CourseVariant> courseVariants = new ArrayList<>();
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "courseId")
     @Valid
     private Set<CourseImage> courseImages = new HashSet<>();
