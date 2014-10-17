@@ -1,6 +1,6 @@
 'use strict';
 angular.module('adminModule')
-    .controller('CourseBattlesController', function ($scope, courseBattles, teams, courseService, courseBattleService, $state) {
+    .controller('CourseBattlesController', function ($scope, courseBattles, teams, courseService, courseBattleService, $state, courseBattleVoteService) {
         this.courseBattles = courseBattles;
         var courseBattlesCtrl = this;
         this.teams = teams;
@@ -58,10 +58,18 @@ angular.module('adminModule')
         };
 
         this.deleteCourseBattle = function (courseBattleId) {
-            courseBattleService.deleteCourseBattle(courseBattleId)
-                .then(function () {
-                    $state.forceReload();
-                });
+            if (window.confirm("Sure?")) {
+                courseBattleService.deleteCourseBattle(courseBattleId)
+                    .then(function () {
+                        $state.forceReload();
+                    });
+            }
+        };
+
+        this.clearVotes = function (courseBattleId) {
+            if (window.confirm("Sure?")) {
+                courseBattleVoteService.clearVotes(courseBattleId);
+            }
         };
 
         this.showResults = function (courseBattleId) {

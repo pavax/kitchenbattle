@@ -9,6 +9,14 @@ angular.module('commons.resources.courseBattleVote', [])
                         battleId: battleId
                     }
                 );
+            },
+            clearVotes: function (battleId) {
+                return $http.delete('api/course-battle-votes', {
+                        params: {
+                            battleId: battleId
+                        }
+                    }
+                );
             }
         }
     });

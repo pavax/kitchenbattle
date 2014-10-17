@@ -6,9 +6,14 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface CourseBattleVoteRepository extends JpaRepository<CourseBattleVote, String> {
 
     @Query("select distinct count (cbv) from CourseBattleVote cbv where cbv.votedCourseId = :courseId and cbv.courseBattleId = :battleId ")
     Integer countVotesForCourse(@Param("courseId") CourseId courseId, @Param("battleId") BattleId battleId);
+
+    @Query("select cbv  from CourseBattleVote cbv where cbv.courseBattleId = :battleId ")
+    List<CourseBattleVote> findAllCourseBattleVotesForBattle(@Param("battleId") BattleId battleId);
 }

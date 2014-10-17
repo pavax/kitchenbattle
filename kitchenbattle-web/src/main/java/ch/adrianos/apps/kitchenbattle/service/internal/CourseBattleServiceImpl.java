@@ -1,12 +1,9 @@
 package ch.adrianos.apps.kitchenbattle.service.internal;
 
-import ch.adrianos.apps.kitchenbattle.domain.coursebattle.BattleId;
-import ch.adrianos.apps.kitchenbattle.domain.coursebattle.CourseBattle;
-import ch.adrianos.apps.kitchenbattle.domain.coursebattle.CourseBattleRepository;
+import ch.adrianos.apps.kitchenbattle.domain.coursebattle.*;
 import ch.adrianos.apps.kitchenbattle.domain.course.Course;
 import ch.adrianos.apps.kitchenbattle.domain.course.CourseId;
 import ch.adrianos.apps.kitchenbattle.domain.course.CourseRepository;
-import ch.adrianos.apps.kitchenbattle.domain.coursebattle.CourseBattleState;
 import ch.adrianos.apps.kitchenbattle.service.CourseBattleService;
 import ch.adrianos.apps.kitchenbattle.service.CourseBattleNotFoundException;
 import ch.adrianos.apps.kitchenbattle.service.CourseNotFoundException;
@@ -14,6 +11,8 @@ import ch.adrianos.apps.kitchenbattle.service.CreateCourseBattleDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Transactional(rollbackFor = {CourseNotFoundException.class})
@@ -23,10 +22,13 @@ public class CourseBattleServiceImpl implements CourseBattleService {
 
     private final CourseRepository courseRepository;
 
+    private final CourseBattleVoteRepository courseBattleVoteRepository;
+
     @Autowired
-    public CourseBattleServiceImpl(CourseBattleRepository courseBattleRepository, CourseRepository courseRepository) {
+    public CourseBattleServiceImpl(CourseBattleRepository courseBattleRepository, CourseRepository courseRepository, CourseBattleVoteRepository courseBattleVoteRepository) {
         this.courseBattleRepository = courseBattleRepository;
         this.courseRepository = courseRepository;
+        this.courseBattleVoteRepository = courseBattleVoteRepository;
     }
 
     @Override
@@ -58,6 +60,8 @@ public class CourseBattleServiceImpl implements CourseBattleService {
             throw new CourseBattleNotFoundException(battleId);
         }
         courseBattleRepository.delete(battle);
+        List<CourseBattleVote> allCourseBattleVotesForBattle = courseBattleVoteRepository.findAllCourseBattleVotesForBattle(new BattleId(battleId));
+        courseBattleVoteRepository.deleteInBatch(allCourseBattleVotesForBattle);
     }
 
     private CourseBattle getCourseBattle(String battleId) throws CourseBattleNotFoundException {

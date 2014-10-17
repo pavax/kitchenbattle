@@ -9,6 +9,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/course-battle-votes")
@@ -34,6 +35,12 @@ public class CourseBattleVoteController {
         courseBattleVoteRepository.save(new CourseBattleVote(new BattleId(createGuestCourseBattleVotingDto.getBattleId()), new CourseId(createGuestCourseBattleVotingDto.getVotedCourseId())));
     }
 
+    @RequestMapping(method = RequestMethod.DELETE)
+    public void clearCourseBattleVotes(@RequestParam String battleId) {
+        List<CourseBattleVote> allCourseBattleVotesForBattle = courseBattleVoteRepository.findAllCourseBattleVotesForBattle(new BattleId(battleId));
+        courseBattleVoteRepository.deleteInBatch(allCourseBattleVotesForBattle);
+    }
+
     @RequestMapping(value = "search/countCourseVotes", method = RequestMethod.HEAD)
     @ResponseStatus(HttpStatus.OK)
     @Secured({"ROLE_ADMIN"})
@@ -41,7 +48,7 @@ public class CourseBattleVoteController {
         return courseBattleVoteRepository.countVotesForCourse(new CourseId(courseId), new BattleId(battleId));
     }
 
-    @ResponseStatus(value=HttpStatus.CONFLICT)
+    @ResponseStatus(value = HttpStatus.CONFLICT)
     @ExceptionHandler(CourseBattleNotInProgressException.class)
     public void handleCourseBattleNotInProgressException() {
         // Nothing to do

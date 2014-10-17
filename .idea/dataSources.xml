@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="1770838481">
+  <component name="DataSourceManagerImpl" format="xml" hash="4285668066">
     <data-source source="LOCAL" name="MySQL - kitchenbattle@localhost" uuid="05d89730-ebfb-4160-9d3e-44371ab7b619">
       <driver-ref>mysql</driver-ref>
       <synchronize>true</synchronize>
@@ -8,6 +8,20 @@
       <jdbc-url>jdbc:mysql://localhost:3306/kitchenbattle</jdbc-url>
       <user-name>kitchenbattle</user-name>
       <user-password>dfcbdfcedfd8dfc3dfcbdfc4dfc5dfd9</user-password>
+      <driver-properties>
+        <property name="zeroDateTimeBehavior" value="convertToNull" />
+        <property name="tinyInt1isBit" value="false" />
+      </driver-properties>
+      <libraries />
+    </data-source>
+    <data-source source="LOCAL" name="kitchenbatte-dev-schema" uuid="668b4b02-ddd0-4c99-a12f-e3d49827b914">
+      <driver-ref>mysql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306</jdbc-url>
+      <user-name>kb-dev</user-name>
+      <user-password>dfd9dfcfdfc9dfd8dfcfdfde</user-password>
+      <schema-pattern>kitchenbattle-dev.*</schema-pattern>
       <driver-properties>
         <property name="zeroDateTimeBehavior" value="convertToNull" />
         <property name="tinyInt1isBit" value="false" />
