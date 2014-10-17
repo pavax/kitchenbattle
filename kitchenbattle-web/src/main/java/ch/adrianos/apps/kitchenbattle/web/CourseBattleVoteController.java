@@ -36,6 +36,7 @@ public class CourseBattleVoteController {
     }
 
     @RequestMapping(method = RequestMethod.DELETE)
+    @Secured({"ROLE_ADMIN"})
     public void clearCourseBattleVotes(@RequestParam String battleId) {
         List<CourseBattleVote> allCourseBattleVotesForBattle = courseBattleVoteRepository.findAllCourseBattleVotesForBattle(new BattleId(battleId));
         courseBattleVoteRepository.deleteInBatch(allCourseBattleVotesForBattle);
