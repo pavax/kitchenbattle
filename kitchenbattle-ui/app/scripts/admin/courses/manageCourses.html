@@ -58,7 +58,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="course in coursesCtrl.courses | filter:{'teamId':team.teamId}">
+            <tr ng-repeat="course in coursesCtrl.courses | filter:{'teamId':team.teamId} | orderBy:'-courseType':false">
                 <td>{{course.courseType | courseType}}</td>
                 <td>{{course.name}}</td>
                 <td>{{course.description}}</td>

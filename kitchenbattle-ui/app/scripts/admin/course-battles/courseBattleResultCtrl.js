@@ -1,15 +1,28 @@
 'use strict';
 
 angular.module('adminModule')
-    .controller('CourseBattleResultController', function ($scope, selectedEvent, battleId, courseBattleSearchService, courseService, $timeout, Fullscreen) {
+    .controller('CourseBattleResultController', function ($scope, selectedEvent, battleId, courseBattleSearchService, courseService, $timeout, Fullscreen, hotkeys) {
 
         var courseBattleResultCtrl = this;
 
         this.selectedEvent = selectedEvent;
 
-        this.showTeamInfo = false;
+        this.anonymousVoting = false;
 
         this.fullscreen = Fullscreen;
+
+        hotkeys.bindTo($scope)
+            .add({
+                combo: 'shift+a',
+                description: 'Toggle Anonymous Course Battle Voting ',
+                callback: function () {
+                    courseBattleResultCtrl.toggleAnonymousVoting();
+                }
+            });
+
+        this.toggleAnonymousVoting = function () {
+            courseBattleResultCtrl.anonymousVoting = !courseBattleResultCtrl.anonymousVoting;
+        };
 
         function init() {
             courseBattleSearchService.findCourseBattleResults(battleId)

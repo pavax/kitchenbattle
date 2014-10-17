@@ -116,7 +116,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="battle in courseBattlesCtrl.courseBattles">
+            <tr ng-repeat="battle in courseBattlesCtrl.courseBattles | orderBy:'-courseType':false">
                 <td>{{battle.createdAt | date:'short'}}</td>
                 <td>{{battle.courseType | courseType}}
                 <td>

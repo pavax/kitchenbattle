@@ -5,7 +5,12 @@
     <span class="glyphicon glyphicon-screenshot"></span> Go Fullscreen
 </button>
 
-Auto-Refresh: <input type="checkbox" ng-model="courseBattleResultCtrl.autoRefresh">
+<button class="btn btn-default" ng-click="courseBattleResultCtrl.toggleAnonymousVoting()" tooltip-html-unsafe="<kbd><kbd>shift</kbd> + <kbd>a</kbd></kbd>">
+    <span class="glyphicon"
+          ng-class="courseBattleResultCtrl.anonymousVoting ? 'glyphicon-eye-open' : ' glyphicon-eye-close'"></span>
+    <span ng-hide="courseBattleResultCtrl.anonymousVoting">Anonymous Voting On</span>
+    <span ng-show="courseBattleResultCtrl.anonymousVoting">Anonymous Voting Off</span>
+</button>
 
 <div id="fullscreen" class="container-full col-xs-12" ng-if="courseBattleResultCtrl.votingResult">
 
@@ -28,18 +33,21 @@ Auto-Refresh: <input type="checkbox" ng-model="courseBattleResultCtrl.autoRefres
 
     <div class="row">
         <h2>
-            {{courseBattleResultCtrl.votingResult.courseOne.courseName}}
-            <a href="" ng-click="courseBattleResultCtrl.showTeamInfo = !courseBattleResultCtrl.showTeamInfo">
-                    <span ng-show="courseBattleResultCtrl.showTeamInfo">
-                       von {{courseBattleResultCtrl.votingResult.courseOne.teamName}}
-                    </span>
-                <span ng-hide="courseBattleResultCtrl.showTeamInfo">???</span>
-            </a>
+            <span ng-hide="courseBattleResultCtrl.anonymousVoting">
+                {{courseBattleResultCtrl.votingResult.courseOne.courseName}}  von {{courseBattleResultCtrl.votingResult.courseOne.teamName}}
+            </span>
+            <span ng-show="courseBattleResultCtrl.anonymousVoting">
+                Team Anonymisiert
+            </span>
         </h2>
 
         <div class="row">
             <div class="col-xs-3">
-                <img ng-src="{{courseBattleResultCtrl.votingResult.courseOne.imageUrl}}" class="img-responsive">
+                <img ng-hide="courseBattleResultCtrl.anonymousVoting"
+                     ng-src="{{courseBattleResultCtrl.votingResult.courseOne.imageUrl}}" class="img-responsive">
+
+                <div ng-show="courseBattleResultCtrl.anonymousVoting" class="jumbotron" style="height: 200px"><h1>
+                    ???</h1></div>
             </div>
             <div class="col-xs-7 col-xs-offset-1">
                 <div class="text-info text-center h3">Votes:
@@ -54,18 +62,21 @@ Auto-Refresh: <input type="checkbox" ng-model="courseBattleResultCtrl.autoRefres
     </div>
     <div class="row" style="font-size: x-large">
         <h2>
-            {{courseBattleResultCtrl.votingResult.courseTwo.courseName}}
-            <a href="" ng-click="courseBattleResultCtrl.showTeamInfo = !courseBattleResultCtrl.showTeamInfo">
-                    <span ng-show="courseBattleResultCtrl.showTeamInfo">
-                       von {{courseBattleResultCtrl.votingResult.courseTwo.teamName}}
-                    </span>
-                <span ng-hide="courseBattleResultCtrl.showTeamInfo">???</span>
-            </a>
+            <span ng-hide="courseBattleResultCtrl.anonymousVoting">
+            {{courseBattleResultCtrl.votingResult.courseTwo.courseName}} von {{courseBattleResultCtrl.votingResult.courseTwo.teamName}}
+            </span>
+            <span ng-show="courseBattleResultCtrl.anonymousVoting">
+                Team Anonymisiert
+            </span>
         </h2>
 
         <div class="row">
             <div class="col-xs-3">
-                <img ng-src="{{courseBattleResultCtrl.votingResult.courseTwo.imageUrl}}" class="img-responsive">
+                <img ng-hide="courseBattleResultCtrl.anonymousVoting"
+                     ng-src="{{courseBattleResultCtrl.votingResult.courseTwo.imageUrl}}" class="img-responsive">
+
+                <div ng-show="courseBattleResultCtrl.anonymousVoting" class="jumbotron" style="height: 200px"><h1>
+                    ???</h1></div>
             </div>
             <div class="col-xs-7 col-xs-offset-1">
                 <div class="text-info text-center h3">Votes:

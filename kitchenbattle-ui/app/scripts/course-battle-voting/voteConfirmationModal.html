@@ -7,7 +7,8 @@
             <img src="images/apple-touch-icon-114x114.png">
         </div>
         <div class="col-xs-8">
-            <span class="lead">Ihre Stimme wurde gezählt!</span>
+            <span class="lead" ng-hide="voteStatus.voteRequestInProgress">Ihre Stimme wurde gezählt!</span>
+            <span class="lead" ng-show="voteStatus.voteRequestInProgress">Ihre Anfrage wird bearbeitet...</span>
         </div>
     </div>
 </div>

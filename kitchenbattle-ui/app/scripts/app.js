@@ -12,7 +12,8 @@ var app = angular.module('kitchenbattleWebApp', [
     'commonsModule',
     'courseBattleVotingModule',
     'adminModule',
-    'FBAngular'
+    'FBAngular',
+    'cfp.hotkeys'
 ]);
 
 app.config(function ($stateProvider, $urlRouterProvider) {
