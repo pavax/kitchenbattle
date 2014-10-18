@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('adminModule')
-    .controller('CourseBattleResultController', function ($scope, selectedEvent, battleId, courseBattleSearchService, courseService, $timeout, Fullscreen, hotkeys) {
+    .controller('CourseBattleResultController', function ($scope, selectedEvent, battleId, courseBattleSearchService, courseService, Fullscreen, hotkeys, $interval) {
 
         var courseBattleResultCtrl = this;
 
@@ -10,6 +10,10 @@ angular.module('adminModule')
         this.anonymousVoting = false;
 
         this.fullscreen = Fullscreen;
+
+        this.updateInterval = 2000;
+
+        this.autoRefreshEnabled = false;
 
         hotkeys.bindTo($scope)
             .add({
@@ -20,12 +24,30 @@ angular.module('adminModule')
                 }
             });
 
+        hotkeys.bindTo($scope)
+            .add({
+                combo: 'shift+right',
+                description: 'Increase Update Interval',
+                callback: function () {
+                    courseBattleResultCtrl.updateInterval = courseBattleResultCtrl.updateInterval + 500;
+                }
+            });
+
+        hotkeys.bindTo($scope)
+            .add({
+                combo: 'shift+left',
+                description: 'Decrease Update Interval',
+                callback: function () {
+                    courseBattleResultCtrl.updateInterval = courseBattleResultCtrl.updateInterval - 500;
+                }
+            });
+
         this.toggleAnonymousVoting = function () {
             courseBattleResultCtrl.anonymousVoting = !courseBattleResultCtrl.anonymousVoting;
         };
 
-        function init() {
-            courseBattleSearchService.findCourseBattleResults(battleId)
+        function receiveBattleResults() {
+            return courseBattleSearchService.findCourseBattleResults(battleId)
                 .then(function (successResponse) {
                     var votingResult = successResponse.data;
                     courseBattleResultCtrl.votingResult = votingResult;
@@ -38,11 +60,12 @@ angular.module('adminModule')
                     if (courseBattleResultCtrl.votingResult.courseTwo.courseVariants.length > 0) {
                         courseBattleResultCtrl.votingResult.courseTwo.imageUrl = courseBattleResultCtrl.votingResult.courseTwo.courseVariants[0].imageUrl;
                     }
-                    courseBattleResultCtrl.autoRefresh = votingResult.state === 'VOTING_IN_PROGRESS';
+                    courseBattleResultCtrl.autoRefreshEnabled = votingResult.state === 'VOTING_IN_PROGRESS';
+                    return successResponse;
                 });
         }
 
-        init();
+        receiveBattleResults();
 
         this.goFullscreen = function () {
 
@@ -56,20 +79,23 @@ angular.module('adminModule')
 
         };
 
-        this.autoRefresh = false;
+        $scope.$watch(function () {
+            return courseBattleResultCtrl.updateInterval;
+        }, function () {
+            startInterval();
+        });
+
+        var timerPromise;
 
         function startInterval() {
-            var timer = $timeout(function () {
-                if (courseBattleResultCtrl.autoRefresh) {
-                    init();
-                }
-                startInterval();
-            }, 2000);
+            $interval.cancel(timerPromise);
+            if (courseBattleResultCtrl.updateInterval) {
+                timerPromise = $interval(receiveBattleResults, courseBattleResultCtrl.updateInterval);
+            }
             $scope.$on('$destroy', function () {
-                $timeout.cancel(timer);
+                $interval.cancel(timerPromise);
             });
         }
 
-        startInterval();
     })
 ;

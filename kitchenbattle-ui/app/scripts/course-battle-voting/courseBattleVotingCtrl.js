@@ -35,7 +35,7 @@ angular.module('courseBattleVotingModule')
                     courseBattleVotingCtrl.voteStatus.voteRequestInProgress = false;
                     $timeout(function () {
                         modalInstance.close();
-                    }, 1200);
+                    }, 2000);
                 }, function (errorResponse) {
                     if (errorResponse.status === 409) {
                         window.alert('Diese Abstimmung wurde beendet');

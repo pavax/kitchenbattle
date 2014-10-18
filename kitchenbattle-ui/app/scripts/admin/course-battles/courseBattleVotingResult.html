@@ -1,16 +1,47 @@
-<h1>Show Battle Results</h1>
+<div class="page-header">
+    <h1>Show Battle Results</h1>
+</div>
 
-<button class="btn btn-default" ng-controller="fullscreenCtrl as fullscreenCtrl"
-        ng-click="fullscreenCtrl.goFullscreen()">
-    <span class="glyphicon glyphicon-screenshot"></span> Go Fullscreen
-</button>
-
-<button class="btn btn-default" ng-click="courseBattleResultCtrl.toggleAnonymousVoting()" tooltip-html-unsafe="<kbd><kbd>shift</kbd> + <kbd>a</kbd></kbd>">
-    <span class="glyphicon"
+<div class="row">
+    <div class="col-xs-3">
+        <button class="btn btn-default" ng-controller="fullscreenCtrl as fullscreenCtrl"
+                ng-click="fullscreenCtrl.goFullscreen()">
+            <span class="glyphicon glyphicon-screenshot"></span> Go Fullscreen
+        </button>
+    </div>
+    <div class="col-xs-3">
+        <button class="btn btn-default" ng-click="courseBattleResultCtrl.toggleAnonymousVoting()"
+                tooltip-html-unsafe="<kbd><kbd>shift</kbd> + <kbd>a</kbd></kbd>">
+        <span class="glyphicon"
           ng-class="courseBattleResultCtrl.anonymousVoting ? 'glyphicon-eye-open' : ' glyphicon-eye-close'"></span>
-    <span ng-hide="courseBattleResultCtrl.anonymousVoting">Anonymous Voting On</span>
-    <span ng-show="courseBattleResultCtrl.anonymousVoting">Anonymous Voting Off</span>
-</button>
+            <span ng-hide="courseBattleResultCtrl.anonymousVoting">Anonymous Voting On</span>
+            <span ng-show="courseBattleResultCtrl.anonymousVoting">Anonymous Voting Off</span>
+        </button>
+    </div>
+    <div class="col-xs-6">
+        <form name="resultSettingsForm" novalidate class="form-inline">
+            <div class="form-group">
+                <label class="control-label" for="updateInterval">Update Interval
+                    ({{courseBattleResultCtrl.updateInterval}} ms)</label>
+                <div>
+                    <div class="input-group">
+                        <input type="number" id="updateInterval" name="updateInterval" min="2000" max="30000" required
+                               ng-model="courseBattleResultCtrl.updateInterval" step="500">
+
+                        <div class="input-group-addon">ms</div>
+                    </div>
+                    <span class="error" ng-show="resultSettingsForm.updateInterval.$error.required">Required!</span>
+                    <span class="error"
+                          ng-show="resultSettingsForm.updateInterval.$error.number"> Not valid number!</span>
+                    <span class="error" ng-show="resultSettingsForm.updateInterval.$error.min">Min: 2000</span>
+                    <span class="error" ng-show="resultSettingsForm.updateInterval.$error.max">Max: 30000</span>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+        <hr/>
 
 <div id="fullscreen" class="container-full col-xs-12" ng-if="courseBattleResultCtrl.votingResult">
 
@@ -88,5 +119,10 @@
                 </progressbar>
             </div>
         </div>
+    </div>
+    <div class="modal-footer">
+        <p>app sponsored by <a target="_blank" href="http://www.mimacom.com">
+            <img alt="mimacom" src="images/logo-mimacom.png" height="22px"/></a>
+        </p>
     </div>
 </div>
