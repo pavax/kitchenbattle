@@ -76,6 +76,10 @@ angular.module('adminModule')
             $state.go('admin.coursebattles.result', {battleId: courseBattleId})
         };
 
+        this.showCard = function (courseBattleId) {
+            $state.go('courseBattleVoting.battles.vote', {battleId: courseBattleId})
+        };
+
         this.saveNewCourseBattle = function () {
             if ($scope.createNewCourseBattleForm.$valid) {
                 courseBattleService.createNewCourseBattle(
